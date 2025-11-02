@@ -1,3 +1,34 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "resultWorldCupImage",
+      "description": "Image shown for achieving the highest target, a world cup trophy.",
+      "imageUrl": "https://images.unsplash.com/photo-1637203725059-53f993d6ae02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx3b3JsZCUyMGN1cCUyMHRyb3BoeXxlbnwwfHx8fDE3NjIwODAzNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "world cup trophy"
+    },
+    {
+      "id": "resultSuccessImage",
+      "description": "Image shown for meeting the target, showing a celebration.",
+      "imageUrl": "https://images.unsplash.com/photo-1561917423-2ce508445fe4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjZWxlYnJhdGlvbiUyMHNvY2NlcnxlbnwwfHx8fDE3NjIwODAzNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "celebration soccer"
+    },
+    {
+      "id": "resultFailImage",
+      "description": "Image shown for failing to meet the target, showing a sad player.",
+      "imageUrl": "https://images.unsplash.com/photo-1630933109033-4ac25d7a8ae8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzYWQlMjBzb2NjZXIlMjBwbGF5ZXJ8ZW58MHx8fHwxNzYyMDgwMzQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sad soccer player"
+    },
+    {
+      "id": "clickAreaBgImage",
+      "description": "Background image for the click area, a soccer stadium.",
+      "imageUrl": "https://images.unsplash.com/photo-1569531955323-33c6b2dca44b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzb2NjZXIlMjBzdGFkaXVtfGVufDB8fHx8MTc2MTk5MTQ5NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "soccer stadium"
+    },
+    {
+      "id": "ronaldoClickableImage",
+      "description": "Clickable image of Cristiano Ronaldo.",
+      "imageUrl": "https://images.unsplash.com/photo-1724064710352-3cbcee4bc3a8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxDcmlzdGlhbm8lMjBSb25hbGRvfGVufDB8fHx8MTc2MjA4MDM0MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "Cristiano Ronaldo"
+    }
+  ]
 }
