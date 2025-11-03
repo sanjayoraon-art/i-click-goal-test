@@ -49,8 +49,43 @@ export default function Home() {
   const [showResultDialog, setShowResultDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const startTimeRef = useRef<number | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const clicksRef = useRef(clicks);
+  const selectedTimeRef = useRef(selectedTime);
+
+  useEffect(() => {
+    clicksRef.current = clicks;
+  }, [clicks]);
+
+  useEffect(() => {
+    selectedTimeRef.current = selectedTime;
+  }, [selectedTime]);
+  
+  const endGame = useCallback(() => {
+    if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+    }
+    setGameState('finished');
+
+    const timeUsed = selectedTimeRef.current;
+    const finalClicks = clicksRef.current;
+    const cps = parseFloat((finalClicks / timeUsed).toFixed(2));
+    const target = TARGETS[timeUsed];
+    const targetMet = finalClicks >= target;
+
+    const fallbackImageId = targetMet ? (timeUsed === 100 ? 'resultWorldCupImage' : 'resultSuccessImage') : 'resultFailImage';
+    const newResult: Result = {
+        cps,
+        totalClicks: finalClicks,
+        timeUsed,
+        target: target,
+        targetMet,
+        imageId: fallbackImageId,
+    };
+    setResult(newResult);
+    setShowResultDialog(true);
+  }, []);
 
   const resetGame = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
@@ -59,7 +94,6 @@ export default function Home() {
     setTimeLeft(selectedTime);
     setResult(null);
     setShowResultDialog(false);
-    startTimeRef.current = null;
     setIsLoading(false);
   }, [selectedTime]);
 
@@ -69,41 +103,13 @@ export default function Home() {
     resetGame();
     setTimeLeft(time);
   };
-  
-  const endGame = useCallback(() => {
-    if (gameState !== 'running') return;
-
-    setGameState('finished');
-    if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-    }
-
-    const timeUsed = selectedTime;
-    const cps = parseFloat((clicks / timeUsed).toFixed(2));
-    const target = TARGETS[selectedTime];
-    const targetMet = clicks >= target;
-
-    const fallbackImageId = targetMet ? (selectedTime === 100 ? 'resultWorldCupImage' : 'resultSuccessImage') : 'resultFailImage';
-    const newResult: Result = {
-        cps,
-        totalClicks: clicks,
-        timeUsed,
-        target: target,
-        targetMet,
-        imageId: fallbackImageId,
-    };
-    setResult(newResult);
-    setShowResultDialog(true);
-  }, [clicks, selectedTime, gameState]);
-
 
   useEffect(() => {
     if (gameState === 'running') {
-      startTimeRef.current = Date.now();
+      const startTime = Date.now();
       intervalRef.current = setInterval(() => {
-        const elapsed = (Date.now() - (startTimeRef.current ?? Date.now())) / 1000;
-        const remaining = selectedTime - elapsed;
+        const elapsed = (Date.now() - startTime) / 1000;
+        const remaining = selectedTimeRef.current - elapsed;
         
         if (remaining <= 0) {
           setTimeLeft(0);
@@ -126,7 +132,7 @@ export default function Home() {
         clearInterval(intervalRef.current);
       }
     };
-  }, [gameState, selectedTime, endGame]);
+  }, [gameState, endGame, selectedTime]);
 
 
   const handleAreaClick = () => {
