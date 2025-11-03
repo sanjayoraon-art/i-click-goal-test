@@ -110,10 +110,12 @@ export default function Home() {
 
 
   useEffect(() => {
-    if (gameState === 'running' && startTimeRef.current) {
+    if (gameState === 'running') {
+      startTimeRef.current = Date.now();
       intervalRef.current = setInterval(() => {
-        const elapsed = (Date.now() - (startTimeRef.current ?? 0)) / 1000;
+        const elapsed = (Date.now() - (startTimeRef.current ?? Date.now())) / 1000;
         const remaining = selectedTime - elapsed;
+        
         if (remaining <= 0) {
           setTimeLeft(0);
           endGame();
@@ -121,12 +123,17 @@ export default function Home() {
           setTimeLeft(remaining);
         }
       }, 10);
-    } else if (intervalRef.current) {
-      clearInterval(intervalRef.current);
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
     }
-
+  
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
   }, [gameState, selectedTime, endGame]);
 
@@ -136,7 +143,6 @@ export default function Home() {
 
     if (gameState === 'idle') {
       setGameState('running');
-      startTimeRef.current = Date.now();
     }
     
     if (gameState !== 'finished') {
