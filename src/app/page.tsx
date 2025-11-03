@@ -244,11 +244,6 @@ export default function Home() {
                 {result.imageId === 'resultWorldCupImage' ? "You're a true legend!" : "Here are your results."}
               </DialogDescription>
             </DialogHeader>
-            {resultImage && (
-              <div className="flex justify-center my-4">
-                <Image src={resultImage.imageUrl} alt={resultImage.description} width={120} height={160} className="drop-shadow-2xl rounded-lg" data-ai-hint={resultImage.imageHint} />
-              </div>
-            )}
             <div className="grid grid-cols-2 gap-4 text-center p-4 rounded-lg bg-muted/50">
               <div>
                 <div className="text-4xl font-bold text-accent">{result.cps}</div>
