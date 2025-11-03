@@ -64,8 +64,6 @@ export default function Home() {
   const clicksRef = useRef(clicks);
   const selectedTimeRef = useRef(selectedTime);
 
-  const clickableImage = PlaceHolderImages.find(p => p.id === 'clickableImage');
-
   useEffect(() => {
     clicksRef.current = clicks;
   }, [clicks]);
@@ -237,22 +235,16 @@ export default function Home() {
               </div>
             </div>
             
-            {clickableImage && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div 
-                  className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-lg cursor-pointer"
-                  onClick={(e) => { e.stopPropagation(); handleAreaClick(); }}
-                >
-                  <Image 
-                    src={clickableImage.imageUrl} 
-                    alt={clickableImage.description}
-                    data-ai-hint={clickableImage.imageHint}
-                    fill
-                    style={{ objectFit: 'cover' }}
-                  />
-                </div>
-              </div>
-            )}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-24 h-24 rounded-full text-2xl font-bold bg-white/20 hover:bg-white/30 text-white border-2 border-white"
+                onClick={(e) => { e.stopPropagation(); handleAreaClick(); }}
+              >
+                Click
+              </Button>
+            </div>
           </div>
           
         </CardContent>
@@ -295,5 +287,3 @@ export default function Home() {
     </main>
   );
 }
-
-    
