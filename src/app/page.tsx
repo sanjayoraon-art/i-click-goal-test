@@ -58,7 +58,19 @@ export default function Home() {
   const startTimeRef = useRef<number | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const resetGame = useCallback((time: number) => {
+  const resetGame = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    setGameState('idle');
+    setClicks(0);
+    setTimeLeft(selectedTime);
+    setResult(null);
+    setShowResultDialog(false);
+    startTimeRef.current = null;
+    setIsLoading(false);
+  }, [selectedTime]);
+
+  const handleTimeChange = (time: number) => {
+    if (gameState === 'running') return;
     if (intervalRef.current) clearInterval(intervalRef.current);
     setGameState('idle');
     setClicks(0);
@@ -68,11 +80,6 @@ export default function Home() {
     setShowResultDialog(false);
     startTimeRef.current = null;
     setIsLoading(false);
-  }, []);
-
-  const handleTimeChange = (time: number) => {
-    if (gameState === 'running') return;
-    resetGame(time);
   };
   
   const endGame = useCallback(() => {
@@ -136,6 +143,13 @@ export default function Home() {
         setClicks((prev) => prev + 1);
         setIsPulsing(true);
         setTimeout(() => setIsPulsing(false), 100);
+    }
+  };
+
+  const handleDialogChange = (open: boolean) => {
+    setShowResultDialog(open);
+    if (!open && gameState === 'finished') {
+        resetGame();
     }
   };
 
@@ -206,7 +220,7 @@ export default function Home() {
       </Card>
 
       {result && (
-        <Dialog open={showResultDialog} onOpenChange={setShowResultDialog}>
+        <Dialog open={showResultDialog} onOpenChange={handleDialogChange}>
           <DialogContent className="sm:max-w-md text-center">
             <DialogHeader>
               <DialogTitle className="text-3xl font-bold text-center">
@@ -231,7 +245,7 @@ export default function Home() {
               </div>
             </div>
             <DialogFooter className="sm:justify-center mt-4">
-              <Button onClick={() => resetGame(selectedTime)}>
+              <Button onClick={() => resetGame()}>
                 <Goal className="mr-2" /> Try Again
               </Button>
             </DialogFooter>
