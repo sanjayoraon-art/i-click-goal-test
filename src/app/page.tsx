@@ -70,6 +70,7 @@ export default function Home() {
 
   useEffect(() => {
     selectedTimeRef.current = selectedTime;
+    setTimeLeft(selectedTime);
   }, [selectedTime]);
   
   const endGame = useCallback(() => {
@@ -118,7 +119,6 @@ export default function Home() {
     if (gameState === 'running') return;
     setSelectedTime(time);
     resetGame();
-    setTimeLeft(time);
   };
 
   useEffect(() => {
@@ -250,17 +250,8 @@ export default function Home() {
                 {result.imageId === 'resultWorldCupImage' ? "You're a true legend!" : "Here are your results."}
               </DialogDescription>
             </DialogHeader>
-            <div className="my-4">
-              <Image
-                src={PlaceHolderImages.find(p => p.id === result.imageId)?.imageUrl || ''}
-                alt={PlaceHolderImages.find(p => p.id === result.imageId)?.description || 'Result image'}
-                width={400}
-                height={250}
-                className="rounded-lg object-cover mx-auto"
-                data-ai-hint={PlaceHolderImages.find(p => p.id === result.imageId)?.imageHint}
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4 text-center p-4 rounded-lg bg-muted/50">
+
+            <div className="grid grid-cols-2 gap-4 text-center p-4 rounded-lg bg-muted/50 my-4">
               <div>
                 <div className="text-4xl font-bold text-accent">{result.cps}</div>
                 <div className="text-sm text-muted-foreground">Clicks/Second</div>
@@ -285,7 +276,3 @@ export default function Home() {
     </main>
   );
 }
-
-    
-
-    
