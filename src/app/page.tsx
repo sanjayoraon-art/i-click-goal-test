@@ -185,7 +185,7 @@ export default function Home() {
 
           <div
             className={cn(
-                "relative rounded-2xl p-4 sm:p-6 text-center overflow-hidden select-none cursor-pointer transition-transform duration-100 ease-in-out h-64 sm:h-72 md:h-80 flex flex-col justify-center bg-gradient-to-br from-blue-500/20 to-blue-700/30",
+                "relative rounded-2xl p-4 sm:p-6 text-center overflow-hidden select-none cursor-pointer transition-transform duration-100 ease-in-out h-64 sm:h-72 md:h-80 flex flex-col justify-center bg-gradient-to-br from-blue-500 to-blue-700",
                 'hover:scale-[1.02]',
                 isPulsing && 'animate-pulse-click'
             )}
@@ -194,22 +194,22 @@ export default function Home() {
           >
             <div className="relative z-10 flex flex-col items-center">
               
-              <div className="mt-4 grid grid-cols-3 items-center justify-center gap-2 sm:gap-4 w-full text-center text-white">
+              <div className="grid grid-cols-2 items-center justify-center gap-2 sm:gap-4 w-full text-center text-white">
                 <div>
                     <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{timeLeft.toFixed(2)}</div>
                     <div className="text-xs sm:text-sm font-semibold opacity-80">Second</div>
-                </div>
-                <div className="flex flex-col items-center">
-                    <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{TARGETS[selectedTime]}</div>
-                    <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80">
-                        <Target className="h-4 w-4 sm:h-5 sm:w-5" />
-                        <span>Target</span>
-                    </div>
                 </div>
                 <div>
                     <div className="text-3xl smtext-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{clicks}</div>
                     <div className="text-xs sm:text-sm font-semibold opacity-80">Clicks</div>
                 </div>
+              </div>
+              <div className="flex flex-col items-center mt-4">
+                  <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{TARGETS[selectedTime]}</div>
+                  <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80">
+                      <Target className="h-4 w-4 sm:h-5 sm:w-5" />
+                      <span>Target</span>
+                  </div>
               </div>
             </div>
           </div>
