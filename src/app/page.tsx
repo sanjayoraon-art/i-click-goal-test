@@ -140,17 +140,18 @@ export default function Home() {
 
 
   const handleAreaClick = () => {
-    if (gameState === 'finished' || isLoading) return;
+    if (isLoading) return;
 
     if (gameState === 'idle') {
       setGameState('running');
       startTimeRef.current = Date.now();
     }
     
-    setClicks((prev) => prev + 1);
-
-    setIsPulsing(true);
-    setTimeout(() => setIsPulsing(false), 100);
+    if (gameState !== 'finished') {
+        setClicks((prev) => prev + 1);
+        setIsPulsing(true);
+        setTimeout(() => setIsPulsing(false), 100);
+    }
   };
 
   const resultImage = result ? images[result.imageId] : null;
@@ -162,7 +163,7 @@ export default function Home() {
           ⚽ Ronaldo Goal Test
         </h1>
         <p className="text-muted-foreground text-lg mt-2">
-          Click Ronaldo as Fast as You Can!
+          Click as Fast as You Can!
         </p>
       </header>
 
@@ -184,7 +185,7 @@ export default function Home() {
 
           <div
             className={cn(
-                "relative rounded-2xl p-4 sm:p-6 text-center overflow-hidden select-none cursor-pointer transition-transform duration-100 ease-in-out bg-gradient-to-br from-blue-500/20 to-blue-700/30",
+                "relative rounded-2xl p-4 sm:p-6 text-center overflow-hidden select-none cursor-pointer transition-transform duration-100 ease-in-out h-64 sm:h-72 md:h-80 flex flex-col justify-center bg-gradient-to-br from-blue-500/20 to-blue-700/30",
                 gameState !== 'finished' && 'hover:scale-[1.02]',
                 isPulsing && 'animate-pulse-click'
             )}
@@ -195,12 +196,12 @@ export default function Home() {
                 src={images.clickAreaBgImage.imageUrl}
                 alt="Stadium background"
                 fill
-                className="object-cover opacity-70"
+                className="object-cover opacity-30"
                 data-ai-hint={images.clickAreaBgImage.imageHint}
                 priority
             />}
             <div className="relative z-10 flex flex-col items-center">
-                {images.ronaldoClickableImage && <Image src={images.ronaldoClickableImage.imageUrl} alt="Cristiano Ronaldo" width={300} height={400} className="object-contain h-48 sm:h-64 md:h-80 w-auto" data-ai-hint={images.ronaldoClickableImage.imageHint} />}
+              
               <div className="mt-4 grid grid-cols-3 items-center justify-center gap-2 sm:gap-4 w-full text-center text-white">
                 <div>
                     <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{timeLeft.toFixed(2)}</div>
@@ -218,11 +219,11 @@ export default function Home() {
             </div>
           </div>
           
-          {gameState === 'finished' && !isLoading && (
+          {(gameState === 'finished' || gameState === 'idle') && (
             <div className="mt-6 text-center animate-in fade-in-50 slide-in-from-bottom-10 duration-500">
-              <Button size="lg" className="rounded-full font-bold text-lg shadow-lg" onClick={() => resetGame(selectedTime)}>
+              <Button size="lg" className="rounded-full font-bold text-lg shadow-lg" onClick={() => gameState === 'idle' ? handleAreaClick() : resetGame(selectedTime)}>
                 <Goal className="mr-2 h-5 w-5" />
-                Play Again
+                {gameState === 'idle' ? 'Start Clicking' : 'Play Again'}
               </Button>
             </div>
           )}
