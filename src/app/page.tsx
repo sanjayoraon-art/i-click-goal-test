@@ -292,7 +292,7 @@ export default function Home() {
       )}
     </main>
     <footer className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground">
-        <p>© 2024 Click Goal Test. All rights reserved.</p>
+        <p>Click Goal test</p>
     </footer>
     </>
   );
