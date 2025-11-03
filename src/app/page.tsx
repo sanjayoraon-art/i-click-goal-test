@@ -160,7 +160,7 @@ export default function Home() {
     <main className="flex min-h-screen w-full flex-col items-center justify-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
       <header className="text-center mb-8">
         <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
-          ⚽ Ronaldo Goal Test
+          click goal test
         </h1>
         <p className="text-muted-foreground text-lg mt-2">
           Click as Fast as You Can!
@@ -192,14 +192,6 @@ export default function Home() {
             onClick={handleAreaClick}
             onMouseDown={(e) => e.preventDefault()}
           >
-            {images.clickAreaBgImage && <Image 
-                src={images.clickAreaBgImage.imageUrl}
-                alt="Stadium background"
-                fill
-                className="object-cover opacity-30"
-                data-ai-hint={images.clickAreaBgImage.imageHint}
-                priority
-            />}
             <div className="relative z-10 flex flex-col items-center">
               
               <div className="mt-4 grid grid-cols-3 items-center justify-center gap-2 sm:gap-4 w-full text-center text-white">
@@ -276,3 +268,5 @@ export default function Home() {
     </main>
   );
 }
+
+    
