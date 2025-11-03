@@ -253,7 +253,7 @@ export default function Home() {
         </Dialog>
       )}
       
-      <footer className="text-center mt-8">
+      <footer className="fixed bottom-0 left-0 w-full p-4 text-center bg-card/80 backdrop-blur-sm border-t">
         <p className="text-muted-foreground text-sm">Click Goal Test - SIUUU! 🔥</p>
       </footer>
     </main>
