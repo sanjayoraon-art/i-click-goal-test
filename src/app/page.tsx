@@ -226,7 +226,7 @@ export default function Home() {
                     <div className="text-xs sm:text-sm font-semibold opacity-80">Clicks</div>
                 </div>
               </div>
-              <div className="flex flex-col items-center mt-4">
+              <div className="flex flex-col items-center mt-8">
                   <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg text-white">{TARGETS[selectedTime]}</div>
                   <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80 text-white">
                       <Target className="h-4 w-4 sm:h-5 sm:w-5" />
