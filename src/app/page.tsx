@@ -191,8 +191,7 @@ export default function Home() {
 
           <div
             className={cn(
-                "relative rounded-2xl p-6 text-center text-white overflow-hidden select-none cursor-pointer transition-transform duration-100 ease-in-out",
-                "bg-gradient-to-br from-[#667eea] to-[#764ba2]",
+                "relative rounded-2xl p-6 text-center overflow-hidden select-none cursor-pointer transition-transform duration-100 ease-in-out",
                 gameState !== 'finished' && 'hover:scale-[1.02]',
                 isPulsing && 'animate-pulse-click',
                 (gameState === 'finished' || isLoading) && 'cursor-not-allowed opacity-80'
@@ -285,3 +284,5 @@ export default function Home() {
     </main>
   );
 }
+
+    
