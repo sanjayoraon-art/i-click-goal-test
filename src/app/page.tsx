@@ -1,14 +1,12 @@
+
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { PlaceHolderImages, type ImagePlaceholder } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
 import { Goal, Target } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
-import { analyzeGameResult } from '@/ai/flows/intelligent-achievement-recognition';
 
 const TIME_OPTIONS = [5, 10, 15, 30, 60, 100];
 
@@ -31,11 +29,6 @@ type Result = {
   target: number;
   imageId: string;
 };
-
-const images = PlaceHolderImages.reduce((acc, img) => {
-    acc[img.id] = img;
-    return acc;
-}, {} as Record<string, ImagePlaceholder>);
 
 const BUTTON_COLORS = [
   'bg-sky-500 hover:bg-sky-600',
@@ -72,26 +65,21 @@ export default function Home() {
 
   const handleTimeChange = (time: number) => {
     if (gameState === 'running') return;
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    setGameState('idle');
-    setClicks(0);
     setSelectedTime(time);
+    resetGame();
     setTimeLeft(time);
-    setResult(null);
-    setShowResultDialog(false);
-    startTimeRef.current = null;
-    setIsLoading(false);
   };
   
   const endGame = useCallback(() => {
+    if (gameState !== 'running') return;
+
+    setGameState('finished');
     if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
     }
-    if (gameState === 'finished' || !startTimeRef.current) return;
 
-    setGameState('finished');
-    const timeUsed = (Date.now() - startTimeRef.current) / 1000;
+    const timeUsed = selectedTime;
     const cps = parseFloat((clicks / timeUsed).toFixed(2));
     const target = TARGETS[selectedTime];
     const targetMet = clicks >= target;
@@ -124,11 +112,13 @@ export default function Home() {
           setTimeLeft(remaining);
         }
       }, 10);
-    } else {
-      if (intervalRef.current) {
+    } else if (gameState === 'idle') {
+       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
+      setTimeLeft(selectedTime);
+      setClicks(0);
     }
   
     return () => {
@@ -136,7 +126,7 @@ export default function Home() {
         clearInterval(intervalRef.current);
       }
     };
-  }, [gameState, selectedTime]);
+  }, [gameState, selectedTime, endGame]);
 
 
   const handleAreaClick = () => {
@@ -154,10 +144,10 @@ export default function Home() {
   };
 
   const handleDialogChange = (open: boolean) => {
-    setShowResultDialog(open);
-    if (!open && gameState === 'finished') {
+    if (!open) {
         resetGame();
     }
+    setShowResultDialog(open);
   };
 
 
@@ -252,7 +242,7 @@ export default function Home() {
               </div>
             </div>
             <DialogFooter className="sm:justify-center mt-4">
-              <Button onClick={() => resetGame()}>
+              <Button onClick={() => handleDialogChange(false)}>
                 <Goal className="mr-2" /> Try Again
               </Button>
             </DialogFooter>
@@ -262,3 +252,5 @@ export default function Home() {
     </main>
   );
 }
+
+    
