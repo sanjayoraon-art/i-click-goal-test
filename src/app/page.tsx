@@ -37,6 +37,14 @@ const images = PlaceHolderImages.reduce((acc, img) => {
     return acc;
 }, {} as Record<string, ImagePlaceholder>);
 
+const BUTTON_COLORS = [
+  'bg-sky-500 hover:bg-sky-600',
+  'bg-teal-500 hover:bg-teal-600',
+  'bg-emerald-500 hover:bg-emerald-600',
+  'bg-amber-500 hover:bg-amber-600',
+  'bg-orange-500 hover:bg-orange-600',
+  'bg-red-500 hover:bg-red-600',
+];
 
 export default function Home() {
   const [selectedTime, setSelectedTime] = useState(5);
@@ -170,11 +178,15 @@ export default function Home() {
       <Card className="w-full max-w-2xl bg-card/80 backdrop-blur-sm shadow-2xl rounded-2xl overflow-hidden border-2">
         <CardContent className="p-6 md:p-8">
           <div className="flex justify-center gap-2 flex-wrap mb-8">
-            {TIME_OPTIONS.map((time) => (
+            {TIME_OPTIONS.map((time, index) => (
               <Button
                 key={time}
-                variant={selectedTime === time ? 'default' : 'outline'}
-                className="rounded-full font-semibold"
+                variant={selectedTime === time ? 'outline' : 'default'}
+                className={cn(
+                  'rounded-full font-semibold text-white',
+                  selectedTime !== time && BUTTON_COLORS[index % BUTTON_COLORS.length],
+                  selectedTime === time && 'border-4 border-primary'
+                )}
                 onClick={() => handleTimeChange(time)}
                 disabled={gameState === 'running'}
               >

@@ -101,4 +101,12 @@ export default {
     },
   },
   plugins: [require('tailwindcss-animate')],
+  safelist: [
+    {
+      pattern: /bg-(sky|teal|emerald|amber|orange|red)-(500)/,
+    },
+     {
+      pattern: /hover:bg-(sky|teal|emerald|amber|orange|red)-(600)/,
+    }
+  ]
 } satisfies Config;
