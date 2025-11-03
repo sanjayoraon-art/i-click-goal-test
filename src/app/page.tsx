@@ -175,6 +175,7 @@ export default function Home() {
 
 
   return (
+    <>
     <main className="flex min-h-screen w-full flex-col items-center justify-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
       <header className="text-center mb-8">
         <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
@@ -290,5 +291,9 @@ export default function Home() {
         </Dialog>
       )}
     </main>
+    <footer className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground">
+        <p>© 2024 Click Goal Test. All rights reserved.</p>
+    </footer>
+    </>
   );
 }
