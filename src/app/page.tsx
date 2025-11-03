@@ -197,7 +197,7 @@ export default function Home() {
               <div className="mt-4 grid grid-cols-3 items-center justify-center gap-2 sm:gap-4 w-full text-center text-white">
                 <div>
                     <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{timeLeft.toFixed(2)}</div>
-                    <div className="text-xs sm:text-sm font-semibold opacity-80">Seconds Left</div>
+                    <div className="text-xs sm:text-sm font-semibold opacity-80">Second</div>
                 </div>
                 <div>
                     <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{clicks}</div>
