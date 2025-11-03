@@ -8,6 +8,7 @@ import { PlaceHolderImages, type ImagePlaceholder } from '@/lib/placeholder-imag
 import { cn } from '@/lib/utils';
 import { Goal, Target } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { analyzeGameResult } from '@/ai/flows/intelligent-achievement-recognition';
 
 const TIME_OPTIONS = [5, 10, 15, 30, 60, 100];
 
@@ -100,8 +101,8 @@ export default function Home() {
         cps,
         totalClicks: clicks,
         timeUsed,
-        targetMet,
         target: target,
+        targetMet,
         imageId: fallbackImageId,
     };
     setResult(newResult);
@@ -135,7 +136,7 @@ export default function Home() {
         clearInterval(intervalRef.current);
       }
     };
-  }, [gameState, selectedTime, endGame]);
+  }, [gameState, selectedTime]);
 
 
   const handleAreaClick = () => {
