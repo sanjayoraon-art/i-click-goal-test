@@ -255,7 +255,7 @@ export default function Home() {
           <DialogContent
             className={cn(
               'sm:max-w-md text-center border',
-              result.targetMet ? 'bg-green-100' : 'bg-purple-100'
+              result.targetMet ? 'bg-green-100' : 'bg-red-100'
             )}
           >
             <DialogHeader>
