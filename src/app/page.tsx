@@ -38,7 +38,6 @@ const images = PlaceHolderImages.reduce((acc, img) => {
 }, {} as Record<string, ImagePlaceholder>);
 
 const clickAreaBgImage = images['clickAreaBgImage'];
-const ronaldoClickableImage = images['ronaldoClickableImage'];
 
 
 export default function Home() {
@@ -270,7 +269,7 @@ export default function Home() {
               </div>
               <div className="col-span-2">
                 <div className="text-2xl font-bold">{result.target}</div>
-                <div className="text-sm text-muted-foreground">Target Clicks</div>
+                <div className="text-sm text-muted-foreground">target goal</div>
               </div>
             </div>
             <DialogFooter className="sm:justify-center mt-4">
