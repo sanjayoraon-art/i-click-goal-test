@@ -76,53 +76,27 @@ export default function Home() {
     resetGame(time);
   };
   
-  const endGame = useCallback(async () => {
+  const endGame = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     if (!startTimeRef.current) return;
 
     setGameState('finished');
-    setIsLoading(true);
     const timeUsed = (Date.now() - startTimeRef.current) / 1000;
     const cps = parseFloat((clicks / timeUsed).toFixed(2));
     const target = TARGETS[selectedTime];
     const targetMet = clicks >= target;
 
-    try {
-        const aiResult = await analyzeGameResult({
-            cps,
-            totalClicks: clicks,
-            timeUsed,
-            targetMet,
-            selectedTime,
-            target,
-        });
-
-        const newResult: Result = {
-            cps,
-            totalClicks: clicks,
-            timeUsed,
-            targetMet,
-            target: target,
-            imageId: aiResult.imageId,
-        };
-        setResult(newResult);
-        setShowResultDialog(true);
-    } catch (error) {
-        console.error("AI analysis failed:", error);
-        const fallbackImageId = targetMet ? (selectedTime === 100 ? 'resultWorldCupImage' : 'resultSuccessImage') : 'resultFailImage';
-        const newResult: Result = {
-            cps,
-            totalClicks: clicks,
-            timeUsed,
-            targetMet,
-            target: target,
-            imageId: fallbackImageId,
-        };
-        setResult(newResult);
-        setShowResultDialog(true);
-    } finally {
-        setIsLoading(false);
-    }
+    const fallbackImageId = targetMet ? (selectedTime === 100 ? 'resultWorldCupImage' : 'resultSuccessImage') : 'resultFailImage';
+    const newResult: Result = {
+        cps,
+        totalClicks: clicks,
+        timeUsed,
+        targetMet,
+        target: target,
+        imageId: fallbackImageId,
+    };
+    setResult(newResult);
+    setShowResultDialog(true);
   }, [clicks, selectedTime]);
 
 
