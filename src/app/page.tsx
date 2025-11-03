@@ -199,16 +199,16 @@ export default function Home() {
                     <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{timeLeft.toFixed(2)}</div>
                     <div className="text-xs sm:text-sm font-semibold opacity-80">Second</div>
                 </div>
-                <div>
-                    <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{clicks}</div>
-                    <div className="text-xs sm:text-sm font-semibold opacity-80">Clicks</div>
-                </div>
-                 <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center">
                     <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{TARGETS[selectedTime]}</div>
                     <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80">
                         <Target className="h-4 w-4 sm:h-5 sm:w-5" />
                         <span>Target</span>
                     </div>
+                </div>
+                <div>
+                    <div className="text-3xl smtext-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{clicks}</div>
+                    <div className="text-xs sm:text-sm font-semibold opacity-80">Clicks</div>
                 </div>
               </div>
             </div>
