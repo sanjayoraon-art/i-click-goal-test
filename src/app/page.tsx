@@ -154,13 +154,6 @@ export default function Home() {
   };
 
   const resultImage = result ? images[result.imageId] : null;
-  
-  const clickAreaMessage = () => {
-    if (gameState === 'idle') return 'Click on the image of Ronaldo!';
-    if (gameState === 'running') return 'Keep Clicking! ⚽';
-    if (gameState === 'finished') return isLoading ? 'Analyzing...' : 'Game Over!';
-    return '';
-  };
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center justify-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
@@ -193,8 +186,7 @@ export default function Home() {
             className={cn(
                 "relative rounded-2xl p-6 text-center overflow-hidden select-none cursor-pointer transition-transform duration-100 ease-in-out",
                 gameState !== 'finished' && 'hover:scale-[1.02]',
-                isPulsing && 'animate-pulse-click',
-                (gameState === 'finished' || isLoading) && 'cursor-not-allowed'
+                isPulsing && 'animate-pulse-click'
             )}
             onClick={handleAreaClick}
             onMouseDown={(e) => e.preventDefault()}
@@ -203,13 +195,12 @@ export default function Home() {
                 src={images.clickAreaBgImage.imageUrl}
                 alt="Stadium background"
                 fill
-                className="object-cover opacity-100"
+                className="object-cover opacity-40"
                 data-ai-hint={images.clickAreaBgImage.imageHint}
                 priority
             />}
             <div className="relative z-10 flex flex-col items-center">
                 {images.ronaldoClickableImage && <Image src={images.ronaldoClickableImage.imageUrl} alt="Cristiano Ronaldo" width={300} height={400} className="object-contain" data-ai-hint={images.ronaldoClickableImage.imageHint} />}
-              <h2 className="text-2xl md:text-3xl font-bold mt-4">{clickAreaMessage()}</h2>
               <div className="mt-4 grid grid-cols-3 items-center justify-center gap-4 w-full text-center">
                 <div>
                     <div className="text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{timeLeft.toFixed(2)}</div>
