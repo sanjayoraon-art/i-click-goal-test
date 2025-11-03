@@ -7,6 +7,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Goal, Target } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const TIME_OPTIONS = [5, 10, 15, 30, 60, 100];
 
@@ -38,6 +40,15 @@ const BUTTON_COLORS = [
   'bg-orange-500 hover:bg-orange-600',
   'bg-red-500 hover:bg-red-600',
 ];
+
+const FAIL_IMAGE_MAP: { [key: number]: string } = {
+    5: 'resultFailImage5s',
+    10: 'resultFailImage10s',
+    15: 'resultFailImage15s',
+    30: 'resultFailImage30s',
+    60: 'resultFailImage60s',
+    100: 'resultFailImage100s',
+};
 
 export default function Home() {
   const [selectedTime, setSelectedTime] = useState(5);
@@ -74,7 +85,13 @@ export default function Home() {
     const target = TARGETS[timeUsed];
     const targetMet = finalClicks >= target;
 
-    const fallbackImageId = targetMet ? (timeUsed === 100 ? 'resultWorldCupImage' : 'resultSuccessImage') : 'resultFailImage';
+    let fallbackImageId: string;
+    if (targetMet) {
+        fallbackImageId = timeUsed === 100 ? 'resultWorldCupImage' : 'resultSuccessImage';
+    } else {
+        fallbackImageId = FAIL_IMAGE_MAP[timeUsed] || 'resultFailImage';
+    }
+
     const newResult: Result = {
         cps,
         totalClicks: finalClicks,
@@ -161,7 +178,7 @@ export default function Home() {
     <main className="flex min-h-screen w-full flex-col items-center justify-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
       <header className="text-center mb-8">
         <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
-          click goal test
+          Click Goal Test
         </h1>
         <p className="text-muted-foreground text-lg mt-2">
           Click as Fast as You Can!
@@ -233,6 +250,16 @@ export default function Home() {
                 {result.imageId === 'resultWorldCupImage' ? "You're a true legend!" : "Here are your results."}
               </DialogDescription>
             </DialogHeader>
+            <div className="my-4">
+              <Image
+                src={PlaceHolderImages.find(p => p.id === result.imageId)?.imageUrl || ''}
+                alt={PlaceHolderImages.find(p => p.id === result.imageId)?.description || 'Result image'}
+                width={400}
+                height={250}
+                className="rounded-lg object-cover mx-auto"
+                data-ai-hint={PlaceHolderImages.find(p => p.id === result.imageId)?.imageHint}
+              />
+            </div>
             <div className="grid grid-cols-2 gap-4 text-center p-4 rounded-lg bg-muted/50">
               <div>
                 <div className="text-4xl font-bold text-accent">{result.cps}</div>
@@ -258,5 +285,7 @@ export default function Home() {
     </main>
   );
 }
+
+    
 
     
