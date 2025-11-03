@@ -194,7 +194,7 @@ export default function Home() {
                 "relative rounded-2xl p-6 text-center overflow-hidden select-none cursor-pointer transition-transform duration-100 ease-in-out",
                 gameState !== 'finished' && 'hover:scale-[1.02]',
                 isPulsing && 'animate-pulse-click',
-                (gameState === 'finished' || isLoading) && 'cursor-not-allowed opacity-80'
+                (gameState === 'finished' || isLoading) && 'cursor-not-allowed'
             )}
             onClick={handleAreaClick}
             onMouseDown={(e) => e.preventDefault()}
@@ -203,13 +203,13 @@ export default function Home() {
                 src={images.clickAreaBgImage.imageUrl}
                 alt="Stadium background"
                 fill
-                className="object-cover opacity-20"
+                className="object-cover opacity-100"
                 data-ai-hint={images.clickAreaBgImage.imageHint}
                 priority
             />}
             <div className="relative z-10 flex flex-col items-center">
                 {images.ronaldoClickableImage && <Image src={images.ronaldoClickableImage.imageUrl} alt="Cristiano Ronaldo" width={300} height={400} className="object-contain" data-ai-hint={images.ronaldoClickableImage.imageHint} />}
-              <h2 className="text-2xl md:text-3xl font-bold mt-4 drop-shadow-md">{clickAreaMessage()}</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mt-4">{clickAreaMessage()}</h2>
               <div className="mt-4 grid grid-cols-3 items-center justify-center gap-4 w-full text-center">
                 <div>
                     <div className="text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{timeLeft.toFixed(2)}</div>
