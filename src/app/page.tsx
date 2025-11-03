@@ -237,9 +237,9 @@ export default function Home() {
             
             <div className="absolute inset-0 flex items-center justify-center">
               <Button
-                variant="outline"
+                variant="default"
                 size="lg"
-                className="w-24 h-24 rounded-full text-2xl font-bold bg-white/20 hover:bg-white/30 text-white border-2 border-white"
+                className="w-24 h-24 rounded-full text-2xl font-bold bg-primary hover:bg-primary/90 text-primary-foreground border-0"
                 onClick={(e) => { e.stopPropagation(); handleAreaClick(); }}
               >
                 Click
