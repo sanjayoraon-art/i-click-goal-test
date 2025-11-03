@@ -38,6 +38,8 @@ const images = PlaceHolderImages.reduce((acc, img) => {
 }, {} as Record<string, ImagePlaceholder>);
 
 const clickAreaBgImage = images['clickAreaBgImage'];
+const ronaldoClickableImage = images['ronaldoClickableImage'];
+
 
 export default function Home() {
   const [selectedTime, setSelectedTime] = useState(5);
@@ -201,7 +203,7 @@ export default function Home() {
                     fill
                     className={cn(
                         "object-cover transition-opacity duration-300",
-                        gameState === 'running' || gameState === 'idle' ? 'opacity-30' : 'opacity-10'
+                        'opacity-80'
                     )}
                     data-ai-hint={clickAreaBgImage.imageHint}
                     priority
@@ -220,7 +222,10 @@ export default function Home() {
                 </div>
                  <div className="flex flex-col items-center">
                     <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{TARGETS[selectedTime]}</div>
-                    <Target className="h-4 w-4 sm:h-5 sm:w-5 mt-1 text-white/80" />
+                    <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80">
+                        <Target className="h-4 w-4 sm:h-5 sm:w-5" />
+                        <span>Target</span>
+                    </div>
                 </div>
               </div>
             </div>
