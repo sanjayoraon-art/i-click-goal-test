@@ -203,12 +203,12 @@ export default function Home() {
                 src={images.clickAreaBgImage.imageUrl}
                 alt="Stadium background"
                 fill
-                className="object-cover opacity-30"
+                className="object-cover opacity-20"
                 data-ai-hint={images.clickAreaBgImage.imageHint}
                 priority
             />}
             <div className="relative z-10 flex flex-col items-center">
-                {images.ronaldoClickableImage && <Image src={images.ronaldoClickableImage.imageUrl} alt="Cristiano Ronaldo" width={150} height={200} className="object-contain drop-shadow-2xl" data-ai-hint={images.ronaldoClickableImage.imageHint} />}
+                {images.ronaldoClickableImage && <Image src={images.ronaldoClickableImage.imageUrl} alt="Cristiano Ronaldo" width={300} height={400} className="object-contain" data-ai-hint={images.ronaldoClickableImage.imageHint} />}
               <h2 className="text-2xl md:text-3xl font-bold mt-4 drop-shadow-md">{clickAreaMessage()}</h2>
               <div className="mt-4 grid grid-cols-3 items-center justify-center gap-4 w-full text-center">
                 <div>
@@ -284,7 +284,3 @@ export default function Home() {
     </main>
   );
 }
-
-    
-
-    
