@@ -264,7 +264,7 @@ export default function Home() {
       )}
       
       <footer className="text-center mt-8">
-        <p className="text-muted-foreground text-sm">© 2024 Ronaldo Goal Test - SIUUU! 🔥</p>
+        <p className="text-muted-foreground text-sm">Click Goal Test - SIUUU! 🔥</p>
       </footer>
     </main>
   );
