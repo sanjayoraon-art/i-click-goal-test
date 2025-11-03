@@ -243,7 +243,7 @@ export default function Home() {
                 <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg text-white">{TARGETS[selectedTime]}</div>
                 <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80 text-white">
                     <Target className="h-4 w-4 sm:h-5 sm:w-5" />
-                    <span>Target</span>
+                    <span>Target goals</span>
                 </div>
             </div>
           </div>
@@ -256,7 +256,7 @@ export default function Home() {
           <DialogContent
             className={cn(
               'sm:max-w-md text-center border',
-              result.targetMet ? 'bg-green-100' : 'bg-red-100'
+              result.targetMet ? 'bg-green-100' : 'bg-purple-100'
             )}
           >
             <DialogHeader>
