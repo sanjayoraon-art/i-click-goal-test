@@ -255,7 +255,7 @@ export default function Home() {
           <DialogContent
             className={cn(
               'sm:max-w-md text-center',
-              result.targetMet ? 'bg-green-100/10' : 'bg-red-100/10'
+              result.targetMet ? 'bg-green-100/10' : 'bg-purple-100/10'
             )}
           >
             <DialogHeader>
@@ -269,11 +269,11 @@ export default function Home() {
 
             <div className="grid grid-cols-2 gap-4 text-center p-4 rounded-lg bg-muted/50 my-4">
               <div>
-                <div className="text-4xl font-bold text-accent">{result.cps}</div>
+                <div className="text-4xl font-bold text-teal-500">{result.cps}</div>
                 <div className="text-sm text-muted-foreground">Clicks/Second</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-primary">{result.totalClicks}</div>
+                <div className="text-4xl font-bold text-amber-500">{result.totalClicks}</div>
                 <div className="text-sm text-muted-foreground">Total Clicks</div>
               </div>
               <div className="col-span-2">
@@ -292,3 +292,5 @@ export default function Home() {
     </main>
   );
 }
+
+    
