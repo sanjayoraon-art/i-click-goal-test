@@ -203,7 +203,7 @@ export default function Home() {
                 src={images.clickAreaBgImage.imageUrl}
                 alt="Stadium background"
                 fill
-                className="object-cover opacity-20"
+                className="object-cover opacity-30"
                 data-ai-hint={images.clickAreaBgImage.imageHint}
                 priority
             />}
@@ -284,5 +284,7 @@ export default function Home() {
     </main>
   );
 }
+
+    
 
     
