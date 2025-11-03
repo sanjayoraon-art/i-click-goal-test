@@ -8,7 +8,6 @@ import { PlaceHolderImages, type ImagePlaceholder } from '@/lib/placeholder-imag
 import { cn } from '@/lib/utils';
 import { Goal, Target } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
-import { analyzeGameResult } from '@/ai/flows/intelligent-achievement-recognition';
 
 const TIME_OPTIONS = [5, 10, 15, 30, 60, 100];
 
@@ -77,8 +76,11 @@ export default function Home() {
   };
   
   const endGame = useCallback(() => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    if (!startTimeRef.current) return;
+    if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+    }
+    if (gameState === 'finished' || !startTimeRef.current) return;
 
     setGameState('finished');
     const timeUsed = (Date.now() - startTimeRef.current) / 1000;
@@ -97,7 +99,7 @@ export default function Home() {
     };
     setResult(newResult);
     setShowResultDialog(true);
-  }, [clicks, selectedTime]);
+  }, [clicks, selectedTime, gameState]);
 
 
   useEffect(() => {
@@ -123,7 +125,7 @@ export default function Home() {
 
 
   const handleAreaClick = () => {
-    if (isLoading) return;
+    if (isLoading || gameState === 'finished') return;
 
     if (gameState === 'idle') {
       setGameState('running');
