@@ -238,7 +238,7 @@ export default function Home() {
                 Click
               </Button>
             </div>
-            <div className="relative z-10 flex flex-col items-center">
+            <div className="relative z-10 flex flex-col items-center mt-auto">
                 <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg text-white">{TARGETS[selectedTime]}</div>
                 <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80 text-white">
                     <Target className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -252,7 +252,12 @@ export default function Home() {
 
       {result && (
         <Dialog open={showResultDialog} onOpenChange={handleDialogChange}>
-          <DialogContent className="sm:max-w-md text-center">
+          <DialogContent
+            className={cn(
+              'sm:max-w-md text-center',
+              result.targetMet ? 'bg-green-100/10' : 'bg-red-100/10'
+            )}
+          >
             <DialogHeader>
               <DialogTitle className="text-3xl font-bold text-center">
                 {result.targetMet ? '🎉 SIUUU! Target Met! 🎉' : '😢 So Close!'}
