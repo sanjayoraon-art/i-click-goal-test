@@ -232,7 +232,7 @@ export default function Home() {
               <Button
                 variant="default"
                 size="lg"
-                className="w-24 h-24 rounded-full text-2xl font-bold bg-primary hover:bg-primary/90 text-primary-foreground border-0"
+                className="w-24 h-24 rounded-full text-2xl font-bold bg-primary hover:bg-primary/90 text-primary-foreground border-0 shadow-lg"
                 onClick={(e) => { e.stopPropagation(); handleAreaClick(); }}
               >
                 Click
@@ -254,8 +254,8 @@ export default function Home() {
         <Dialog open={showResultDialog} onOpenChange={handleDialogChange}>
           <DialogContent
             className={cn(
-              'sm:max-w-md text-center',
-              result.targetMet ? 'bg-green-100/10' : 'bg-purple-100/10'
+              'sm:max-w-md text-center border',
+              result.targetMet ? 'bg-green-100' : 'bg-purple-100'
             )}
           >
             <DialogHeader>
@@ -292,5 +292,3 @@ export default function Home() {
     </main>
   );
 }
-
-    
