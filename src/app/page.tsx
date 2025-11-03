@@ -194,7 +194,7 @@ export default function Home() {
           >
             <div className="relative z-10 flex flex-col items-center">
               
-              <div className="grid grid-cols-2 items-center justify-center gap-2 sm:gap-4 w-full text-center text-white">
+              <div className="grid grid-cols-2 items-center justify-center gap-2 sm:gap-4 w-full text-center text-black">
                 <div>
                     <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{timeLeft.toFixed(2)}</div>
                     <div className="text-xs sm:text-sm font-semibold opacity-80">Second</div>
@@ -205,8 +205,8 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex flex-col items-center mt-4">
-                  <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{TARGETS[selectedTime]}</div>
-                  <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80">
+                  <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg text-black">{TARGETS[selectedTime]}</div>
+                  <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80 text-black">
                       <Target className="h-4 w-4 sm:h-5 sm:w-5" />
                       <span>Target</span>
                   </div>
