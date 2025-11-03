@@ -230,15 +230,6 @@ export default function Home() {
             </div>
           </div>
           
-          {(gameState === 'finished' || gameState === 'idle') && (
-            <div className="mt-6 text-center animate-in fade-in-50 slide-in-from-bottom-10 duration-500">
-              <Button size="lg" className="rounded-full font-bold text-lg shadow-lg" onClick={() => gameState === 'idle' ? handleAreaClick() : resetGame(selectedTime)}>
-                <Goal className="mr-2 h-5 w-5" />
-                {gameState === 'idle' ? 'Start Clicking' : 'Play Again'}
-              </Button>
-            </div>
-          )}
-
         </CardContent>
       </Card>
 
