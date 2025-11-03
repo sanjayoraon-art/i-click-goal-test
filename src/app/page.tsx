@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { PlaceHolderImages, type ImagePlaceholder } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
-import { Goal } from 'lucide-react';
+import { Goal, Target } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { analyzeGameResult } from '@/ai/flows/intelligent-achievement-recognition';
 
@@ -36,6 +36,8 @@ const images = PlaceHolderImages.reduce((acc, img) => {
     acc[img.id] = img;
     return acc;
 }, {} as Record<string, ImagePlaceholder>);
+
+const clickAreaBgImage = images['clickAreaBgImage'];
 
 export default function Home() {
   const [selectedTime, setSelectedTime] = useState(5);
@@ -186,12 +188,25 @@ export default function Home() {
           <div
             className={cn(
                 "relative rounded-2xl p-4 sm:p-6 text-center overflow-hidden select-none cursor-pointer transition-transform duration-100 ease-in-out h-64 sm:h-72 md:h-80 flex flex-col justify-center bg-gradient-to-br from-blue-500/20 to-blue-700/30",
-                gameState !== 'finished' && 'hover:scale-[1.02]',
+                'hover:scale-[1.02]',
                 isPulsing && 'animate-pulse-click'
             )}
             onClick={handleAreaClick}
             onMouseDown={(e) => e.preventDefault()}
           >
+            {clickAreaBgImage && (
+                <Image
+                    src={clickAreaBgImage.imageUrl}
+                    alt={clickAreaBgImage.description}
+                    fill
+                    className={cn(
+                        "object-cover transition-opacity duration-300",
+                        gameState === 'running' || gameState === 'idle' ? 'opacity-30' : 'opacity-10'
+                    )}
+                    data-ai-hint={clickAreaBgImage.imageHint}
+                    priority
+                />
+            )}
             <div className="relative z-10 flex flex-col items-center">
               
               <div className="mt-4 grid grid-cols-3 items-center justify-center gap-2 sm:gap-4 w-full text-center text-white">
@@ -203,9 +218,9 @@ export default function Home() {
                     <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{clicks}</div>
                     <div className="text-xs sm:text-sm font-semibold opacity-80">Clicks</div>
                 </div>
-                 <div>
+                 <div className="flex flex-col items-center">
                     <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{TARGETS[selectedTime]}</div>
-                    <div className="text-xs sm:text-sm font-semibold opacity-80">Target</div>
+                    <Target className="h-4 w-4 sm:h-5 sm:w-5 mt-1 text-white/80" />
                 </div>
               </div>
             </div>
@@ -268,5 +283,3 @@ export default function Home() {
     </main>
   );
 }
-
-    
