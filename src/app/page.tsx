@@ -37,8 +37,6 @@ const images = PlaceHolderImages.reduce((acc, img) => {
     return acc;
 }, {} as Record<string, ImagePlaceholder>);
 
-const clickAreaBgImage = images['clickAreaBgImage'];
-
 
 export default function Home() {
   const [selectedTime, setSelectedTime] = useState(5);
@@ -157,7 +155,6 @@ export default function Home() {
     }
   };
 
-  const resultImage = result ? images[result.imageId] : null;
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center justify-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
@@ -195,19 +192,6 @@ export default function Home() {
             onClick={handleAreaClick}
             onMouseDown={(e) => e.preventDefault()}
           >
-            {clickAreaBgImage && (
-                <Image
-                    src={clickAreaBgImage.imageUrl}
-                    alt={clickAreaBgImage.description}
-                    fill
-                    className={cn(
-                        "object-cover transition-opacity duration-300",
-                        'opacity-80'
-                    )}
-                    data-ai-hint={clickAreaBgImage.imageHint}
-                    priority
-                />
-            )}
             <div className="relative z-10 flex flex-col items-center">
               
               <div className="mt-4 grid grid-cols-3 items-center justify-center gap-2 sm:gap-4 w-full text-center text-white">
