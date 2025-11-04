@@ -279,7 +279,7 @@ export default function Home() {
               </div>
               <div className="col-span-2">
                 <div className="text-2xl font-bold">{result.target}</div>
-                <div className="text-sm text-muted-foreground">target goal</div>
+                <div className="text-sm text-muted-foreground">Target goals</div>
               </div>
             </div>
             <DialogFooter className="sm:justify-center mt-4">
