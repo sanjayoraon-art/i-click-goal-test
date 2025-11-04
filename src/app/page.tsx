@@ -179,10 +179,10 @@ export default function Home() {
     <main className="flex min-h-screen w-full flex-col items-center justify-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
       <header className="text-center mb-8">
         <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
-          Click Goal Test
+          क्लिक लक्ष्य परीक्षण
         </h1>
         <p className="text-muted-foreground text-lg mt-2">
-          Click as Fast as You Can!
+          जितनी जल्दी हो सके क्लिक करें!
         </p>
       </header>
 
@@ -220,11 +220,11 @@ export default function Home() {
               <div className="grid grid-cols-2 items-center justify-center gap-2 sm:gap-4 w-full text-center text-white">
                 <div>
                     <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{timeLeft.toFixed(2)}</div>
-                    <div className="text-xs sm:text-sm font-semibold opacity-80">Second</div>
+                    <div className="text-xs sm:text-sm font-semibold opacity-80">सेकंड</div>
                 </div>
                 <div>
                     <div className="text-3xl smtext-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{clicks}</div>
-                    <div className="text-xs sm:text-sm font-semibold opacity-80">Clicks</div>
+                    <div className="text-xs sm:text-sm font-semibold opacity-80">क्लिक</div>
                 </div>
               </div>
             </div>
@@ -236,14 +236,14 @@ export default function Home() {
                 className="w-24 h-24 rounded-full text-2xl font-bold bg-primary hover:bg-primary/90 text-primary-foreground border-0 shadow-lg"
                 onClick={(e) => { e.stopPropagation(); handleAreaClick(); }}
               >
-                Click
+                क्लिक
               </Button>
             </div>
             <div className="relative z-10 flex flex-col items-center mt-auto">
                 <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg text-white">{TARGETS[selectedTime]}</div>
                 <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80 text-white">
                     <Target className="h-4 w-4 sm:h-5 sm:w-5" />
-                    <span>Target goals</span>
+                    <span>लक्ष्य गोल</span>
                 </div>
             </div>
           </div>
@@ -261,30 +261,30 @@ export default function Home() {
           >
             <DialogHeader>
               <DialogTitle className="text-3xl font-bold text-center">
-                {result.targetMet ? '🎉 SIUUU! Target Met! 🎉' : '😢 So Close!'}
+                {result.targetMet ? '🎉 बहुत बढ़िया! लक्ष्य पूरा हुआ! 🎉' : '😢 थोड़ी सी चूक!'}
               </DialogTitle>
               <DialogDescription className="text-center">
-                {result.imageId === 'resultWorldCupImage' ? "You're a true legend!" : "Here are your results."}
+                {result.imageId === 'resultWorldCupImage' ? "आप एक सच्चे কিংবদন্তী हैं!" : "यहां आपके परिणाम हैं।"}
               </DialogDescription>
             </DialogHeader>
 
             <div className="grid grid-cols-2 gap-4 text-center p-4 rounded-lg bg-muted/50 my-4">
               <div>
                 <div className="text-4xl font-bold text-teal-500">{result.cps}</div>
-                <div className="text-sm text-muted-foreground">Clicks/Second</div>
+                <div className="text-sm text-muted-foreground">क्लिक/सेकंड</div>
               </div>
               <div>
                 <div className="text-4xl font-bold text-amber-500">{result.totalClicks}</div>
-                <div className="text-sm text-muted-foreground">Total Clicks</div>
+                <div className="text-sm text-muted-foreground">कुल क्लिक</div>
               </div>
               <div className="col-span-2">
                 <div className="text-2xl font-bold">{result.target}</div>
-                <div className="text-sm text-muted-foreground">Target goals</div>
+                <div className="text-sm text-muted-foreground">लक्ष्य गोल</div>
               </div>
             </div>
             <DialogFooter className="sm:justify-center mt-4">
               <Button onClick={() => handleDialogChange(false)}>
-                <Goal className="mr-2" /> Try Again
+                <Goal className="mr-2" /> फिर से कोशिश करें
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -292,7 +292,7 @@ export default function Home() {
       )}
     </main>
     <footer className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground">
-        <p>Click Goal test</p>
+        <p>क्लिक लक्ष्य परीक्षण</p>
     </footer>
     </>
   );

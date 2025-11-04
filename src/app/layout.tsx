@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Click Goal Test',
-  description: 'Click as Fast as You Can!',
+  title: 'क्लिक लक्ष्य परीक्षण',
+  description: 'जितनी जल्दी हो सके क्लिक करें!',
 };
 
 export default function RootLayout({
