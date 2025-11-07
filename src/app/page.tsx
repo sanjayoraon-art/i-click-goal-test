@@ -250,7 +250,7 @@ export default function Home() {
         <div className="space-y-4">
           <Card className="bg-card/80 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-lg">What is CPS?</CardTitle>
+              <div className="text-lg font-semibold">What is CPS?</div>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">CPS stands for "Clicks Per Second." It is a measure of how many times you can click a mouse button in one second.</p>
@@ -258,7 +258,7 @@ export default function Home() {
           </Card>
           <Card className="bg-card/80 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-lg">How is CPS calculated?</CardTitle>
+              <div className="text-lg font-semibold">How is CPS calculated?</div>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">The formula is simple: CPS = Total Clicks / Time in Seconds. Our tool calculates this for you automatically when the time runs out.</p>
@@ -266,7 +266,7 @@ export default function Home() {
           </Card>
           <Card className="bg-card/80 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-lg">How can I improve my CPS score?</CardTitle>
+              <div className="text-lg font-semibold">How can I improve my CPS score?</div>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">Practice is key! Regularly using this test can help improve your muscle memory and reaction time. Additionally, using a good quality gaming mouse and finding a comfortable clicking technique (like jitter clicking or butterfly clicking) can also boost your score.</p>
@@ -285,7 +285,7 @@ export default function Home() {
           >
             <DialogHeader className="p-4 items-center">
               <DialogTitle className="text-2xl sm:text-3xl font-bold text-center">
-                  {result.targetMet ? '🎉 Awesome! Target Met! 🎉' : '😢 So Close!'}
+                  {result.targetMet ? 'Awesome! Target Met!' : 'So Close!'}
               </DialogTitle>
               <DialogDescription className="text-center text-sm sm:text-base">
                 Here are your results.
@@ -316,7 +316,7 @@ export default function Home() {
       )}
     </main>
     <footer className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground">
-        <p>Click Goal Test - A fun game to improve your click speed. &copy; {new Date().getFullYear()}</p>
+        <p>&copy; {new Date().getFullYear()} Click Goal Test. All rights reserved.</p>
     </footer>
     </>
   );

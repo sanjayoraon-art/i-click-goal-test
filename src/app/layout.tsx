@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Click Speed Test - Check Your CPS (Clicks Per Second)',
-  description: 'Test your click speed with our online CPS test. Find out how many clicks per second you can achieve in various time challenges. Improve your gaming skills and reaction time now!',
+  title: 'Click Speed Test - Challenge Your Clicks Per Second (CPS)',
+  description: 'How fast can you click? Take our free CPS test to measure your click speed and compete with others. Perfect for gamers looking to improve their performance.',
   keywords: ['CPS test', 'click speed test', 'clicks per second', 'click test', 'online clicker', 'gaming skills', 'reaction time'],
   openGraph: {
     title: 'Click Speed Test - Challenge Your Clicks Per Second (CPS)',
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
         url: 'https://your-website-url.com/og-image.png', // Replace with a link to an image for social sharing
         width: 1200,
         height: 630,
-        alt: 'Click Speed Test Game',
+        alt: 'Click Speed Test Game Interface',
       },
     ],
   },
