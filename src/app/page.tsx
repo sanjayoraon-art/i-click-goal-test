@@ -2,13 +2,11 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Goal, Target } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
-import placeholderImages from '@/lib/placeholder-images.json';
 
 const TIME_OPTIONS = [5, 10, 15, 30, 60, 100];
 
@@ -286,19 +284,9 @@ export default function Home() {
             )}
           >
             <DialogHeader className="p-4 items-center">
-                <div className="flex items-center justify-center gap-2">
-                    <Image
-                      src={result.targetMet ? placeholderImages.success[0].url : placeholderImages.fail[0].url}
-                      alt={result.targetMet ? "Success" : "Failure"}
-                      width={40}
-                      height={40}
-                      className="rounded-full"
-                      data-ai-hint={result.targetMet ? placeholderImages.success[0].hint : placeholderImages.fail[0].hint}
-                    />
-                    <DialogTitle className="text-2xl sm:text-3xl font-bold text-center">
-                        {result.targetMet ? '🎉 Awesome! Target Met! 🎉' : '😢 So Close!'}
-                    </DialogTitle>
-                </div>
+              <DialogTitle className="text-2xl sm:text-3xl font-bold text-center">
+                  {result.targetMet ? '🎉 Awesome! Target Met! 🎉' : '😢 So Close!'}
+              </DialogTitle>
               <DialogDescription className="text-center text-sm sm:text-base">
                 Here are your results.
               </DialogDescription>
