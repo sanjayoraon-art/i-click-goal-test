@@ -182,7 +182,7 @@ export default function Home() {
           Click Goal Test
         </h1>
         <p className="text-muted-foreground text-lg mt-2">
-          Click as fast as you can!
+          How fast can you click? Test your clicks per second (CPS) and challenge your limits!
         </p>
       </header>
 
@@ -279,7 +279,7 @@ export default function Home() {
               </div>
               <div className="col-span-2">
                 <div className="text-2xl font-bold">{result.target}</div>
-                <div className="text-sm text-muted-foreground">Target Goal</div>
+                <div className="text-sm text-muted-foreground">Target goals</div>
               </div>
             </div>
             <DialogFooter className="sm:justify-center mt-4">
@@ -292,7 +292,7 @@ export default function Home() {
       )}
     </main>
     <footer className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground">
-        <p>Click Goal Test</p>
+        <p>Click Goal Test - A fun game to improve your click speed.</p>
     </footer>
     </>
   );

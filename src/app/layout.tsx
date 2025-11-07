@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Click Goal Test',
-  description: 'Click as fast as you can!',
+  title: 'Click Goal Test - Check Your Clicks Per Second (CPS)',
+  description: 'Test your clicking speed with our Click Goal Test! See how many clicks per second (CPS) you can achieve in different time limits. Challenge yourself to meet the target and improve your gaming skills.',
 };
 
 export default function RootLayout({
