@@ -2,69 +2,69 @@
   "placeholderImages": [
     {
       "id": "resultWorldCupImage",
-      "description": "Image shown for achieving the highest target, a world cup trophy.",
-      "imageUrl": "https://images.unsplash.com/photo-1637203725059-53f993d6ae02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx3b3JsZCUyMGN1cCUyMHRyb3BoeXxlbnwwfHx8fDE3NjIwODAzNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "world cup trophy"
+      "description": "Cartoon image of a shiny gold trophy for the highest achievement.",
+      "imageUrl": "https://images.unsplash.com/photo-1754300681803-61eadeb79d10?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjYXJ0b29uJTIwdHJvcGh5fGVufDB8fHx8MTc2MjUzMjExNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon trophy"
     },
     {
       "id": "resultSuccessImage",
-      "description": "Image shown for meeting the target, showing a celebration.",
-      "imageUrl": "https://images.unsplash.com/photo-1561917423-2ce508445fe4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjZWxlYnJhdGlvbiUyMHNvY2NlcnxlbnwwfHx8fDE3NjIwODAzNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "celebration soccer"
+      "description": "Happy cartoon character celebrating a win.",
+      "imageUrl": "https://images.unsplash.com/photo-1666720083840-960982b14da1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjYXJ0b29uJTIwY2VsZWJyYXRpb258ZW58MHx8fHwxNzYyNTMyMTE0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon celebration"
     },
     {
       "id": "resultFailImage",
-      "description": "Image shown for failing to meet the target, showing a sad player.",
-      "imageUrl": "https://images.unsplash.com/photo-1630933109033-4ac25d7a8ae8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzYWQlMjBzb2NjZXIlMjBwbGF5ZXJ8ZW58MHx8fHwxNzYyMDgwMzQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "sad soccer player"
+      "description": "Sad cartoon character after failing.",
+      "imageUrl": "https://images.unsplash.com/photo-1592806088932-05058af0ad8d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzYWQlMjBjYXJ0b29ufGVufDB8fHx8MTc2MjUzMjExNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sad cartoon"
     },
     {
       "id": "clickAreaBgImage",
-      "description": "Background image for the click area, a soccer stadium.",
-      "imageUrl": "https://images.unsplash.com/photo-1569531955323-33c6b2dca44b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzb2NjZXIlMjBzdGFkaXVtfGVufDB8fHx8MTc2MTk5MTQ5NHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "soccer stadium"
+      "description": "A colorful cartoon-style background for the click area.",
+      "imageUrl": "https://images.unsplash.com/photo-1579546928686-286c9fbde1ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjYXJ0b29uJTIwYmFja2dyb3VuZHxlbnwwfHx8fDE3NjI1MzIxMTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon background"
     },
     {
       "id": "clickableImage",
-      "description": "Clickable image for the game.",
-      "imageUrl": "https://images.unsplash.com/photo-1508098682722-e95fb63a453e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxDcmlzdGlhbm8lMjBSb25hbGRvJTIwY2VsZWJyYXRpb258ZW58MHx8fHwxNzI1MTEyMzMxfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "soccer celebration"
+      "description": "A fun, clickable cartoon character.",
+      "imageUrl": "https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJ0b29uJTIwY2hhcmFjdGVyfGVufDB8fHx8MTc2MjQyODc4NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cartoon character"
     },
     {
       "id": "resultFailImage5s",
-      "description": "Image shown for failing the 5-second challenge.",
-      "imageUrl": "https://images.unsplash.com/photo-1607688387751-c1e95ae09a42?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxmcnVzdHJhdGVkJTIwcGVyc29ufGVufDB8fHx8MTc2MjE5NTE4OXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "frustrated person"
+      "description": "A slightly frustrated cartoon face for failing the 5-second challenge.",
+      "imageUrl": "https://images.unsplash.com/photo-1698077689052-73daf0d5b10b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxmcnVzdHJhdGVkJTIwY2FydG9vbnxlbnwwfHx8fDE3NjI1MzIxMTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "frustrated cartoon"
     },
     {
       "id": "resultFailImage10s",
-      "description": "Image shown for failing the 10-second challenge.",
-      "imageUrl": "https://images.unsplash.com/photo-1760009449689-9174a37e038c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkaXNhcHBvaW50ZWQlMjBmYWNlfGVufDB8fHx8MTc2MjE5NTE4OXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "disappointed face"
+      "description": "A disappointed cartoon face for failing the 10-second challenge.",
+      "imageUrl": "https://images.unsplash.com/photo-1632373578082-82ff7d381406?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkaXNhcHBvaW50ZWQlMjBjYXJ0b29ufGVufDB8fHx8MTc2MjUzMjExNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "disappointed cartoon"
     },
     {
       "id": "resultFailImage15s",
-      "description": "Image shown for failing the 15-second challenge.",
-      "imageUrl": "https://images.unsplash.com/photo-1738204227842-9c7860272bfb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhbm5veWVkJTIwZXhwcmVzc2lvbnxlbnwwfHx8fDE3NjIxOTUxODl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "annoyed expression"
+      "description": "An annoyed cartoon expression for failing the 15-second challenge.",
+      "imageUrl": "https://picsum.photos/seed/fail15/400/300",
+      "imageHint": "annoyed cartoon"
     },
     {
       "id": "resultFailImage30s",
-      "description": "Image shown for failing the 30-second challenge.",
-      "imageUrl": "https://images.unsplash.com/photo-1543250904-db6907909639?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxoZWFkJTIwaW4lMjBoYW5kc3xlbnwwfHx8fDE3NjIxOTUxODl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "head in hands"
+      "description": "A cartoon character with head in hands for the 30-second challenge.",
+      "imageUrl": "https://picsum.photos/seed/fail30/400/300",
+      "imageHint": "cartoon facepalm"
     },
     {
       "id": "resultFailImage60s",
-      "description": "Image shown for failing the 60-second challenge.",
-      "imageUrl": "https://images.unsplash.com/photo-1677598261475-fa58a3138a95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxleGFzcGVyYXRlZCUyMHNpZ2h8ZW58MHx8fHwxNzYyMTk1MTkwfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "exasperated sigh"
+      "description": "An exasperated cartoon character for failing the 60-second challenge.",
+      "imageUrl": "https://picsum.photos/seed/fail60/400/300",
+      "imageHint": "exasperated cartoon"
     },
     {
       "id": "resultFailImage100s",
-      "description": "Image shown for failing the 100-second challenge.",
-      "imageUrl": "https://images.unsplash.com/photo-1593353814202-9bbe1d944fd7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxsb29raW5nJTIwZGVmZWF0ZWR8ZW58MHx8fHwxNzYyMTk1MTg5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "looking defeated"
+      "description": "A defeated-looking cartoon character for the 100-second challenge.",
+      "imageUrl": "https://picsum.photos/seed/fail100/400/300",
+      "imageHint": "defeated cartoon"
     }
   ]
 }
