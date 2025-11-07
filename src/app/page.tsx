@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Goal, Target } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
@@ -172,17 +172,19 @@ export default function Home() {
     }
     setShowResultDialog(open);
   };
+  
+  const resultImage = result ? PlaceHolderImages.find(img => img.id === result.imageId) : undefined;
 
 
   return (
     <>
-    <main className="flex min-h-screen w-full flex-col items-center justify-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
-      <header className="text-center mb-8">
+    <main className="flex min-h-screen w-full flex-col items-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
+      <header className="text-center mb-8 max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
-          Click Goal Test
+          Click Speed Test (CPS)
         </h1>
         <p className="text-muted-foreground text-lg mt-2">
-          How fast can you click? Test your clicks per second (CPS) and challenge your limits!
+          How fast can you click? Test your clicks per second (CPS) and challenge your limits to improve your gaming reaction time!
         </p>
       </header>
 
@@ -250,6 +252,52 @@ export default function Home() {
           
         </CardContent>
       </Card>
+      
+      <section className="w-full max-w-4xl mx-auto mt-12 text-left">
+        <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold">About the Click Speed Test</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4 text-muted-foreground">
+            <p>
+              The Clicks Per Second (CPS) test is a simple yet effective way to measure your clicking speed. It's a fun tool used by gamers and professionals alike to test and improve their mouse-clicking abilities and reaction time. A higher CPS score is often crucial in games that require quick actions, such as first-person shooters (FPS) or real-time strategy (RTS) games.
+            </p>
+            <p>
+              Our Click Goal Test allows you to challenge yourself against set targets in various time intervals, from a quick 5-second sprint to a 100-second marathon. Meeting the target proves your clicking prowess!
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+      
+      <section className="w-full max-w-4xl mx-auto mt-8 text-left">
+        <h2 className="text-3xl font-bold text-center mb-6">Frequently Asked Questions (FAQ)</h2>
+        <div className="space-y-4">
+          <Card className="bg-card/80 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="text-lg">What is CPS?</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">CPS stands for "Clicks Per Second." It is a measure of how many times you can click a mouse button in one second.</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-card/80 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="text-lg">How is CPS calculated?</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">The formula is simple: CPS = Total Clicks / Time in Seconds. Our tool calculates this for you automatically when the time runs out.</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-card/80 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="text-lg">How can I improve my CPS score?</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">Practice is key! Regularly using this test can help improve your muscle memory and reaction time. Additionally, using a good quality gaming mouse and finding a comfortable clicking technique (like jitter clicking or butterfly clicking) can also boost your score.</p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
       {result && (
         <Dialog open={showResultDialog} onOpenChange={handleDialogChange}>
@@ -267,6 +315,18 @@ export default function Home() {
                 {result.imageId === 'resultWorldCupImage' ? "You are a true legend!" : "Here are your results."}
               </DialogDescription>
             </DialogHeader>
+
+            {resultImage && (
+                <div className="my-4 rounded-lg overflow-hidden">
+                    <Image
+                        src={resultImage.imageUrl}
+                        alt={resultImage.description}
+                        width={400}
+                        height={300}
+                        className="w-full h-auto object-cover"
+                    />
+                </div>
+            )}
 
             <div className="grid grid-cols-2 gap-4 text-center p-4 rounded-lg bg-muted/50 my-4">
               <div>
@@ -292,7 +352,7 @@ export default function Home() {
       )}
     </main>
     <footer className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground">
-        <p>Click Goal Test - A fun game to improve your click speed.</p>
+        <p>Click Goal Test - A fun game to improve your click speed. &copy; {new Date().getFullYear()}</p>
     </footer>
     </>
   );
