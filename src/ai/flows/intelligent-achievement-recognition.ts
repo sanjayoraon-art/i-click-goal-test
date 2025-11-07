@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -44,14 +45,23 @@ Here's the game result data:
 - Selected time: {{selectedTime}}
 - Target clicks: {{target}}
 
-Consider these factors to determine the image ID:
-- If the player met the target, especially if the selected time is 100 seconds, suggest 'resultWorldCupImage' to congratulate them.
-- If the player met the target, suggest 'resultSuccessImage' to celebrate their success.
-- If the player did not meet the target, suggest 'resultFailImage' to acknowledge their effort.
+Here are the available image IDs:
+- resultWorldCupImage: For exceptional performance, especially in the 100s challenge.
+- resultSuccessImage: For meeting the target in any challenge.
+- resultFailImage5s: For failing the 5-second challenge.
+- resultFailImage10s: For failing the 10-second challenge.
+- resultFailImage15s: For failing the 15-second challenge.
+- resultFailImage30s: For failing the 30-second challenge.
+- resultFailImage60s: For failing the 60-second challenge.
+- resultFailImage100s: For failing the 100-second challenge.
 
-Based on the analysis, return the image ID that best represents the outcome of the game.
+Analyze the data and choose the SINGLE most appropriate image ID.
 
-Return ONLY the image ID. For example:
+- If 'targetMet' is true and 'selectedTime' is 100, the best imageId is 'resultWorldCupImage'.
+- If 'targetMet' is true for any other time, the best imageId is 'resultSuccessImage'.
+- If 'targetMet' is false, select the correct fail image based on 'selectedTime'. For example, if 'selectedTime' is 15, the imageId should be 'resultFailImage15s'.
+
+Return ONLY the chosen image ID. For example:
 resultSuccessImage`,
 });
 
@@ -66,3 +76,5 @@ const analyzeGameResultFlow = ai.defineFlow(
     return {imageId: output!.imageId};
   }
 );
+
+    

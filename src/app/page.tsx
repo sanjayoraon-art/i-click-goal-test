@@ -9,6 +9,7 @@ import { Goal, Target } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { analyzeGameResult, AnalyzeGameResultInput } from '@/ai/flows/intelligent-achievement-recognition';
 
 const TIME_OPTIONS = [5, 10, 15, 30, 60, 100];
 
@@ -73,12 +74,13 @@ export default function Home() {
     setTimeLeft(selectedTime);
   }, [selectedTime]);
   
-  const endGame = useCallback(() => {
+  const endGame = useCallback(async () => {
     if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
     setGameState('finished');
+    setIsLoading(true);
 
     const timeUsed = selectedTimeRef.current;
     const finalClicks = clicksRef.current;
@@ -86,23 +88,40 @@ export default function Home() {
     const target = TARGETS[timeUsed];
     const targetMet = finalClicks >= target;
 
-    let fallbackImageId: string;
-    if (targetMet) {
-        fallbackImageId = timeUsed === 100 ? 'resultWorldCupImage' : 'resultSuccessImage';
-    } else {
-        fallbackImageId = FAIL_IMAGE_MAP[timeUsed] || 'resultFailImage';
-    }
-
-    const newResult: Result = {
-        cps,
-        totalClicks: finalClicks,
-        timeUsed,
-        target: target,
-        targetMet,
-        imageId: fallbackImageId,
+    const analysisInput: AnalyzeGameResultInput = {
+      cps,
+      totalClicks: finalClicks,
+      timeUsed,
+      targetMet,
+      selectedTime: timeUsed,
+      target,
     };
-    setResult(newResult);
-    setShowResultDialog(true);
+
+    try {
+      const analysisResult = await analyzeGameResult(analysisInput);
+      const newResult: Result = {
+        ...analysisInput,
+        imageId: analysisResult.imageId,
+      };
+      setResult(newResult);
+    } catch (error) {
+      console.error("AI analysis failed:", error);
+      // Fallback to old logic if AI fails
+      let fallbackImageId: string;
+      if (targetMet) {
+        fallbackImageId = timeUsed === 100 ? 'resultWorldCupImage' : 'resultSuccessImage';
+      } else {
+        fallbackImageId = FAIL_IMAGE_MAP[timeUsed] || 'resultFailImage';
+      }
+      const newResult: Result = {
+        ...analysisInput,
+        imageId: fallbackImageId,
+      };
+      setResult(newResult);
+    } finally {
+      setIsLoading(false);
+      setShowResultDialog(true);
+    }
   }, []);
 
   const resetGame = useCallback(() => {
@@ -316,7 +335,13 @@ export default function Home() {
               </DialogDescription>
             </DialogHeader>
 
-            {resultImage && (
+            {isLoading ? (
+              <div className="my-2 px-4">
+                <div className="rounded-lg overflow-hidden flex justify-center items-center h-[225px] bg-muted/50">
+                    <p>Loading result image...</p>
+                </div>
+              </div>
+            ) : resultImage && (
                 <div className="my-2 px-4">
                   <div className="rounded-lg overflow-hidden">
                     <Image
@@ -325,6 +350,7 @@ export default function Home() {
                         width={400}
                         height={300}
                         className="w-full h-auto object-cover"
+                        data-ai-hint={resultImage.imageHint}
                     />
                   </div>
                 </div>
@@ -345,8 +371,8 @@ export default function Home() {
               </div>
             </div>
             <DialogFooter className="sm:justify-center p-4">
-              <Button onClick={() => handleDialogChange(false)}>
-                <Goal className="mr-2" /> Try Again
+              <Button onClick={() => handleDialogChange(false)} disabled={isLoading}>
+                {isLoading ? 'Analyzing...' : <> <Goal className="mr-2" /> Try Again</>}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -359,3 +385,5 @@ export default function Home() {
     </>
   );
 }
+
+    
