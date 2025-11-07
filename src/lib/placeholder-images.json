@@ -1,0 +1,14 @@
+{
+  "success": [
+    {
+      "url": "https://picsum.photos/seed/happy-trophy/200/200",
+      "hint": "happy trophy"
+    }
+  ],
+  "fail": [
+    {
+      "url": "https://picsum.photos/seed/sad-face/200/200",
+      "hint": "sad face"
+    }
+  ]
+}
