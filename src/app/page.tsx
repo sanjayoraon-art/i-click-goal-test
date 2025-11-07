@@ -269,7 +269,7 @@ export default function Home() {
               <div className="text-lg font-semibold">How can I improve my CPS score?</div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground">Practice is key! Regularly using this test can help improve your muscle memory and reaction time. Additionally, using a good quality gaming mouse and finding a comfortable clicking technique (like jitter clicking or butterfly clicking) can also boost your score.</p>
+              <p className="text-muted-foreground">Practice is key! Regularly using this test can help improve your muscle memory and reaction time. Additionally, using a good quality gaming mouse and find a comfortable clicking technique (like jitter clicking or butterfly clicking) can also boost your score.</p>
             </CardContent>
           </Card>
         </div>
@@ -316,8 +316,10 @@ export default function Home() {
       )}
     </main>
     <footer className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} Click Goal Test. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Click speed Test. All rights reserved.</p>
     </footer>
     </>
   );
 }
+
+    
