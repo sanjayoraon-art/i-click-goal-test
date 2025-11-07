@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://your-website-url.com/og-image.png', // Replace with a link to an image for social sharing
+        url: 'https://picsum.photos/seed/cps-test/1200/630', // Replace with a link to an image for social sharing
         width: 1200,
         height: 630,
         alt: 'Click Speed Test Game Interface',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Click Speed Test - Challenge Your Clicks Per Second (CPS)',
     description: 'Measure your click speed with our interactive CPS test and see how you rank. Improve your gaming skills today!',
-    images: ['https://your-website-url.com/twitter-image.png'], // Replace with a link to an image for Twitter sharing
+    images: ['https://picsum.photos/seed/cps-test-twitter/1200/630'], // Replace with a link to an image for Twitter sharing
   },
 };
 
