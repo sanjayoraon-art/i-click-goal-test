@@ -7,9 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Goal, Target } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
-import Image from 'next/image';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { analyzeGameResult, AnalyzeGameResultInput } from '@/ai/flows/intelligent-achievement-recognition';
 
 const TIME_OPTIONS = [5, 10, 15, 30, 60, 100];
 
@@ -30,7 +27,6 @@ type Result = {
   timeUsed: number;
   targetMet: boolean;
   target: number;
-  imageId: string;
 };
 
 const BUTTON_COLORS = [
@@ -42,15 +38,6 @@ const BUTTON_COLORS = [
   'bg-red-500 hover:bg-red-600',
 ];
 
-const FAIL_IMAGE_MAP: { [key: number]: string } = {
-    5: 'resultFailImage5s',
-    10: 'resultFailImage10s',
-    15: 'resultFailImage15s',
-    30: 'resultFailImage30s',
-    60: 'resultFailImage60s',
-    100: 'resultFailImage100s',
-};
-
 export default function Home() {
   const [selectedTime, setSelectedTime] = useState(5);
   const [gameState, setGameState] = useState<GameState>('idle');
@@ -59,7 +46,6 @@ export default function Home() {
   const [result, setResult] = useState<Result | null>(null);
   const [isPulsing, setIsPulsing] = useState(false);
   const [showResultDialog, setShowResultDialog] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const clicksRef = useRef(clicks);
@@ -74,13 +60,12 @@ export default function Home() {
     setTimeLeft(selectedTime);
   }, [selectedTime]);
   
-  const endGame = useCallback(async () => {
+  const endGame = useCallback(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
     setGameState('finished');
-    setIsLoading(true);
 
     const timeUsed = selectedTimeRef.current;
     const finalClicks = clicksRef.current;
@@ -88,7 +73,7 @@ export default function Home() {
     const target = TARGETS[timeUsed];
     const targetMet = finalClicks >= target;
 
-    const analysisInput: AnalyzeGameResultInput = {
+    const newResult: Result = {
       cps,
       totalClicks: finalClicks,
       timeUsed,
@@ -96,32 +81,9 @@ export default function Home() {
       selectedTime: timeUsed,
       target,
     };
-
-    try {
-      const analysisResult = await analyzeGameResult(analysisInput);
-      const newResult: Result = {
-        ...analysisInput,
-        imageId: analysisResult.imageId,
-      };
-      setResult(newResult);
-    } catch (error) {
-      console.error("AI analysis failed:", error);
-      // Fallback to old logic if AI fails
-      let fallbackImageId: string;
-      if (targetMet) {
-        fallbackImageId = timeUsed === 100 ? 'resultWorldCupImage' : 'resultSuccessImage';
-      } else {
-        fallbackImageId = FAIL_IMAGE_MAP[timeUsed] || 'resultFailImage';
-      }
-      const newResult: Result = {
-        ...analysisInput,
-        imageId: fallbackImageId,
-      };
-      setResult(newResult);
-    } finally {
-      setIsLoading(false);
-      setShowResultDialog(true);
-    }
+    
+    setResult(newResult);
+    setShowResultDialog(true);
   }, []);
 
   const resetGame = useCallback(() => {
@@ -131,7 +93,6 @@ export default function Home() {
     setTimeLeft(selectedTime);
     setResult(null);
     setShowResultDialog(false);
-    setIsLoading(false);
   }, [selectedTime]);
 
   const handleTimeChange = (time: number) => {
@@ -172,7 +133,7 @@ export default function Home() {
 
 
   const handleAreaClick = () => {
-    if (isLoading || gameState === 'finished') return;
+    if (gameState === 'finished') return;
 
     if (gameState === 'idle') {
       setGameState('running');
@@ -192,9 +153,6 @@ export default function Home() {
     setShowResultDialog(open);
   };
   
-  const resultImage = result ? PlaceHolderImages.find(img => img.id === result.imageId) : undefined;
-
-
   return (
     <>
     <main className="flex min-h-screen w-full flex-col items-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
@@ -331,31 +289,10 @@ export default function Home() {
                 {result.targetMet ? '🎉 Awesome! Target Met! 🎉' : '😢 So Close!'}
               </DialogTitle>
               <DialogDescription className="text-center text-sm sm:text-base">
-                {result.imageId === 'resultWorldCupImage' ? "You are a true legend!" : "Here are your results."}
+                Here are your results.
               </DialogDescription>
             </DialogHeader>
-
-            {isLoading ? (
-              <div className="my-2 px-4">
-                <div className="rounded-lg overflow-hidden flex justify-center items-center h-[225px] bg-muted/50">
-                    <p>Loading result image...</p>
-                </div>
-              </div>
-            ) : resultImage && (
-                <div className="my-2 px-4">
-                  <div className="rounded-lg overflow-hidden">
-                    <Image
-                        src={resultImage.imageUrl}
-                        alt={resultImage.description}
-                        width={400}
-                        height={300}
-                        className="w-full h-auto object-cover"
-                        data-ai-hint={resultImage.imageHint}
-                    />
-                  </div>
-                </div>
-            )}
-
+            
             <div className="grid grid-cols-2 gap-4 text-center p-4 rounded-lg bg-muted/50 my-4 mx-4">
               <div>
                 <div className="text-3xl sm:text-4xl font-bold text-teal-500">{result.cps}</div>
@@ -371,8 +308,8 @@ export default function Home() {
               </div>
             </div>
             <DialogFooter className="sm:justify-center p-4">
-              <Button onClick={() => handleDialogChange(false)} disabled={isLoading}>
-                {isLoading ? 'Analyzing...' : <> <Goal className="mr-2" /> Try Again</>}
+              <Button onClick={() => handleDialogChange(false)}>
+                <Goal className="mr-2" /> Try Again
               </Button>
             </DialogFooter>
           </DialogContent>
