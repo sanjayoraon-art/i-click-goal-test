@@ -225,7 +225,7 @@ export default function Home() {
                     <div className="text-xs sm:text-sm font-semibold opacity-80">Seconds</div>
                 </div>
                 <div>
-                    <div className="text-3xl smtext-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{clicks}</div>
+                    <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{clicks}</div>
                     <div className="text-xs sm:text-sm font-semibold opacity-80">Clicks</div>
                 </div>
               </div>
@@ -303,21 +303,22 @@ export default function Home() {
         <Dialog open={showResultDialog} onOpenChange={handleDialogChange}>
           <DialogContent
             className={cn(
-              'sm:max-w-md text-center border',
+              'max-w-xs sm:max-w-md text-center border rounded-lg max-h-[90vh] overflow-y-auto',
               result.targetMet ? 'bg-green-100' : 'bg-purple-100'
             )}
           >
-            <DialogHeader>
-              <DialogTitle className="text-3xl font-bold text-center">
+            <DialogHeader className="p-4">
+              <DialogTitle className="text-2xl sm:text-3xl font-bold text-center">
                 {result.targetMet ? '🎉 Awesome! Target Met! 🎉' : '😢 So Close!'}
               </DialogTitle>
-              <DialogDescription className="text-center">
+              <DialogDescription className="text-center text-sm sm:text-base">
                 {result.imageId === 'resultWorldCupImage' ? "You are a true legend!" : "Here are your results."}
               </DialogDescription>
             </DialogHeader>
 
             {resultImage && (
-                <div className="my-4 rounded-lg overflow-hidden">
+                <div className="my-2 px-4">
+                  <div className="rounded-lg overflow-hidden">
                     <Image
                         src={resultImage.imageUrl}
                         alt={resultImage.description}
@@ -325,24 +326,25 @@ export default function Home() {
                         height={300}
                         className="w-full h-auto object-cover"
                     />
+                  </div>
                 </div>
             )}
 
-            <div className="grid grid-cols-2 gap-4 text-center p-4 rounded-lg bg-muted/50 my-4">
+            <div className="grid grid-cols-2 gap-4 text-center p-4 rounded-lg bg-muted/50 my-4 mx-4">
               <div>
-                <div className="text-4xl font-bold text-teal-500">{result.cps}</div>
-                <div className="text-sm text-muted-foreground">Clicks/Second</div>
+                <div className="text-3xl sm:text-4xl font-bold text-teal-500">{result.cps}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Clicks/Second</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-amber-500">{result.totalClicks}</div>
-                <div className="text-sm text-muted-foreground">Total Clicks</div>
+                <div className="text-3xl sm:text-4xl font-bold text-amber-500">{result.totalClicks}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Total Clicks</div>
               </div>
-              <div className="col-span-2">
-                <div className="text-2xl font-bold">{result.target}</div>
-                <div className="text-sm text-muted-foreground">Target goals</div>
+              <div className="col-span-2 mt-2">
+                <div className="text-xl sm:text-2xl font-bold">{result.target}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Target goals</div>
               </div>
             </div>
-            <DialogFooter className="sm:justify-center mt-4">
+            <DialogFooter className="sm:justify-center p-4">
               <Button onClick={() => handleDialogChange(false)}>
                 <Goal className="mr-2" /> Try Again
               </Button>
