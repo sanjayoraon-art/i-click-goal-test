@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { Goal, Target } from 'lucide-react';
+import { Goal, Target, Gamepad2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -156,8 +156,12 @@ export default function Home() {
   
   return (
     <>
-    <main className="flex min-h-[calc(100vh-150px)] w-full flex-col items-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
+    <main className="flex min-h-screen w-full flex-col items-center justify-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
       <header className="text-center mb-8 max-w-4xl mx-auto">
+        <Link href="/" className="font-bold text-2xl text-primary inline-flex items-center gap-2 mb-4">
+          <Gamepad2 className="h-8 w-8" />
+          Click Games
+        </Link>
         <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
           Click Speed Test (CPS)
         </h1>
@@ -344,7 +348,7 @@ export default function Home() {
         <Dialog open={showResultDialog} onOpenChange={handleDialogChange}>
           <DialogContent
             className={cn(
-              'max-w-xs sm:max-w-md text-center border rounded-lg max-h-[90vh] overflow-y-auto',
+              'max-w-xs sm:max-w-md text-center border rounded-lg max-h-[90vh] overflow-y-auto z-50',
               result.targetMet ? 'bg-green-100 dark:bg-green-900/50' : 'bg-purple-100 dark:bg-purple-900/50'
             )}
           >
@@ -381,11 +385,14 @@ export default function Home() {
       )}
     </main>
     <footer className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground">
-        <div className="container mx-auto flex justify-center items-center space-x-4">
+        <div className="container mx-auto flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4">
             <span>&copy; {new Date().getFullYear()} Click Speed Test. All rights reserved.</span>
-            <Link href="/about" className="hover:text-primary">About Us</Link>
-            <Link href="/privacy-policy" className="hover:text-primary">Privacy Policy</Link>
-            <Link href="/terms-and-conditions" className="hover:text-primary">Terms &amp; Conditions</Link>
+            <div className="flex space-x-4">
+              <Link href="/aim-trainer" className="hover:text-primary">Aim Trainer</Link>
+              <Link href="/about" className="hover:text-primary">About Us</Link>
+              <Link href="/privacy-policy" className="hover:text-primary">Privacy Policy</Link>
+              <Link href="/terms-and-conditions" className="hover:text-primary">Terms & Conditions</Link>
+            </div>
         </div>
     </footer>
     </>

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
-import { RefreshCw, Star, Target } from 'lucide-react';
+import { RefreshCw, Gamepad2, Home } from 'lucide-react';
 import Link from 'next/link';
 
 const GAME_DURATION = 30; // 30 seconds
@@ -124,8 +124,12 @@ export default function AimTrainerPage() {
 
   return (
     <>
-      <main className="flex min-h-screen w-full flex-col items-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
+      <main className="flex min-h-screen w-full flex-col items-center justify-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
         <header className="text-center mb-8 max-w-4xl mx-auto">
+           <Link href="/" className="font-bold text-2xl text-primary inline-flex items-center gap-2 mb-4">
+            <Gamepad2 className="h-8 w-8" />
+            Click Games
+          </Link>
           <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
             Aim Trainer
           </h1>
@@ -166,7 +170,7 @@ export default function AimTrainerPage() {
                   }}
                   onClick={handleTargetClick}
                 >
-                  <Target className="text-white" />
+                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-goal text-white"><path d="M12 13V2l8 4-8 4"/><path d="M12 22v-9"/><path d="M20 13.5a8.5 8.5 0 1 1-17 0 8.5 8.5 0 0 1 17 0Z"/><path d="M12 17a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/></svg>
                 </div>
               )}
                {gameState === 'finished' && (
@@ -181,11 +185,19 @@ export default function AimTrainerPage() {
             </div>
           </CardContent>
         </Card>
+         <div className="text-center mt-8">
+            <Link href="/">
+              <Button>
+                <Home className="mr-2 h-4 w-4" />
+                Back to Home
+              </Button>
+            </Link>
+          </div>
       </main>
 
       {result && (
         <Dialog open={showResultDialog} onOpenChange={handleDialogChange}>
-          <DialogContent className="max-w-xs sm:max-w-md text-center border rounded-lg">
+          <DialogContent className="max-w-xs sm:max-w-md text-center border rounded-lg z-50">
             <DialogHeader className="p-4 items-center">
               <DialogTitle className="text-2xl sm:text-3xl font-bold text-center">
                 Your Results!
@@ -213,6 +225,17 @@ export default function AimTrainerPage() {
           </DialogContent>
         </Dialog>
       )}
+       <footer className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground mt-auto">
+        <div className="container mx-auto flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4">
+            <span>&copy; {new Date().getFullYear()} Click Speed Test. All rights reserved.</span>
+            <div className="flex space-x-4">
+              <Link href="/aim-trainer" className="hover:text-primary">Aim Trainer</Link>
+              <Link href="/about" className="hover:text-primary">About Us</Link>
+              <Link href="/privacy-policy" className="hover:text-primary">Privacy Policy</Link>
+              <Link href="/terms-and-conditions" className="hover:text-primary">Terms & Conditions</Link>
+            </div>
+        </div>
+      </footer>
     </>
   );
 }

@@ -57,11 +57,14 @@ export default function PrivacyPolicyPage() {
         </main>
       </div>
       <footer className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground">
-          <div className="container mx-auto flex justify-center items-center space-x-4">
+          <div className="container mx-auto flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4">
               <span>&copy; {new Date().getFullYear()} Click Speed Test. All rights reserved.</span>
-              <Link href="/about" className="hover:text-primary">About Us</Link>
-              <Link href="/privacy-policy" className="hover:text-primary">Privacy Policy</Link>
-              <Link href="/terms-and-conditions" className="hover:text-primary">Terms & Conditions</Link>
+              <div className="flex space-x-4">
+                <Link href="/aim-trainer" className="hover:text-primary">Aim Trainer</Link>
+                <Link href="/about" className="hover:text-primary">About Us</Link>
+                <Link href="/privacy-policy" className="hover:text-primary">Privacy Policy</Link>
+                <Link href="/terms-and-conditions" className="hover:text-primary">Terms & Conditions</Link>
+              </div>
           </div>
       </footer>
     </>
