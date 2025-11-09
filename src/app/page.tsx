@@ -317,9 +317,11 @@ export default function Home() {
       )}
     </main>
     <footer className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground">
-        <div className="flex justify-center items-center space-x-4">
-            <p>&copy; {new Date().getFullYear()} Click speed Test. All rights reserved.</p>
+        <div className="container mx-auto flex justify-center items-center space-x-4">
+            <span>&copy; {new Date().getFullYear()} Click Speed Test. All rights reserved.</span>
             <Link href="/about" className="hover:text-primary">About Us</Link>
+            <Link href="/privacy-policy" className="hover:text-primary">Privacy Policy</Link>
+            <Link href="/terms-and-conditions" className="hover:text-primary">Terms & Conditions</Link>
         </div>
     </footer>
     </>
