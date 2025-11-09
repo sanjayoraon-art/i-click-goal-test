@@ -197,7 +197,10 @@ export default function AimTrainerPage() {
 
       {result && (
         <Dialog open={showResultDialog} onOpenChange={handleDialogChange}>
-          <DialogContent className="max-w-xs sm:max-w-md text-center border rounded-lg z-50">
+          <DialogContent style={{ zIndex: 100 }} className={cn(
+              'max-w-xs sm:max-w-md text-center border rounded-lg',
+              result.accuracy > 75 ? 'bg-green-100 dark:bg-green-900/50' : result.accuracy > 50 ? 'bg-amber-100 dark:bg-amber-900/50' : 'bg-red-100 dark:bg-red-900/50'
+            )}>
             <DialogHeader className="p-4 items-center">
               <DialogTitle className="text-2xl sm:text-3xl font-bold text-center">
                 Your Results!
