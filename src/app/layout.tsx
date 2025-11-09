@@ -1,6 +1,8 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Click Speed Test - Challenge Your Clicks Per Second (CPS)',
@@ -39,6 +41,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+        {/* Replace ca-pub-XXXXXXXXXXXXXXXX with your own AdSense Publisher ID */}
         <script 
           async 
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
@@ -48,6 +51,17 @@ export default function RootLayout({
       <body className="font-body antialiased">
         {children}
         <Toaster />
+        <footer className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground">
+            <div className="container mx-auto flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                <span>&copy; {new Date().getFullYear()} Click Speed Test. All rights reserved.</span>
+                <div className="flex space-x-4">
+                  <Link href="/" className="hover:text-primary">Home</Link>
+                  <Link href="/about" className="hover:text-primary">About Us</Link>
+                  <Link href="/privacy-policy" className="hover:text-primary">Privacy Policy</Link>
+                  <Link href="/terms-and-conditions" className="hover:text-primary">Terms & Conditions</Link>
+                </div>
+            </div>
+        </footer>
       </body>
     </html>
   );
