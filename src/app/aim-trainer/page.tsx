@@ -44,20 +44,25 @@ export default function AimTrainerPage() {
     if (timerRef.current) clearInterval(timerRef.current);
     setGameState('finished');
     
-    const finalHits = hits;
-    const finalMisses = misses;
-    const totalClicks = finalHits + finalMisses;
-    const accuracy = totalClicks > 0 ? parseFloat(((finalHits / totalClicks) * 100).toFixed(2)) : 0;
-    
-    const newResult = {
-        hits: finalHits,
-        misses: finalMisses,
-        accuracy: accuracy,
-    };
+    // Use a function for setting state to ensure we have the latest values
+    setHits(currentHits => {
+        setMisses(currentMisses => {
+            const totalClicks = currentHits + currentMisses;
+            const accuracy = totalClicks > 0 ? parseFloat(((currentHits / totalClicks) * 100).toFixed(2)) : 0;
+            
+            const newResult = {
+                hits: currentHits,
+                misses: currentMisses,
+                accuracy: accuracy,
+            };
 
-    setResult(newResult);
-    setShowResultDialog(true);
-  }, [hits, misses]);
+            setResult(newResult);
+            setShowResultDialog(true);
+            return currentMisses;
+        });
+        return currentHits;
+    });
+  }, []);
 
   useEffect(() => {
     if (gameState === 'running') {
@@ -164,7 +169,7 @@ export default function AimTrainerPage() {
                   <Target className="text-white" />
                 </div>
               )}
-               {gameState === 'finished' && result && (
+               {gameState === 'finished' && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50">
                   <h2 className="text-4xl font-bold text-white mb-4">Game Over!</h2>
                   <Button size="lg" onClick={resetGame}>
