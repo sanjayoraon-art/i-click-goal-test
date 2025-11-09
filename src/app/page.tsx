@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Goal, Target } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import Link from 'next/link';
 
 const TIME_OPTIONS = [5, 10, 15, 30, 60, 100];
 
@@ -316,7 +317,10 @@ export default function Home() {
       )}
     </main>
     <footer className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} Click speed Test. All rights reserved.</p>
+        <div className="flex justify-center items-center space-x-4">
+            <p>&copy; {new Date().getFullYear()} Click speed Test. All rights reserved.</p>
+            <Link href="/about" className="hover:text-primary">About Us</Link>
+        </div>
     </footer>
     </>
   );
