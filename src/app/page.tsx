@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { Goal, Target } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import Link from 'next/link';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 const TIME_OPTIONS = [5, 10, 15, 30, 60, 100];
 
@@ -276,6 +277,45 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="w-full max-w-4xl mx-auto mt-8 text-left">
+        <h2 className="text-3xl font-bold text-center mb-6">Clicking Techniques Comparison</h2>
+        <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
+          <CardContent className="p-0">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="font-semibold text-base">Technique</TableHead>
+                  <TableHead className="font-semibold text-base">Description</TableHead>
+                  <TableHead className="text-right font-semibold text-base">Potential CPS</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell className="font-medium">Regular Clicking</TableCell>
+                  <TableCell>Using one finger to click the mouse button normally. This is the most common method.</TableCell>
+                  <TableCell className="text-right">4-8 CPS</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Jitter Clicking</TableCell>
+                  <TableCell>Rapidly vibrating your hand or arm muscles to cause your finger to click the mouse button very quickly.</TableCell>
+                  <TableCell className="text-right">10-15 CPS</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Butterfly Clicking</TableCell>
+                  <TableCell>Using two fingers (usually index and middle) to alternately click the same mouse button. This can achieve a very high CPS.</TableCell>
+                  <TableCell className="text-right">15-25 CPS</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Drag Clicking</TableCell>
+                  <TableCell>Frictionally dragging your finger across the mouse button to register a large number of clicks in a short burst.</TableCell>
+                  <TableCell className="text-right">30+ CPS</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </section>
+
       {result && (
         <Dialog open={showResultDialog} onOpenChange={handleDialogChange}>
           <DialogContent
@@ -327,3 +367,4 @@ export default function Home() {
     </>
   );
 }
+
