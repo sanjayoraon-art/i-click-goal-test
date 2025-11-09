@@ -248,6 +248,30 @@ export default function Home() {
       </section>
       
       <section className="w-full max-w-4xl mx-auto mt-8 text-left">
+        <h2 className="text-3xl font-bold text-center mb-6">Time and Targets</h2>
+        <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
+          <CardContent className="p-0">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="font-semibold text-base">Time Duration</TableHead>
+                  <TableHead className="text-right font-semibold text-base">Target Clicks</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {Object.entries(TARGETS).map(([time, target]) => (
+                  <TableRow key={time}>
+                    <TableCell className="font-medium">{time} seconds</TableCell>
+                    <TableCell className="text-right">{target} clicks</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="w-full max-w-4xl mx-auto mt-8 text-left">
         <h2 className="text-3xl font-bold text-center mb-6">Frequently Asked Questions (FAQ)</h2>
         <div className="space-y-4">
           <Card className="bg-card/80 backdrop-blur-sm">
@@ -367,4 +391,3 @@ export default function Home() {
     </>
   );
 }
-
