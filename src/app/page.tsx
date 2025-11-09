@@ -347,7 +347,6 @@ export default function Home() {
       {result && (
         <Dialog open={showResultDialog} onOpenChange={handleDialogChange}>
           <DialogContent
-            style={{ zIndex: 100 }}
             className={cn(
               'max-w-xs sm:max-w-md text-center border rounded-lg max-h-[90vh] overflow-y-auto',
               result.targetMet ? 'bg-green-100 dark:bg-green-900/50' : 'bg-purple-100 dark:bg-purple-900/50'

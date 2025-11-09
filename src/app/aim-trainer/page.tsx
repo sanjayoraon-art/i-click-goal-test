@@ -197,7 +197,7 @@ export default function AimTrainerPage() {
 
       {result && (
         <Dialog open={showResultDialog} onOpenChange={handleDialogChange}>
-          <DialogContent style={{ zIndex: 100 }} className={cn(
+          <DialogContent className={cn(
               'max-w-xs sm:max-w-md text-center border rounded-lg',
               result.accuracy > 75 ? 'bg-green-100 dark:bg-green-900/50' : result.accuracy > 50 ? 'bg-amber-100 dark:bg-amber-900/50' : 'bg-red-100 dark:bg-red-900/50'
             )}>
