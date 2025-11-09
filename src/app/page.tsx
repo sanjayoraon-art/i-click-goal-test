@@ -252,17 +252,17 @@ export default function Home() {
         <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
           <CardContent className="p-0">
             <Table>
-              <TableHeader>
+              <TableHeader className="bg-muted/50">
                 <TableRow>
-                  <TableHead className="font-semibold text-base">Time Duration</TableHead>
-                  <TableHead className="text-right font-semibold text-base">Target Clicks</TableHead>
+                  <TableHead className="font-semibold text-base text-foreground/80">Time Duration</TableHead>
+                  <TableHead className="text-right font-semibold text-base text-foreground/80">Target Clicks</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {Object.entries(TARGETS).map(([time, target]) => (
-                  <TableRow key={time}>
+                  <TableRow key={time} className="even:bg-muted/20">
                     <TableCell className="font-medium">{time} seconds</TableCell>
-                    <TableCell className="text-right">{target} clicks</TableCell>
+                    <TableCell className="text-right font-bold">{target} clicks</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -306,33 +306,33 @@ export default function Home() {
         <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
           <CardContent className="p-0">
             <Table>
-              <TableHeader>
+              <TableHeader className="bg-muted/50">
                 <TableRow>
-                  <TableHead className="font-semibold text-base">Technique</TableHead>
-                  <TableHead className="font-semibold text-base">Description</TableHead>
-                  <TableHead className="text-right font-semibold text-base">Potential CPS</TableHead>
+                  <TableHead className="font-semibold text-base text-foreground/80">Technique</TableHead>
+                  <TableHead className="font-semibold text-base text-foreground/80">Description</TableHead>
+                  <TableHead className="text-right font-semibold text-base text-foreground/80">Potential CPS</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <TableRow>
+                <TableRow className="even:bg-muted/20">
                   <TableCell className="font-medium">Regular Clicking</TableCell>
                   <TableCell>Using one finger to click the mouse button normally. This is the most common method.</TableCell>
-                  <TableCell className="text-right">4-8 CPS</TableCell>
+                  <TableCell className="text-right font-bold">4-8 CPS</TableCell>
                 </TableRow>
-                <TableRow>
+                <TableRow className="even:bg-muted/20">
                   <TableCell className="font-medium">Jitter Clicking</TableCell>
                   <TableCell>Rapidly vibrating your hand or arm muscles to cause your finger to click the mouse button very quickly.</TableCell>
-                  <TableCell className="text-right">10-15 CPS</TableCell>
+                  <TableCell className="text-right font-bold">10-15 CPS</TableCell>
                 </TableRow>
-                <TableRow>
+                <TableRow className="even:bg-muted/20">
                   <TableCell className="font-medium">Butterfly Clicking</TableCell>
                   <TableCell>Using two fingers (usually index and middle) to alternately click the same mouse button. This can achieve a very high CPS.</TableCell>
-                  <TableCell className="text-right">15-25 CPS</TableCell>
+                  <TableCell className="text-right font-bold">15-25 CPS</TableCell>
                 </TableRow>
-                <TableRow>
+                <TableRow className="even:bg-muted/20">
                   <TableCell className="font-medium">Drag Clicking</TableCell>
                   <TableCell>Frictionally dragging your finger across the mouse button to register a large number of clicks in a short burst.</TableCell>
-                  <TableCell className="text-right">30+ CPS</TableCell>
+                  <TableCell className="text-right font-bold">30+ CPS</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -385,7 +385,7 @@ export default function Home() {
             <span>&copy; {new Date().getFullYear()} Click Speed Test. All rights reserved.</span>
             <Link href="/about" className="hover:text-primary">About Us</Link>
             <Link href="/privacy-policy" className="hover:text-primary">Privacy Policy</Link>
-            <Link href="/terms-and-conditions" className="hover:text-primary">Terms & Conditions</Link>
+            <Link href="/terms-and-conditions" className="hover:text-primary">Terms &amp; Conditions</Link>
         </div>
     </footer>
     </>
