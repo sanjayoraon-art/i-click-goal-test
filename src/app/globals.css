@@ -86,3 +86,9 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Ensure Dialog is always on top */
+[role="dialog"] {
+    position: fixed;
+    z-index: 100 !important;
+}
