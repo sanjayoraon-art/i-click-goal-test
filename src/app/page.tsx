@@ -351,7 +351,7 @@ export default function Home() {
           <DialogPortal>
             <DialogContent
               className={cn(
-                'fixed left-[50%] top-[50%] z-[100] grid w-full max-w-xs translate-x-[-50%] translate-y-[-50%] gap-4 border p-6 shadow-lg sm:max-w-md sm:rounded-lg',
+                'w-full max-w-xs sm:max-w-md',
                 result.targetMet ? 'bg-green-100 dark:bg-green-900/50' : 'bg-purple-100 dark:bg-purple-900/50'
               )}
             >
@@ -390,3 +390,5 @@ export default function Home() {
     </>
   );
 }
+
+    
