@@ -1,0 +1,213 @@
+// @/app/aim-trainer/page.tsx
+"use client";
+
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { RefreshCw, Star, Target } from 'lucide-react';
+import Link from 'next/link';
+
+const GAME_DURATION = 30; // 30 seconds
+const TARGET_SIZE = 40; // in pixels
+
+type GameState = 'idle' | 'running' | 'finished';
+
+type Result = {
+  hits: number;
+  misses: number;
+  accuracy: number;
+};
+
+export default function AimTrainerPage() {
+  const [gameState, setGameState] = useState<GameState>('idle');
+  const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
+  const [hits, setHits] = useState(0);
+  const [misses, setMisses] = useState(0);
+  const [targetPosition, setTargetPosition] = useState({ top: '50%', left: '50%' });
+  const [result, setResult] = useState<Result | null>(null);
+  const [showResultDialog, setShowResultDialog] = useState(false);
+
+  const gameAreaRef = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const moveTarget = useCallback(() => {
+    if (!gameAreaRef.current) return;
+    const gameArea = gameAreaRef.current.getBoundingClientRect();
+    const newTop = Math.random() * (gameArea.height - TARGET_SIZE);
+    const newLeft = Math.random() * (gameArea.width - TARGET_SIZE);
+    setTargetPosition({ top: `${newTop}px`, left: `${newLeft}px` });
+  }, []);
+  
+  const endGame = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    setGameState('finished');
+    
+    const finalHits = hits;
+    const finalMisses = misses;
+    const totalClicks = finalHits + finalMisses;
+    const accuracy = totalClicks > 0 ? parseFloat(((finalHits / totalClicks) * 100).toFixed(2)) : 0;
+    
+    const newResult = {
+        hits: finalHits,
+        misses: finalMisses,
+        accuracy: accuracy,
+    };
+
+    setResult(newResult);
+    setShowResultDialog(true);
+  }, [hits, misses]);
+
+  useEffect(() => {
+    if (gameState === 'running') {
+      timerRef.current = setInterval(() => {
+        setTimeLeft((prevTime) => {
+          if (prevTime <= 1) {
+            endGame();
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    } else {
+      if (timerRef.current) clearInterval(timerRef.current);
+    }
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [gameState, endGame]);
+
+  const startGame = () => {
+    setGameState('running');
+    setTimeLeft(GAME_DURATION);
+    setHits(0);
+    setMisses(0);
+    setResult(null);
+    setShowResultDialog(false);
+    moveTarget();
+  };
+  
+  const resetGame = () => {
+    setGameState('idle');
+    setTimeLeft(GAME_DURATION);
+    setHits(0);
+    setMisses(0);
+    setResult(null);
+    setShowResultDialog(false);
+    setTargetPosition({ top: '50%', left: '50%' });
+  }
+
+  const handleTargetClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (gameState !== 'running') return;
+    setHits((prev) => prev + 1);
+    moveTarget();
+  };
+
+  const handleMissClick = () => {
+    if (gameState !== 'running') return;
+    setMisses((prev) => prev + 1);
+  };
+  
+  const handleDialogChange = (open: boolean) => {
+    if (!open) {
+      resetGame();
+    }
+    setShowResultDialog(open);
+  };
+
+  return (
+    <>
+      <main className="flex min-h-screen w-full flex-col items-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
+        <header className="text-center mb-8 max-w-4xl mx-auto">
+          <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
+            Aim Trainer
+          </h1>
+          <p className="text-muted-foreground text-lg mt-2">
+            Test and improve your aiming skills! Click as many targets as you can in 30 seconds.
+          </p>
+        </header>
+
+        <Card className="w-full max-w-2xl bg-card/80 backdrop-blur-sm shadow-2xl rounded-2xl overflow-hidden border-2">
+          <CardHeader className="border-b-2">
+            <div className="flex justify-between items-center">
+              <div className="text-2xl font-bold">Time Left: <span className="text-primary tabular-nums">{timeLeft}s</span></div>
+              <div className="text-2xl font-bold">Score: <span className="text-primary tabular-nums">{hits}</span></div>
+              <div className="text-2xl font-bold">Misses: <span className="text-red-500 tabular-nums">{misses}</span></div>
+            </div>
+          </CardHeader>
+          <CardContent className="p-2">
+            <div
+              ref={gameAreaRef}
+              className="relative w-full h-80 md:h-96 rounded-lg bg-slate-200 dark:bg-slate-800 cursor-crosshair overflow-hidden"
+              onClick={handleMissClick}
+            >
+              {gameState === 'idle' && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50">
+                  <h2 className="text-3xl font-bold text-white mb-4">Start Training</h2>
+                  <Button size="lg" onClick={startGame}>Start Game</Button>
+                </div>
+              )}
+              {gameState === 'running' && (
+                <div
+                  className="absolute rounded-full bg-red-500 flex items-center justify-center cursor-pointer transition-all duration-100 ease-out"
+                  style={{ 
+                    top: targetPosition.top, 
+                    left: targetPosition.left, 
+                    width: `${TARGET_SIZE}px`, 
+                    height: `${TARGET_SIZE}px`,
+                    transform: 'translate(-50%, -50%)',
+                  }}
+                  onClick={handleTargetClick}
+                >
+                  <Target className="text-white" />
+                </div>
+              )}
+               {gameState === 'finished' && result && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50">
+                  <h2 className="text-4xl font-bold text-white mb-4">Game Over!</h2>
+                  <Button size="lg" onClick={resetGame}>
+                    <RefreshCw className="mr-2" />
+                    Play Again
+                  </Button>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </main>
+
+      {result && (
+        <Dialog open={showResultDialog} onOpenChange={handleDialogChange}>
+          <DialogContent className="max-w-xs sm:max-w-md text-center border rounded-lg">
+            <DialogHeader className="p-4 items-center">
+              <DialogTitle className="text-2xl sm:text-3xl font-bold text-center">
+                Your Results!
+              </DialogTitle>
+            </DialogHeader>
+            <div className="grid grid-cols-1 gap-4 text-center p-4">
+              <div>
+                <div className="text-4xl font-bold text-teal-500">{result.hits}</div>
+                <div className="text-sm text-muted-foreground">Targets Hit</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-red-500">{result.misses}</div>
+                <div className="text-sm text-muted-foreground">Missed Clicks</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-amber-500">{result.accuracy}%</div>
+                <div className="text-sm text-muted-foreground">Accuracy</div>
+              </div>
+            </div>
+            <DialogFooter className="sm:justify-center p-4">
+              <Button onClick={() => handleDialogChange(false)}>
+                <RefreshCw className="mr-2" /> Try Again
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+    </>
+  );
+}

@@ -156,7 +156,7 @@ export default function Home() {
   
   return (
     <>
-    <main className="flex min-h-screen w-full flex-col items-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
+    <main className="flex min-h-[calc(100vh-150px)] w-full flex-col items-center p-4 md:p-8 font-headline text-foreground bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
       <header className="text-center mb-8 max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
           Click Speed Test (CPS)
