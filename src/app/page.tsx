@@ -155,237 +155,240 @@ export default function Home() {
   };
   
   return (
-    <div className="min-h-screen w-full bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
-      <main className="flex flex-col items-center justify-center p-4 md:p-8 font-headline text-foreground">
-        <header className="text-center mb-8 max-w-4xl mx-auto">
-          <Link href="/" className="font-bold text-2xl text-primary inline-flex items-center gap-2 mb-4">
-            <Gamepad2 className="h-8 w-8" />
-            Click Games
-          </Link>
-          <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
-            Click Speed Test (CPS)
-          </h1>
-          <p className="text-muted-foreground text-lg mt-2">
-            How fast can you click? Test your clicks per second (CPS) and challenge your limits to improve your gaming reaction time!
-          </p>
-        </header>
+    <>
+      <div className="min-h-screen w-full bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
+        <main className="flex flex-col items-center justify-center p-4 md:p-8 font-headline text-foreground">
+          <header className="text-center mb-8 max-w-4xl mx-auto">
+            <Link href="/" className="font-bold text-2xl text-primary inline-flex items-center gap-2 mb-4">
+              <Gamepad2 className="h-8 w-8" />
+              Click Games
+            </Link>
+            <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
+              Click Speed Test (CPS)
+            </h1>
+            <p className="text-muted-foreground text-lg mt-2">
+              How fast can you click? Test your clicks per second (CPS) and challenge your limits to improve your gaming reaction time!
+            </p>
+          </header>
 
-        <Card className="w-full max-w-2xl bg-card/80 backdrop-blur-sm shadow-2xl rounded-2xl overflow-hidden border-2">
-          <CardContent className="p-6 md:p-8">
-            <div className="flex justify-center gap-2 flex-wrap mb-8">
-              {TIME_OPTIONS.map((time, index) => (
-                <Button
-                  key={time}
-                  variant={selectedTime === time ? 'outline' : 'default'}
-                  className={cn(
-                    'rounded-full font-semibold text-white',
-                    selectedTime !== time && BUTTON_COLORS[index % BUTTON_COLORS.length],
-                    selectedTime === time && 'border-4 border-primary'
-                  )}
-                  onClick={() => handleTimeChange(time)}
-                  disabled={gameState === 'running'}
-                >
-                  {time}s
-                </Button>
-              ))}
-            </div>
+          <Card className="w-full max-w-2xl bg-card/80 backdrop-blur-sm shadow-2xl rounded-2xl overflow-hidden border-2">
+            <CardContent className="p-6 md:p-8">
+              <div className="flex justify-center gap-2 flex-wrap mb-8">
+                {TIME_OPTIONS.map((time, index) => (
+                  <Button
+                    key={time}
+                    variant={selectedTime === time ? 'outline' : 'default'}
+                    className={cn(
+                      'rounded-full font-semibold text-white',
+                      selectedTime !== time && BUTTON_COLORS[index % BUTTON_COLORS.length],
+                      selectedTime === time && 'border-4 border-primary'
+                    )}
+                    onClick={() => handleTimeChange(time)}
+                    disabled={gameState === 'running'}
+                  >
+                    {time}s
+                  </Button>
+                ))}
+              </div>
 
-            <div
-              className={cn(
-                  "relative rounded-2xl p-4 sm:p-6 text-center overflow-hidden select-none cursor-pointer transition-transform duration-100 ease-in-out h-64 sm:h-72 md:h-80 flex flex-col justify-between bg-gradient-to-br from-blue-500 to-blue-700",
-                  'hover:scale-[1.02]',
-                  isPulsing && 'animate-pulse-click'
-              )}
-              onClick={handleAreaClick}
-              onMouseDown={(e) => e.preventDefault()}
-            >
-              <div className="relative z-10 flex flex-col items-center">
+              <div
+                className={cn(
+                    "relative rounded-2xl p-4 sm:p-6 text-center overflow-hidden select-none cursor-pointer transition-transform duration-100 ease-in-out h-64 sm:h-72 md:h-80 flex flex-col justify-between bg-gradient-to-br from-blue-500 to-blue-700",
+                    'hover:scale-[1.02]',
+                    isPulsing && 'animate-pulse-click'
+                )}
+                onClick={handleAreaClick}
+                onMouseDown={(e) => e.preventDefault()}
+              >
+                <div className="relative z-10 flex flex-col items-center">
+                  
+                  <div className="grid grid-cols-2 items-center justify-center gap-2 sm:gap-4 w-full text-center text-white">
+                    <div>
+                        <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{timeLeft.toFixed(2)}</div>
+                        <div className="text-xs sm:text-sm font-semibold opacity-80">Seconds</div>
+                    </div>
+                    <div>
+                        <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{clicks}</div>
+                        <div className="text-xs sm:text-sm font-semibold opacity-80">Clicks</div>
+                    </div>
+                  </div>
+                </div>
                 
-                <div className="grid grid-cols-2 items-center justify-center gap-2 sm:gap-4 w-full text-center text-white">
-                  <div>
-                      <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{timeLeft.toFixed(2)}</div>
-                      <div className="text-xs sm:text-sm font-semibold opacity-80">Seconds</div>
-                  </div>
-                  <div>
-                      <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{clicks}</div>
-                      <div className="text-xs sm:text-sm font-semibold opacity-80">Clicks</div>
-                  </div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Button
+                    variant="default"
+                    size="lg"
+                    className="w-24 h-24 rounded-full text-2xl font-bold bg-primary hover:bg-primary/90 text-primary-foreground border-0 shadow-lg"
+                    onClick={(e) => { e.stopPropagation(); handleAreaClick(); }}
+                  >
+                    Click
+                  </Button>
+                </div>
+                <div className="relative z-10 flex flex-col items-center mt-auto">
+                    <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg text-white">{TARGETS[selectedTime]}</div>
+                    <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80 text-white">
+                        <Target className="h-4 w-4 sm:h-5 sm:w-5" />
+                        <span>Target Goal</span>
+                    </div>
                 </div>
               </div>
               
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Button
-                  variant="default"
-                  size="lg"
-                  className="w-24 h-24 rounded-full text-2xl font-bold bg-primary hover:bg-primary/90 text-primary-foreground border-0 shadow-lg"
-                  onClick={(e) => { e.stopPropagation(); handleAreaClick(); }}
-                >
-                  Click
-                </Button>
-              </div>
-              <div className="relative z-10 flex flex-col items-center mt-auto">
-                  <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg text-white">{TARGETS[selectedTime]}</div>
-                  <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80 text-white">
-                      <Target className="h-4 w-4 sm:h-5 sm:w-5" />
-                      <span>Target Goal</span>
-                  </div>
-              </div>
-            </div>
-            
-          </CardContent>
-        </Card>
-        
-        <section className="w-full max-w-4xl mx-auto mt-12 text-left">
-          <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">About the Click Speed Test</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 text-muted-foreground">
-              <p>
-                The Clicks Per Second (CPS) test is a simple yet effective way to measure your clicking speed. It's a fun tool used by gamers and professionals alike to test and improve their mouse-clicking abilities and reaction time. A higher CPS score is often crucial in games that require quick actions, such as first-person shooters (FPS) or real-time strategy (RTS) games.
-              </p>
-              <p>
-                Our Click Goal Test allows you to challenge yourself against set targets in various time intervals, from a quick 5-second sprint to a 100-second marathon. Meeting the target proves your clicking prowess!
-              </p>
             </CardContent>
           </Card>
-        </section>
-        
+          
+          <section className="w-full max-w-4xl mx-auto mt-12 text-left">
+            <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold">About the Click Speed Test</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 text-muted-foreground">
+                <p>
+                  The Clicks Per Second (CPS) test is a simple yet effective way to measure your clicking speed. It's a fun tool used by gamers and professionals alike to test and improve their mouse-clicking abilities and reaction time. A higher CPS score is often crucial in games that require quick actions, such as first-person shooters (FPS) or real-time strategy (RTS) games.
+                </p>
+                <p>
+                  Our Click Goal Test allows you to challenge yourself against set targets in various time intervals, from a quick 5-second sprint to a 100-second marathon. Meeting the target proves your clicking prowess!
+                </p>
+              </CardContent>
+            </Card>
+          </section>
+          
+          <section className="w-full max-w-4xl mx-auto mt-8 text-left">
+            <h2 className="text-3xl font-bold text-center mb-6">Time and Targets</h2>
+            <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
+              <CardContent className="p-0">
+                <Table>
+                  <TableHeader className="bg-muted/50">
+                    <TableRow>
+                      <TableHead className="font-semibold text-base text-foreground/80">Time Duration</TableHead>
+                      <TableHead className="text-right font-semibold text-base text-foreground/80">Target Clicks</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {Object.entries(TARGETS).map(([time, target]) => (
+                      <TableRow key={time} className="even:bg-muted/20">
+                        <TableCell className="font-medium">{time} seconds</TableCell>
+                        <TableCell className="text-right font-bold">{target} clicks</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </section>
+
         <section className="w-full max-w-4xl mx-auto mt-8 text-left">
-          <h2 className="text-3xl font-bold text-center mb-6">Time and Targets</h2>
+          <h2 className="text-3xl font-bold text-center mb-6">Frequently Asked Questions (FAQ)</h2>
+          <div className="space-y-4">
+            <Card className="bg-card/80 backdrop-blur-sm">
+              <CardHeader>
+                <div className="text-lg font-semibold">What is CPS?</div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">CPS stands for "Clicks Per Second." It is a measure of how many times you can click a mouse button in one second.</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-card/80 backdrop-blur-sm">
+              <CardHeader>
+                <div className="text-lg font-semibold">How is CPS calculated?</div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">The formula is simple: CPS = Total Clicks / Time in Seconds. Our tool calculates this for you automatically when the time runs out.</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-card/80 backdrop-blur-sm">
+              <CardHeader>
+                <div className="text-lg font-semibold">How can I improve my CPS score?</div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">Practice is key! Regularly using this test can help improve your muscle memory and reaction time. Additionally, using a good quality gaming mouse and find a comfortable clicking technique (like jitter clicking or butterfly clicking) can also boost your score.</p>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        <section className="w-full max-w-4xl mx-auto mt-8 text-left">
+          <h2 className="text-3xl font-bold text-center mb-6">Clicking Techniques Comparison</h2>
           <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
             <CardContent className="p-0">
               <Table>
                 <TableHeader className="bg-muted/50">
                   <TableRow>
-                    <TableHead className="font-semibold text-base text-foreground/80">Time Duration</TableHead>
-                    <TableHead className="text-right font-semibold text-base text-foreground/80">Target Clicks</TableHead>
+                    <TableHead className="font-semibold text-base text-foreground/80">Technique</TableHead>
+                    <TableHead className="font-semibold text-base text-foreground/80">Description</TableHead>
+                    <TableHead className="text-right font-semibold text-base text-foreground/80">Potential CPS</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {Object.entries(TARGETS).map(([time, target]) => (
-                    <TableRow key={time} className="even:bg-muted/20">
-                      <TableCell className="font-medium">{time} seconds</TableCell>
-                      <TableCell className="text-right font-bold">{target} clicks</TableCell>
-                    </TableRow>
-                  ))}
+                  <TableRow className="even:bg-muted/20">
+                    <TableCell className="font-medium">Regular Clicking</TableCell>
+                    <TableCell>Using one finger to click the mouse button normally. This is the most common method.</TableCell>
+                    <TableCell className="text-right font-bold">4-8 CPS</TableCell>
+                  </TableRow>
+                  <TableRow className="even:bg-muted/20">
+                    <TableCell className="font-medium">Jitter Clicking</TableCell>
+                    <TableCell>Rapidly vibrating your hand or arm muscles to cause your finger to click the mouse button very quickly.</TableCell>
+                    <TableCell className="text-right font-bold">10-15 CPS</TableCell>
+                  </TableRow>
+                  <TableRow className="even:bg-muted/20">
+                    <TableCell className="font-medium">Butterfly Clicking</TableCell>
+                    <TableCell>Using two fingers (usually index and middle) to alternately click the same mouse button. This can achieve a very high CPS.</TableCell>
+                    <TableCell className="text-right font-bold">15-25 CPS</TableCell>
+                  </TableRow>
+                  <TableRow className="even:bg-muted/20">
+                    <TableCell className="font-medium">Drag Clicking</TableCell>
+                    <TableCell>Frictionally dragging your finger across the mouse button to register a large number of clicks in a short burst.</TableCell>
+                    <TableCell className="text-right font-bold">30+ CPS</TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
-            </Table>
-          </CardContent>
-        </Card>
-      </section>
-
-      <section className="w-full max-w-4xl mx-auto mt-8 text-left">
-        <h2 className="text-3xl font-bold text-center mb-6">Frequently Asked Questions (FAQ)</h2>
-        <div className="space-y-4">
-          <Card className="bg-card/80 backdrop-blur-sm">
-            <CardHeader>
-              <div className="text-lg font-semibold">What is CPS?</div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">CPS stands for "Clicks Per Second." It is a measure of how many times you can click a mouse button in one second.</p>
             </CardContent>
           </Card>
-          <Card className="bg-card/80 backdrop-blur-sm">
-            <CardHeader>
-              <div className="text-lg font-semibold">How is CPS calculated?</div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">The formula is simple: CPS = Total Clicks / Time in Seconds. Our tool calculates this for you automatically when the time runs out.</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-card/80 backdrop-blur-sm">
-            <CardHeader>
-              <div className="text-lg font-semibold">How can I improve my CPS score?</div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">Practice is key! Regularly using this test can help improve your muscle memory and reaction time. Additionally, using a good quality gaming mouse and find a comfortable clicking technique (like jitter clicking or butterfly clicking) can also boost your score.</p>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      <section className="w-full max-w-4xl mx-auto mt-8 text-left">
-        <h2 className="text-3xl font-bold text-center mb-6">Clicking Techniques Comparison</h2>
-        <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
-          <CardContent className="p-0">
-            <Table>
-              <TableHeader className="bg-muted/50">
-                <TableRow>
-                  <TableHead className="font-semibold text-base text-foreground/80">Technique</TableHead>
-                  <TableHead className="font-semibold text-base text-foreground/80">Description</TableHead>
-                  <TableHead className="text-right font-semibold text-base text-foreground/80">Potential CPS</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow className="even:bg-muted/20">
-                  <TableCell className="font-medium">Regular Clicking</TableCell>
-                  <TableCell>Using one finger to click the mouse button normally. This is the most common method.</TableCell>
-                  <TableCell className="text-right font-bold">4-8 CPS</TableCell>
-                </TableRow>
-                <TableRow className="even:bg-muted/20">
-                  <TableCell className="font-medium">Jitter Clicking</TableCell>
-                  <TableCell>Rapidly vibrating your hand or arm muscles to cause your finger to click the mouse button very quickly.</TableCell>
-                  <TableCell className="text-right font-bold">10-15 CPS</TableCell>
-                </TableRow>
-                <TableRow className="even:bg-muted/20">
-                  <TableCell className="font-medium">Butterfly Clicking</TableCell>
-                  <TableCell>Using two fingers (usually index and middle) to alternately click the same mouse button. This can achieve a very high CPS.</TableCell>
-                  <TableCell className="text-right font-bold">15-25 CPS</TableCell>
-                </TableRow>
-                <TableRow className="even:bg-muted/20">
-                  <TableCell className="font-medium">Drag Clicking</TableCell>
-                  <TableCell>Frictionally dragging your finger across the mouse button to register a large number of clicks in a short burst.</TableCell>
-                  <TableCell className="text-right font-bold">30+ CPS</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
-      </section>
-      </main>
-        {result && (
-          <Dialog open={showResultDialog} onOpenChange={handleDialogChange}>
-            <DialogPortal>
-              <DialogContent
-                className={cn(
-                  'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100] max-w-xs sm:max-w-md text-center border rounded-lg max-h-[90vh] overflow-y-auto',
-                  result.targetMet ? 'bg-green-100 dark:bg-green-900/50' : 'bg-purple-100 dark:bg-purple-900/50'
-                )}
-              >
-                <DialogHeader className="p-4 items-center">
-                  <DialogTitle className="text-2xl sm:text-3xl font-bold text-center">
-                      {result.targetMet ? 'Awesome! Target Met!' : 'So Close!'}
-                  </DialogTitle>
-                  <DialogDescription className="text-center text-sm sm:text-base">
-                    Here are your results.
-                  </DialogDescription>
-                </DialogHeader>
-                
-                <div className="grid grid-cols-2 gap-4 text-center p-4 rounded-lg bg-muted/50 my-4 mx-4">
-                  <div>
-                    <div className="text-3xl sm:text-4xl font-bold text-teal-500">{result.cps}</div>
-                    <div className="text-xs sm:text-sm text-muted-foreground">Clicks/Second</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl sm:text-4xl font-bold text-amber-500">{result.totalClicks}</div>
-                    <div className="text-xs sm:text-sm text-muted-foreground">Total Clicks</div>
-                  </div>
-                  <div className="col-span-2 mt-2">
-                    <div className="text-xl sm:text-2xl font-bold">{result.target}</div>
-                    <div className="text-xs sm:text-sm text-muted-foreground">Target goals</div>
-                  </div>
+        </section>
+        </main>
+      </div>
+      {result && (
+        <Dialog open={showResultDialog} onOpenChange={handleDialogChange}>
+          <DialogPortal>
+            <DialogContent
+              className={cn(
+                'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100] max-w-xs sm:max-w-md text-center border rounded-lg max-h-[90vh] overflow-y-auto',
+                result.targetMet ? 'bg-green-100 dark:bg-green-900/50' : 'bg-purple-100 dark:bg-purple-900/50'
+              )}
+            >
+              <DialogHeader className="p-4 items-center">
+                <DialogTitle className="text-2xl sm:text-3xl font-bold text-center">
+                    {result.targetMet ? 'Awesome! Target Met!' : 'So Close!'}
+                </DialogTitle>
+                <DialogDescription className="text-center text-sm sm:text-base">
+                  Here are your results.
+                </DialogDescription>
+              </DialogHeader>
+              
+              <div className="grid grid-cols-2 gap-4 text-center p-4 rounded-lg bg-muted/50 my-4 mx-4">
+                <div>
+                  <div className="text-3xl sm:text-4xl font-bold text-teal-500">{result.cps}</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">Clicks/Second</div>
                 </div>
-                <DialogFooter className="sm:justify-center p-4">
-                  <Button onClick={() => handleDialogChange(false)}>
-                    <Goal className="mr-2" /> Try Again
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </DialogPortal>
-          </Dialog>
-        )}
-    </div>
+                <div>
+                  <div className="text-3xl sm:text-4xl font-bold text-amber-500">{result.totalClicks}</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">Total Clicks</div>
+                </div>
+                <div className="col-span-2 mt-2">
+                  <div className="text-xl sm:text-2xl font-bold">{result.target}</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">Target goals</div>
+                </div>
+              </div>
+              <DialogFooter className="sm:justify-center p-4">
+                <Button onClick={() => handleDialogChange(false)}>
+                  <Goal className="mr-2" /> Try Again
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </DialogPortal>
+        </Dialog>
+      )}
+    </>
   );
 }
+
+    
