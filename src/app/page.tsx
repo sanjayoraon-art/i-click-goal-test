@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { Goal, Target, Gamepad2, History } from 'lucide-react';
+import { Target, Gamepad2, History } from 'lucide-react';
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
@@ -112,24 +112,24 @@ export default function Home() {
     }
   };
   
-  const cps = clicks > 0 ? (clicks / (selectedTime - timeLeft)).toFixed(2) : '0.00';
+  const cps = clicks > 0 && (selectedTime - timeLeft) > 0 ? (clicks / (selectedTime - timeLeft)).toFixed(2) : '0.00';
   
   return (
-    <div className="flex flex-col min-h-screen bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <div className="max-w-3xl mx-auto">
-          <header className="text-center mb-8 max-w-4xl mx-auto">
-            <Link href="/" className="font-bold text-2xl text-primary inline-flex items-center gap-2 mb-4">
-              <Gamepad2 className="h-8 w-8" />
-              Click Games
-            </Link>
-            <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
-              Click Speed Test (CPS)
-            </h1>
-            <p className="text-muted-foreground text-lg mt-2">
-              How fast can you click? Test your clicks per second (CPS) and challenge your limits to improve your gaming reaction time!
-            </p>
-          </header>
+    <>
+    <div className="min-h-screen w-full bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
+      <main className="flex flex-col items-center justify-center p-4 md:p-8 font-headline text-foreground">
+        <header className="text-center mb-8 max-w-4xl mx-auto">
+          <Link href="/" className="font-bold text-2xl text-primary inline-flex items-center gap-2 mb-4">
+            <Gamepad2 className="h-8 w-8" />
+            Click Games
+          </Link>
+          <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
+            Click Speed Test (CPS)
+          </h1>
+          <p className="text-muted-foreground text-lg mt-2">
+            How fast can you click? Test your clicks per second (CPS) and challenge your limits to improve your gaming reaction time!
+          </p>
+        </header>
 
           <Card className="w-full max-w-2xl bg-card/80 backdrop-blur-sm shadow-2xl rounded-2xl overflow-hidden border-2 mx-auto">
             <CardContent className="p-6 md:p-8">
@@ -162,22 +162,22 @@ export default function Home() {
               >
                  {gameState === 'finished' ? (
                   <div className="relative z-10 flex flex-col items-center justify-center h-full text-white">
-                    <h2 className="text-xl font-bold">Time's Up!</h2>
-                     <div className="flex justify-center items-center gap-2 my-2">
-                        <div className="text-center p-2 rounded-lg bg-white/20">
-                            <div className="text-2xl font-bold">{cps}</div>
+                    <h2 className="text-lg md:text-2xl font-bold">Time's Up!</h2>
+                    <div className="flex justify-center items-center gap-2 my-2">
+                        <div className="text-center p-1 md:p-2 rounded-lg bg-white/20">
+                            <div className="text-xl md:text-3xl font-bold">{cps}</div>
                             <div className="text-xs">CPS</div>
                         </div>
-                        <div className="text-center p-2 rounded-lg bg-white/20">
-                            <div className="text-2xl font-bold">{clicks}</div>
+                        <div className="text-center p-1 md:p-2 rounded-lg bg-white/20">
+                            <div className="text-xl md:text-3xl font-bold">{clicks}</div>
                             <div className="text-xs">Clicks</div>
                         </div>
-                        <div className="text-center p-2 rounded-lg bg-white/20">
-                           <div className="text-2xl font-bold">{TARGETS[selectedTime]}</div>
+                        <div className="text-center p-1 md:p-2 rounded-lg bg-white/20">
+                           <div className="text-xl md:text-3xl font-bold">{TARGETS[selectedTime]}</div>
                            <div className="text-xs">Target</div>
                         </div>
                     </div>
-                    <Button onClick={resetGame} className="mt-2">
+                    <Button onClick={resetGame} className="mt-2" size="sm">
                       <History className="mr-2 h-4 w-4" />
                       Play Again
                     </Button>
@@ -334,8 +334,10 @@ export default function Home() {
             </CardContent>
           </Card>
         </section>
-        </div>
       </main>
     </div>
+    </>
   );
 }
+
+    
