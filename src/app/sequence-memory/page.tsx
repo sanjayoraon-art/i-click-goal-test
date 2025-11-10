@@ -20,7 +20,7 @@ export default function SequenceMemoryPage() {
   const [level, setLevel] = useState(1);
   const [activeBlock, setActiveBlock] = useState<number | null>(null);
   const [feedbackBlock, setFeedbackBlock] = useState<{ index: number, type: FeedbackType } | null>(null);
-  const [correctBlock, setCorrectBlock] = useState<number | null>(null);
+  const [gameOverSequence, setGameOverSequence] = useState<number[]>([]);
 
   const generateNextInSequence = useCallback(() => {
     let nextBlock;
@@ -35,7 +35,7 @@ export default function SequenceMemoryPage() {
     setUserSequence([]);
     setLevel(1);
     setFeedbackBlock(null);
-    setCorrectBlock(null);
+    setGameOverSequence([]);
     setGameState('showing');
   };
 
@@ -82,7 +82,7 @@ export default function SequenceMemoryPage() {
         }
     } else {
         setFeedbackBlock({ index, type: 'incorrect' });
-        setCorrectBlock(sequence[newPlayerSequence.length - 1]);
+        setGameOverSequence(sequence);
         setGameState('gameover');
     }
   };
@@ -106,11 +106,12 @@ export default function SequenceMemoryPage() {
     if (activeBlock === index) {
       return 'bg-primary scale-105 shadow-lg';
     }
+    if (gameState === 'gameover') {
+        if (feedbackBlock?.index === index) return 'bg-red-500';
+        if (gameOverSequence.includes(index)) return 'bg-sky-500';
+    }
     if (feedbackBlock?.index === index) {
         return feedbackBlock.type === 'correct' ? 'bg-sky-500' : 'bg-red-500';
-    }
-    if (correctBlock === index) {
-      return 'bg-sky-500';
     }
     if (gameState === 'waiting') {
         return 'cursor-pointer bg-muted/50 hover:bg-primary/20';
@@ -139,7 +140,7 @@ export default function SequenceMemoryPage() {
                  <h2 className="text-2xl font-bold text-center w-full">{getStatusMessage()}</h2>
             </div>
             <div className="text-center text-xl font-bold text-muted-foreground">
-                Level: <span className="text-primary">{gameState === 'gameover' ? level : level -1}</span>
+                Level: <span className="text-primary">{level}</span>
             </div>
           </CardHeader>
           <CardContent>
