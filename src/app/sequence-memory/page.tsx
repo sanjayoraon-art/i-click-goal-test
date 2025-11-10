@@ -91,7 +91,7 @@ export default function SequenceMemoryPage() {
   const getStatusMessage = () => {
       switch(gameState) {
           case 'idle':
-            return 'Click "Start" to begin.';
+            return <span className="text-muted-foreground">Click "Start" to begin.</span>;
           case 'showing':
             return 'Watch carefully...';
           case 'waiting':
@@ -112,7 +112,7 @@ export default function SequenceMemoryPage() {
       return 'bg-primary scale-105 shadow-lg';
     }
     if (gameState === 'gameover') {
-        if (feedbackBlock?.index === index && !gameOverSequence.includes(index)) return 'bg-red-500';
+        if (feedbackBlock?.index === index) return 'bg-red-500';
     }
     if (feedbackBlock?.index === index && feedbackBlock.type === 'incorrect') {
         return 'bg-red-500';
