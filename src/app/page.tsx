@@ -112,13 +112,12 @@ export default function Home() {
     }
   };
   
-  const cps = (clicks / selectedTime).toFixed(2);
+  const cps = clicks > 0 ? (clicks / (selectedTime - timeLeft)).toFixed(2) : '0.00';
   
   return (
-    <>
-      <div className="flex flex-col min-h-screen bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
-        <main className="flex-grow container mx-auto px-4 py-8">
-          <div className="max-w-3xl mx-auto">
+    <div className="flex flex-col min-h-screen bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
+      <main className="flex-grow container mx-auto px-4 py-8">
+        <div className="max-w-3xl mx-auto">
           <header className="text-center mb-8 max-w-4xl mx-auto">
             <Link href="/" className="font-bold text-2xl text-primary inline-flex items-center gap-2 mb-4">
               <Gamepad2 className="h-8 w-8" />
@@ -163,22 +162,22 @@ export default function Home() {
               >
                  {gameState === 'finished' ? (
                   <div className="relative z-10 flex flex-col items-center justify-center h-full text-white">
-                    <h2 className="text-2xl font-bold">Time's Up!</h2>
-                     <div className="flex justify-center items-center gap-4 my-4">
-                        <div className="text-center p-4 rounded-lg bg-white/20">
-                            <div className="text-3xl font-bold">{cps}</div>
-                            <div className="text-sm">CPS</div>
+                    <h2 className="text-xl font-bold">Time's Up!</h2>
+                     <div className="flex justify-center items-center gap-2 my-2">
+                        <div className="text-center p-2 rounded-lg bg-white/20">
+                            <div className="text-2xl font-bold">{cps}</div>
+                            <div className="text-xs">CPS</div>
                         </div>
-                        <div className="text-center p-4 rounded-lg bg-white/20">
-                            <div className="text-3xl font-bold">{clicks}</div>
-                            <div className="text-sm">Clicks</div>
+                        <div className="text-center p-2 rounded-lg bg-white/20">
+                            <div className="text-2xl font-bold">{clicks}</div>
+                            <div className="text-xs">Clicks</div>
                         </div>
-                        <div className="text-center p-4 rounded-lg bg-white/20">
-                           <div className="text-3xl font-bold">{TARGETS[selectedTime]}</div>
-                           <div className="text-sm">Target</div>
+                        <div className="text-center p-2 rounded-lg bg-white/20">
+                           <div className="text-2xl font-bold">{TARGETS[selectedTime]}</div>
+                           <div className="text-xs">Target</div>
                         </div>
                     </div>
-                    <Button onClick={resetGame} className="mt-4">
+                    <Button onClick={resetGame} className="mt-2">
                       <History className="mr-2 h-4 w-4" />
                       Play Again
                     </Button>
@@ -336,10 +335,7 @@ export default function Home() {
           </Card>
         </section>
         </div>
-        </main>
-      </div>
-    </>
+      </main>
+    </div>
   );
 }
-
-    
