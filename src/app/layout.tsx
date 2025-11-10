@@ -60,7 +60,6 @@ export default function RootLayout({
                   <div className="flex space-x-4">
                     <Link href="/" className="hover:text-primary">CPS Test</Link>
                     <Link href="/aim-trainer" className="hover:text-primary">Aim Trainer</Link>
-                    <Link href="/about" className="hover:text-primary">About</Link>
                   </div>
               </div>
           </nav>
@@ -71,6 +70,7 @@ export default function RootLayout({
               <div className="container mx-auto flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4">
                   <span>&copy; {new Date().getFullYear()} Click Games. All rights reserved.</span>
                   <div className="flex space-x-4">
+                    <Link href="/about" className="hover:text-primary">About</Link>
                     <Link href="/privacy-policy" className="hover:text-primary">Privacy Policy</Link>
                     <Link href="/terms-and-conditions" className="hover:text-primary">Terms & Conditions</Link>
                   </div>
