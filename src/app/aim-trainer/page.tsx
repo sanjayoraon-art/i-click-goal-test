@@ -5,11 +5,9 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { History, MousePointerClick, Crosshair, TrendingUp } from 'lucide-react';
+import { History, MousePointerClick, Crosshair, Target } from 'lucide-react';
 import type { Metadata } from 'next';
 
-// This is a client component, so we can't export metadata directly.
-// However, we can create a similar structure for reference or for parent layouts.
 const metadata: Metadata = {
   title: 'Aim Trainer - Test & Improve Your Aiming Skills',
   description: 'Sharpen your mouse accuracy and reaction time with our free Aim Trainer game. Click targets, track your score, and improve your FPS gaming skills.',
@@ -23,11 +21,14 @@ interface TargetPosition {
   left: string;
 }
 
+const AIM_TRAINER_TARGET = 25;
+const GAME_DURATION = 30;
+
 export default function AimTrainerPage() {
   const [gameState, setGameState] = useState<GameState>('idle');
   const [score, setScore] = useState(0);
   const [misses, setMisses] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(30);
+  const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
   const [targetPosition, setTargetPosition] = useState<TargetPosition>({ top: '50%', left: '50%' });
   const gameAreaRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -35,7 +36,6 @@ export default function AimTrainerPage() {
   const moveTarget = useCallback(() => {
     if (gameAreaRef.current) {
       const { width, height } = gameAreaRef.current.getBoundingClientRect();
-      // Ensure target doesn't go off-screen. Target size is 40px.
       const newTop = Math.random() * (height - 40);
       const newLeft = Math.random() * (width - 40);
       setTargetPosition({ top: `${newTop}px`, left: `${newLeft}px` });
@@ -45,7 +45,7 @@ export default function AimTrainerPage() {
   const startGame = () => {
     setScore(0);
     setMisses(0);
-    setTimeLeft(30);
+    setTimeLeft(GAME_DURATION);
     setGameState('running');
     moveTarget();
   };
@@ -77,7 +77,7 @@ export default function AimTrainerPage() {
   }, [gameState, endGame]);
 
   const handleTargetClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent miss click from firing
+    e.stopPropagation();
     if (gameState === 'running') {
       setScore(prev => prev + 1);
       moveTarget();
@@ -99,7 +99,7 @@ export default function AimTrainerPage() {
           Aim Trainer
         </h1>
         <p className="text-muted-foreground text-lg mt-2">
-          Test your precision and speed. Click the targets as fast as you can in 30 seconds!
+          Hit {AIM_TRAINER_TARGET} targets in 30 seconds to prove your aim! Click the targets as they appear.
         </p>
       </header>
       
@@ -131,38 +131,51 @@ export default function AimTrainerPage() {
               onClick={handleMissClick}
             >
               {gameState === 'idle' && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/80 z-10">
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/80 z-10 p-4">
                    <div className="mx-auto bg-primary/10 rounded-full p-4 w-fit mb-4">
                     <MousePointerClick className="h-12 w-12 text-primary" />
                   </div>
-                  <h2 className="text-2xl font-bold mb-4">Improve Your Aim</h2>
+                  <h2 className="text-2xl font-bold mb-2">Improve Your Aim</h2>
+                   <div className="flex items-center gap-2 text-lg text-muted-foreground mb-4">
+                      <Target className="h-5 w-5" />
+                      <span>Target: <strong>{AIM_TRAINER_TARGET} hits</strong></span>
+                    </div>
                   <Button onClick={startGame} size="lg">Start Game</Button>
                 </div>
               )}
 
               {gameState === 'running' && (
-                <div
-                  className="absolute w-10 h-10 bg-primary rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-all duration-75"
-                  style={{ top: targetPosition.top, left: targetPosition.left }}
-                  onClick={handleTargetClick}
-                >
-                  <Crosshair className="w-6 h-6 text-primary-foreground" />
-                </div>
+                <>
+                  <div
+                    className="absolute w-10 h-10 bg-primary rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-all duration-75"
+                    style={{ top: targetPosition.top, left: targetPosition.left }}
+                    onClick={handleTargetClick}
+                  >
+                    <Crosshair className="w-6 h-6 text-primary-foreground" />
+                  </div>
+                   <div className="absolute top-4 left-4 text-left text-lg bg-black/20 text-white px-3 py-1 rounded-md">
+                      Target: {AIM_TRAINER_TARGET}
+                    </div>
+                </>
               )}
               
               {gameState === 'finished' && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 z-10 p-4">
                   <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Game Over!</h2>
-                  <div className="flex justify-center items-stretch gap-2 md:gap-4 my-4">
-                      <div className="text-center p-2 md:p-4 rounded-lg bg-muted w-28 md:w-36">
+                  <div className="grid grid-cols-2 md:grid-cols-4 justify-center items-stretch gap-2 md:gap-4 my-4">
+                      <div className="text-center p-2 md:p-4 rounded-lg bg-muted min-w-[7rem] md:min-w-[8rem]">
                           <div className="text-2xl md:text-5xl font-bold">{score}</div>
                           <div className="text-xs md:text-sm uppercase">Hits</div>
                       </div>
-                      <div className="text-center p-2 md:p-4 rounded-lg bg-muted w-28 md:w-36">
+                       <div className="text-center p-2 md:p-4 rounded-lg bg-muted min-w-[7rem] md:min-w-[8rem]">
+                         <div className="text-2xl md:text-5xl font-bold">{AIM_TRAINER_TARGET}</div>
+                         <div className="text-xs md:text-sm uppercase">Target</div>
+                      </div>
+                      <div className="text-center p-2 md:p-4 rounded-lg bg-muted min-w-[7rem] md:min-w-[8rem]">
                           <div className="text-2xl md:text-5xl font-bold">{misses}</div>
                           <div className="text-xs md:text-sm uppercase">Misses</div>
                       </div>
-                      <div className="text-center p-2 md:p-4 rounded-lg bg-muted w-28 md:w-36">
+                      <div className="text-center p-2 md:p-4 rounded-lg bg-muted min-w-[7rem] md:min-w-[8rem]">
                          <div className="text-2xl md:text-5xl font-bold">{accuracy}%</div>
                          <div className="text-xs md:text-sm uppercase">Accuracy</div>
                       </div>
@@ -197,5 +210,3 @@ export default function AimTrainerPage() {
     </div>
   );
 }
-
-    
