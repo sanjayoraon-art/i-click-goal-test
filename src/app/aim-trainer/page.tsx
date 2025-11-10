@@ -203,25 +203,25 @@ export default function AimTrainerPage() {
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 z-10 p-4">
                   <h2 className="text-xl font-bold text-primary mb-2">Finished!</h2>
                   <h3 className="text-base text-muted-foreground mb-4">Level {selectedLevel.name} Complete</h3>
-                  <div className="grid grid-cols-2 gap-2 text-center mb-4">
+                  <div className="grid grid-cols-2 gap-2 text-center mb-4 max-w-xs">
                     <div className="p-2 rounded-lg bg-green-100 dark:bg-green-900/50">
-                      <div className="text-xl font-bold">{score}</div>
+                      <div className="text-lg font-bold">{score}</div>
                       <div className="text-xs uppercase">Hits</div>
                     </div>
                     <div className="p-2 rounded-lg bg-red-100 dark:bg-red-900/50">
-                      <div className="text-xl font-bold">{misses}</div>
+                      <div className="text-lg font-bold">{misses}</div>
                       <div className="text-xs uppercase">Misses</div>
                     </div>
                     <div className="p-2 rounded-lg bg-sky-100 dark:bg-sky-900/50">
-                      <div className="text-xl font-bold text-sky-500">{selectedLevel.duration}s</div>
+                      <div className="text-lg font-bold text-sky-500">{selectedLevel.duration}s</div>
                       <div className="text-xs uppercase">Time</div>
                     </div>
                     <div className="p-2 rounded-lg bg-amber-100 dark:bg-amber-900/50">
-                      <div className="text-xl font-bold text-amber-500">{accuracy}%</div>
+                      <div className="text-lg font-bold text-amber-500">{accuracy}%</div>
                       <div className="text-xs uppercase">Accuracy</div>
                     </div>
                   </div>
-                  <Button onClick={() => setGameState('idle')} size="lg" className="mt-4 w-full max-w-xs">
+                  <Button onClick={() => setGameState('idle')} size="lg" className="mt-4 py-3">
                     <History className="mr-2 h-5 w-5" />
                     Play Again
                   </Button>
