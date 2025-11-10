@@ -9,6 +9,8 @@ import { BrainCircuit, History, Lightbulb } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 type GameState = 'idle' | 'showing' | 'waiting' | 'gameover';
+type FeedbackType = 'correct' | 'incorrect' | null;
+
 const GRID_SIZE = 9;
 
 export default function SequenceMemoryPage() {
@@ -17,9 +19,13 @@ export default function SequenceMemoryPage() {
   const [userSequence, setUserSequence] = useState<number[]>([]);
   const [level, setLevel] = useState(1);
   const [activeBlock, setActiveBlock] = useState<number | null>(null);
+  const [feedbackBlock, setFeedbackBlock] = useState<{ index: number, type: FeedbackType } | null>(null);
 
   const generateNextInSequence = useCallback(() => {
-    const nextBlock = Math.floor(Math.random() * GRID_SIZE);
+    let nextBlock;
+    do {
+      nextBlock = Math.floor(Math.random() * GRID_SIZE);
+    } while (sequence.length > 0 && nextBlock === sequence[sequence.length - 1]);
     return [...sequence, nextBlock];
   }, [sequence]);
 
@@ -49,25 +55,34 @@ export default function SequenceMemoryPage() {
         setUserSequence([]);
         showSequence(newSequence);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [level, gameState]);
 
 
   const handleBlockClick = (index: number) => {
-    if (gameState !== 'waiting') return;
+    if (gameState !== 'waiting' || feedbackBlock) return;
 
     const newPlayerSequence = [...userSequence, index];
     setUserSequence(newPlayerSequence);
+    
+    const isCorrect = newPlayerSequence[newPlayerSequence.length - 1] === sequence[newPlayerSequence.length - 1];
 
-    // Check if the current click is correct
-    if (newPlayerSequence[newPlayerSequence.length - 1] !== sequence[newPlayerSequence.length - 1]) {
-      setGameState('gameover');
-      return;
-    }
+    if (isCorrect) {
+        setFeedbackBlock({ index, type: 'correct' });
+        setTimeout(() => setFeedbackBlock(null), 200);
 
-    // Check if the sequence is complete
-    if (newPlayerSequence.length === sequence.length) {
-      setLevel(prevLevel => prevLevel + 1);
-      setGameState('showing');
+        if (newPlayerSequence.length === sequence.length) {
+            setTimeout(() => {
+                setLevel(prevLevel => prevLevel + 1);
+                setGameState('showing');
+            }, 500);
+        }
+    } else {
+        setFeedbackBlock({ index, type: 'incorrect' });
+        setTimeout(() => {
+            setGameState('gameover');
+            setFeedbackBlock(null);
+        }, 500);
     }
   };
   
@@ -84,6 +99,19 @@ export default function SequenceMemoryPage() {
           default:
             return '';
       }
+  }
+
+  const getBlockClass = (index: number) => {
+    if (activeBlock === index) {
+      return 'bg-primary scale-105 shadow-lg';
+    }
+    if (feedbackBlock?.index === index) {
+        return feedbackBlock.type === 'correct' ? 'bg-sky-500' : 'bg-red-500';
+    }
+    if (gameState === 'waiting') {
+        return 'cursor-pointer bg-muted/50 hover:bg-primary/20';
+    }
+    return 'bg-muted/30';
   }
 
   return (
@@ -126,8 +154,7 @@ export default function SequenceMemoryPage() {
                     onClick={() => handleBlockClick(i)}
                     className={cn(
                         'w-full aspect-square rounded-lg transition-all duration-200',
-                        gameState === 'waiting' ? 'cursor-pointer bg-muted/50 hover:bg-primary/20' : 'bg-muted/30',
-                        activeBlock === i && 'bg-primary scale-105 shadow-lg'
+                        getBlockClass(i)
                     )}
                     />
                 ))}
