@@ -201,21 +201,21 @@ export default function AimTrainerPage() {
               {gameState === 'finished' && (
                 <div className="absolute inset-0 flex flex-col items-center justify-around bg-background/90 z-10 p-4">
                   <h2 className="text-2xl md:text-3xl font-bold text-primary text-center mb-2">Level {selectedLevel.name} Finished!</h2>
-                  <div className="grid grid-cols-2 md:grid-cols-4 justify-center items-stretch gap-2 md:gap-4">
-                      <div className="text-center p-2 rounded-lg bg-green-100 dark:bg-green-900/50 min-w-[5rem]">
-                          <div className="text-2xl md:text-3xl font-bold">{score}</div>
+                  <div className="grid grid-cols-2 md:grid-cols-4 justify-center items-stretch gap-4">
+                      <div className="text-center p-4 rounded-lg bg-green-100 dark:bg-green-900/50 min-w-[5rem]">
+                          <div className="text-2xl md:text-4xl font-bold">{score}</div>
                           <div className="text-xs uppercase">Hits</div>
                       </div>
-                       <div className="text-center p-2 rounded-lg bg-teal-100 dark:bg-teal-900/50 min-w-[5rem]">
-                         <div className="text-2xl md:text-3xl font-bold text-teal-500">{selectedLevel.duration}s</div>
+                       <div className="text-center p-4 rounded-lg bg-teal-100 dark:bg-teal-900/50 min-w-[5rem]">
+                         <div className="text-2xl md:text-4xl font-bold text-teal-500">{selectedLevel.duration}s</div>
                          <div className="text-xs uppercase">Time</div>
                       </div>
-                      <div className="text-center p-2 rounded-lg bg-red-100 dark:bg-red-900/50 min-w-[5rem]">
-                          <div className="text-2xl md:text-3xl font-bold">{misses}</div>
+                      <div className="text-center p-4 rounded-lg bg-red-100 dark:bg-red-900/50 min-w-[5rem]">
+                          <div className="text-2xl md:text-4xl font-bold">{misses}</div>
                           <div className="text-xs uppercase">Misses</div>
                       </div>
-                      <div className="text-center p-2 rounded-lg bg-amber-100 dark:bg-amber-900/50 min-w-[5rem]">
-                         <div className="text-2xl md:text-3xl font-bold text-amber-500">{accuracy}%</div>
+                      <div className="text-center p-4 rounded-lg bg-amber-100 dark:bg-amber-900/50 min-w-[5rem]">
+                         <div className="text-2xl md:text-4xl font-bold text-amber-500">{accuracy}%</div>
                          <div className="text-xs uppercase">Accuracy</div>
                       </div>
                   </div>
