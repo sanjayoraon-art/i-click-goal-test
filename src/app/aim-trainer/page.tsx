@@ -194,7 +194,7 @@ export default function AimTrainerPage() {
               
               {gameState === 'finished' && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 z-10 p-4">
-                  <h2 className="text-2xl md:text-3xl font-bold mb-4 text-primary">Level {selectedLevel.name} Finished!</h2>
+                  <h2 className="text-2xl md:text-3xl font-bold mb-4 text-primary text-center">Level {selectedLevel.name} Finished!</h2>
                   <div className="grid grid-cols-2 md:grid-cols-4 justify-center items-stretch gap-2 md:gap-4 my-4">
                       <div className="text-center p-2 rounded-lg bg-muted min-w-[5rem]">
                           <div className="text-2xl md:text-3xl font-bold">{score}</div>
