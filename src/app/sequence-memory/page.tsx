@@ -107,14 +107,17 @@ export default function SequenceMemoryPage() {
       return 'bg-primary scale-105 shadow-lg';
     }
     if (gameState === 'gameover') {
-        if (feedbackBlock?.index === index) return 'bg-red-500';
-        if (gameOverSequence.includes(index)) return 'bg-sky-500';
+        if (feedbackBlock?.index === index && !gameOverSequence.includes(index)) return 'bg-red-500';
     }
     if (feedbackBlock?.index === index) {
-        return feedbackBlock.type === 'correct' ? 'bg-sky-500' : 'bg-red-500';
+        if (feedbackBlock.type === 'incorrect') return 'bg-red-500';
+        if (feedbackBlock.type === 'correct') return 'bg-sky-500';
     }
-    if (gameState === 'waiting') {
+    if(gameState === 'waiting') {
         return 'cursor-pointer bg-muted/50 hover:bg-primary/20';
+    }
+    if (gameState === 'gameover') {
+      if (gameOverSequence.includes(index)) return 'bg-sky-500/50';
     }
     return 'bg-muted/30';
   }
@@ -154,18 +157,26 @@ export default function SequenceMemoryPage() {
             ) : (
                 <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-sm mx-auto">
                 {[...Array(GRID_SIZE)].map((_, i) => {
-                  const sequenceIndex = gameOverSequence.indexOf(i);
+                  const sequenceIndices = gameOverSequence.reduce((acc: number[], val, idx) => {
+                    if (val === i) acc.push(idx + 1);
+                    return acc;
+                  }, []);
+
                   return (
                     <div
                     key={i}
                     onClick={() => handleBlockClick(i)}
                     className={cn(
-                        'w-full aspect-square rounded-lg transition-all duration-200 flex items-center justify-center text-3xl font-bold text-white',
+                        'w-full aspect-square rounded-lg transition-all duration-200 flex items-center justify-center text-xl sm:text-2xl font-bold text-white',
                         getBlockClass(i)
                     )}
                     >
-                      {gameState === 'gameover' && sequenceIndex !== -1 && (
-                        <span>{sequenceIndex + 1}</span>
+                      {gameState === 'gameover' && sequenceIndices.length > 0 && (
+                        <div className="flex flex-wrap gap-1 justify-center items-center">
+                          {sequenceIndices.map(seqIdx => (
+                            <span key={seqIdx} className="bg-sky-500 rounded-full h-8 w-8 flex items-center justify-center text-sm">{seqIdx}</span>
+                          ))}
+                        </div>
                       )}
                     </div>
                   );
