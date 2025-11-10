@@ -5,9 +5,19 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { Goal, Target, Gamepad2 } from 'lucide-react';
+import { Goal, Target, Gamepad2, History } from 'lucide-react';
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
 
 const TIME_OPTIONS = [5, 10, 15, 30, 60, 100];
 
@@ -112,6 +122,8 @@ export default function Home() {
     }
   };
   
+  const cps = (clicks / (selectedTime - timeLeft)).toFixed(2);
+  
   return (
     <>
       <div className="flex flex-col min-h-screen bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
@@ -174,22 +186,20 @@ export default function Home() {
                 </div>
                 
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Button
-                    variant="default"
-                    size="lg"
-                    className="w-24 h-24 rounded-full text-2xl font-bold bg-primary hover:bg-primary/90 text-primary-foreground border-0 shadow-lg"
-                    onClick={(e) => { e.stopPropagation(); handleAreaClick(); }}
-                  >
-                    Click
-                  </Button>
+                   {gameState === 'idle' && (
+                    <Button
+                      variant="default"
+                      size="lg"
+                      className="w-24 h-24 rounded-full text-2xl font-bold bg-primary hover:bg-primary/90 text-primary-foreground border-0 shadow-lg"
+                      onClick={(e) => { e.stopPropagation(); handleAreaClick(); }}
+                    >
+                      Click
+                    </Button>
+                  )}
                 </div>
 
                 <div className="relative z-10 flex flex-col items-center mt-auto">
-                    { gameState === 'finished' ? (
-                        <Button onClick={resetGame} className="mt-4">
-                          <Goal className="mr-2" /> Try Again
-                        </Button>
-                    ) : (
+                    { gameState !== 'finished' && (
                       <>
                         <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg text-white">{TARGETS[selectedTime]}</div>
                         <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80 text-white">
@@ -205,6 +215,33 @@ export default function Home() {
             </CardContent>
           </Card>
           
+           <AlertDialog open={gameState === 'finished'} onOpenChange={(isOpen) => !isOpen && resetGame()}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-center text-2xl font-bold">Time's Up!</AlertDialogTitle>
+                <AlertDialogDescription className="text-center text-lg">
+                  You clicked <span className="font-bold text-primary">{clicks}</span> times in {selectedTime} seconds.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <div className="flex justify-center items-center gap-4 my-4">
+                  <div className="text-center p-4 rounded-lg bg-muted">
+                      <div className="text-3xl font-bold text-primary">{(clicks / selectedTime).toFixed(2)}</div>
+                      <div className="text-sm text-muted-foreground">CPS</div>
+                  </div>
+                   <div className="text-center p-4 rounded-lg bg-muted">
+                      <div className="text-3xl font-bold">{clicks}</div>
+                      <div className="text-sm text-muted-foreground">Total Clicks</div>
+                  </div>
+              </div>
+              <AlertDialogFooter>
+                <Button onClick={resetGame} className="w-full">
+                  <History className="mr-2 h-4 w-4" />
+                  Play Again
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+
           <section className="w-full max-w-4xl mx-auto mt-12 text-left">
             <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl overflow-hidden border-2">
               <CardHeader>
