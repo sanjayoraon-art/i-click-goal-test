@@ -6,13 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { History, MousePointerClick, Crosshair, Target } from 'lucide-react';
-import type { Metadata } from 'next';
-
-const metadata: Metadata = {
-  title: 'Aim Trainer - Test & Improve Your Aiming Skills',
-  description: 'Sharpen your mouse accuracy and reaction time with our free Aim Trainer game. Click targets, track your score, and improve your FPS gaming skills across 5 difficulty levels.',
-  keywords: ['aim trainer', 'aim test', 'FPS trainer', 'mouse accuracy', 'reaction time game', 'aiming levels'],
-};
 
 type GameState = 'idle' | 'running' | 'finished';
 
@@ -207,7 +200,7 @@ export default function AimTrainerPage() {
               
               {gameState === 'finished' && (
                 <div className="absolute inset-0 flex flex-col items-center justify-around bg-background/90 z-10 p-4">
-                  <h2 className="text-2xl md:text-3xl font-bold text-primary text-center">Level {selectedLevel.name} Finished!</h2>
+                  <h2 className="text-2xl md:text-3xl font-bold text-primary text-center mb-2">Level {selectedLevel.name} Finished!</h2>
                   <div className="grid grid-cols-2 md:grid-cols-4 justify-center items-stretch gap-2 md:gap-4">
                       <div className="text-center p-2 rounded-lg bg-green-100 dark:bg-green-900/50 min-w-[5rem]">
                           <div className="text-2xl md:text-3xl font-bold">{score}</div>
@@ -256,5 +249,3 @@ export default function AimTrainerPage() {
     </div>
   );
 }
-
-    
