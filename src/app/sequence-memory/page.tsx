@@ -91,7 +91,7 @@ export default function SequenceMemoryPage() {
   const getStatusMessage = () => {
       switch(gameState) {
           case 'idle':
-            return <span className="text-primary-foreground bg-primary p-2 rounded-md">Click "Start" to begin.</span>;
+            return <span className="text-sky-500 bg-sky-100 p-2 rounded-md">Click "Start" to begin.</span>;
           case 'showing':
             return 'Watch carefully...';
           case 'waiting':
@@ -124,7 +124,7 @@ export default function SequenceMemoryPage() {
         return 'cursor-pointer bg-muted/50 hover:bg-primary/20';
     }
     if (gameState === 'gameover') {
-      if (gameOverSequence.includes(index)) return 'bg-sky-500/50';
+      if (gameOverSequence.includes(index)) return 'bg-primary/50';
     }
     return 'bg-muted/30';
   }
