@@ -194,23 +194,23 @@ export default function AimTrainerPage() {
               
               {gameState === 'finished' && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 z-10 p-4">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Level {selectedLevel.name} Finished!</h2>
+                  <h2 className="text-2xl md:text-3xl font-bold mb-4 text-primary">Level {selectedLevel.name} Finished!</h2>
                   <div className="grid grid-cols-2 md:grid-cols-4 justify-center items-stretch gap-2 md:gap-4 my-4">
-                      <div className="text-center p-2 md:p-4 rounded-lg bg-muted min-w-[6rem] md:min-w-[8rem]">
-                          <div className="text-2xl md:text-4xl font-bold">{score}</div>
-                          <div className="text-xs md:text-sm uppercase">Hits</div>
+                      <div className="text-center p-2 rounded-lg bg-muted min-w-[5rem]">
+                          <div className="text-2xl md:text-3xl font-bold">{score}</div>
+                          <div className="text-xs uppercase">Hits</div>
                       </div>
-                       <div className="text-center p-2 md:p-4 rounded-lg bg-muted min-w-[6rem] md:min-w-[8rem]">
-                         <div className="text-2xl md:text-4xl font-bold">{selectedLevel.targets}</div>
-                         <div className="text-xs md:text-sm uppercase">Target</div>
+                       <div className="text-center p-2 rounded-lg bg-muted min-w-[5rem]">
+                         <div className="text-2xl md:text-3xl font-bold">{selectedLevel.targets}</div>
+                         <div className="text-xs uppercase">Target</div>
                       </div>
-                      <div className="text-center p-2 md:p-4 rounded-lg bg-muted min-w-[6rem] md:min-w-[8rem]">
-                          <div className="text-2xl md:text-4xl font-bold">{misses}</div>
-                          <div className="text-xs md:text-sm uppercase">Misses</div>
+                      <div className="text-center p-2 rounded-lg bg-muted min-w-[5rem]">
+                          <div className="text-2xl md:text-3xl font-bold">{misses}</div>
+                          <div className="text-xs uppercase">Misses</div>
                       </div>
-                      <div className="text-center p-2 md:p-4 rounded-lg bg-muted min-w-[6rem] md:min-w-[8rem]">
-                         <div className="text-2xl md:text-4xl font-bold">{accuracy}%</div>
-                         <div className="text-xs md:text-sm uppercase">Accuracy</div>
+                      <div className="text-center p-2 rounded-lg bg-muted min-w-[5rem]">
+                         <div className="text-2xl md:text-3xl font-bold">{accuracy}%</div>
+                         <div className="text-xs uppercase">Accuracy</div>
                       </div>
                   </div>
                   <Button onClick={() => setGameState('idle')} size="lg" className="mt-4">
