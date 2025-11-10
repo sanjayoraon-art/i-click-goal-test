@@ -63,6 +63,7 @@ export default function RootLayout({
                     <Link href="/aim-trainer" className="hover:text-primary">Aim Trainer</Link>
                     <Link href="/reaction-time" className="hover:text-primary">Reaction Time</Link>
                     <Link href="/sequence-memory" className="hover:text-primary">Sequence Memory</Link>
+                    <Link href="/number-memory" className="hover:text-primary">Number Memory</Link>
                     <Link href="/typing-test" className="hover:text-primary">Typing Test</Link>
                   </div>
               </div>

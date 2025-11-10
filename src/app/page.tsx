@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { Target, Gamepad2, History, MousePointerClick, BrainCircuit, Type, Zap } from 'lucide-react';
+import { Target, Gamepad2, History, MousePointerClick, BrainCircuit, Type, Zap, Hash } from 'lucide-react';
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
@@ -45,16 +45,22 @@ const otherGames = [
     icon: <Zap className="h-10 w-10 text-primary" />,
   },
   {
-    title: 'Typing Test',
-    description: 'Measure your typing speed and accuracy in WPM.',
-    href: '/typing-test',
-    icon: <Type className="h-10 w-10 text-primary" />,
-  },
-  {
     title: 'Sequence Memory',
     description: 'Test your short-term memory by repeating sequences.',
     href: '/sequence-memory',
     icon: <BrainCircuit className="h-10 w-10 text-primary" />,
+  },
+  {
+    title: 'Number Memory',
+    description: 'Memorize the numbers that appear and recall them.',
+    href: '/number-memory',
+    icon: <Hash className="h-10 w-10 text-primary" />,
+  },
+  {
+    title: 'Typing Test',
+    description: 'Measure your typing speed and accuracy in WPM.',
+    href: '/typing-test',
+    icon: <Type className="h-10 w-10 text-primary" />,
   },
 ];
 
