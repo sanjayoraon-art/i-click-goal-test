@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Zap, History, MousePointerClick, Timer } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 
 type GameState = 'idle' | 'waiting' | 'measuring' | 'finished' | 'too_soon';
@@ -162,14 +163,28 @@ export default function ReactionTimePage() {
           </CardContent>
            {history.length > 0 && (
             <CardHeader>
-              <CardTitle className="text-xl">Last {history.length} attempts</CardTitle>
-              <div className="flex justify-center gap-2 pt-2">
-                {history.map((time, index) => (
-                  <div key={index} className="p-2 bg-muted rounded-md text-sm font-semibold">
-                    {time}ms
-                  </div>
-                ))}
-              </div>
+              <CardTitle className="text-xl mb-4">Last {history.length} attempts (ms)</CardTitle>
+                <Carousel
+                  opts={{
+                    align: "start",
+                    loop: false,
+                  }}
+                  className="w-full max-w-xs mx-auto"
+                >
+                  <CarouselContent>
+                    {history.map((time, index) => (
+                      <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                        <div className="p-1">
+                           <div className="p-2 bg-muted rounded-md text-lg font-semibold">
+                              {time}ms
+                            </div>
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </Carousel>
             </CardHeader>
            )}
         </Card>
