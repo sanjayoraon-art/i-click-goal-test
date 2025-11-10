@@ -157,27 +157,27 @@ export default function Home() {
                     gameState !== 'finished' && 'cursor-pointer hover:scale-[1.02]',
                     isPulsing && 'animate-pulse-click'
                 )}
-                onClick={gameState !== 'finished' ? handleAreaClick : undefined}
+                onClick={handleAreaClick}
                 onMouseDown={(e) => e.preventDefault()}
               >
                  {gameState === 'finished' ? (
                   <div className="relative z-10 flex flex-col items-center justify-center h-full text-white">
-                    <h2 className="text-lg md:text-2xl font-bold">Time's Up!</h2>
-                    <div className="flex justify-center items-center gap-2 my-2">
-                        <div className="text-center p-1 md:p-2 rounded-lg bg-white/20">
-                            <div className="text-xl md:text-3xl font-bold">{cps}</div>
-                            <div className="text-xs">CPS</div>
+                    <h2 className="text-2xl md:text-4xl font-bold">Time's Up!</h2>
+                    <div className="flex justify-center items-center gap-2 md:gap-4 my-2 md:my-4">
+                        <div className="text-center p-2 md:p-4 rounded-lg bg-white/20">
+                            <div className="text-2xl md:text-5xl font-bold">{cps}</div>
+                            <div className="text-xs md:text-sm">CPS</div>
                         </div>
-                        <div className="text-center p-1 md:p-2 rounded-lg bg-white/20">
-                            <div className="text-xl md:text-3xl font-bold">{clicks}</div>
-                            <div className="text-xs">Clicks</div>
+                        <div className="text-center p-2 md:p-4 rounded-lg bg-white/20">
+                            <div className="text-2xl md:text-5xl font-bold">{clicks}</div>
+                            <div className="text-xs md:text-sm">Clicks</div>
                         </div>
-                        <div className="text-center p-1 md:p-2 rounded-lg bg-white/20">
-                           <div className="text-xl md:text-3xl font-bold">{TARGETS[selectedTime]}</div>
-                           <div className="text-xs">Target</div>
+                        <div className="text-center p-2 md:p-4 rounded-lg bg-white/20">
+                           <div className="text-2xl md:text-5xl font-bold">{TARGETS[selectedTime]}</div>
+                           <div className="text-xs md:text-sm">Target</div>
                         </div>
                     </div>
-                    <Button onClick={resetGame} className="mt-2" size="sm">
+                    <Button onClick={resetGame} className="mt-2" size="lg">
                       <History className="mr-2 h-4 w-4" />
                       Play Again
                     </Button>
@@ -339,7 +339,3 @@ export default function Home() {
     </>
   );
 }
-
-    
-
-    
