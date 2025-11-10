@@ -24,9 +24,10 @@ export default function SequenceMemoryPage() {
 
   const generateNextInSequence = useCallback(() => {
     let nextBlock;
+    const lastBlock = sequence.length > 0 ? sequence[sequence.length - 1] : -1;
     do {
       nextBlock = Math.floor(Math.random() * GRID_SIZE);
-    } while (sequence.length > 0 && nextBlock === sequence[sequence.length - 1]);
+    } while (nextBlock === lastBlock);
     return [...sequence, nextBlock];
   }, [sequence]);
 
@@ -52,7 +53,7 @@ export default function SequenceMemoryPage() {
   }, []);
 
   useEffect(() => {
-    if (gameState === 'showing') {
+    if (gameState === 'showing' && level > sequence.length) {
         const newSequence = generateNextInSequence();
         setSequence(newSequence);
         setUserSequence([]);
@@ -96,7 +97,11 @@ export default function SequenceMemoryPage() {
           case 'waiting':
             return 'Your turn!';
           case 'gameover':
-            return `Game Over! You reached level ${level}.`;
+            return (
+              <span>
+                <span className="text-red-500">Game Over!</span> You reached level {level}.
+              </span>
+            );
           default:
             return '';
       }
@@ -113,7 +118,7 @@ export default function SequenceMemoryPage() {
         return 'bg-red-500';
     }
     if(gameState === 'waiting' && feedbackBlock?.index === index && feedbackBlock.type === 'correct') {
-        return 'cursor-pointer bg-sky-500';
+        return 'bg-sky-500';
     }
     if(gameState === 'waiting') {
         return 'cursor-pointer bg-muted/50 hover:bg-primary/20';
