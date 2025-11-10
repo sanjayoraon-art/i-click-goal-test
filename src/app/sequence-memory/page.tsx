@@ -20,6 +20,7 @@ export default function SequenceMemoryPage() {
   const [level, setLevel] = useState(1);
   const [activeBlock, setActiveBlock] = useState<number | null>(null);
   const [feedbackBlock, setFeedbackBlock] = useState<{ index: number, type: FeedbackType } | null>(null);
+  const [correctBlock, setCorrectBlock] = useState<number | null>(null);
 
   const generateNextInSequence = useCallback(() => {
     let nextBlock;
@@ -34,6 +35,7 @@ export default function SequenceMemoryPage() {
     setUserSequence([]);
     setLevel(1);
     setFeedbackBlock(null);
+    setCorrectBlock(null);
     setGameState('showing');
   };
 
@@ -80,6 +82,7 @@ export default function SequenceMemoryPage() {
         }
     } else {
         setFeedbackBlock({ index, type: 'incorrect' });
+        setCorrectBlock(sequence[newPlayerSequence.length - 1]);
         setGameState('gameover');
     }
   };
@@ -105,6 +108,9 @@ export default function SequenceMemoryPage() {
     }
     if (feedbackBlock?.index === index) {
         return feedbackBlock.type === 'correct' ? 'bg-sky-500' : 'bg-red-500';
+    }
+    if (correctBlock === index) {
+      return 'bg-sky-500';
     }
     if (gameState === 'waiting') {
         return 'cursor-pointer bg-muted/50 hover:bg-primary/20';
