@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Goal, Target, Gamepad2 } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogPortal } from '@/components/ui/dialog';
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
@@ -23,14 +22,6 @@ const TARGETS: { [key: number]: number } = {
 
 type GameState = 'idle' | 'running' | 'finished';
 
-type Result = {
-  cps: number;
-  totalClicks: number;
-  timeUsed: number;
-  targetMet: boolean;
-  target: number;
-};
-
 const BUTTON_COLORS = [
   'bg-sky-500 hover:bg-sky-600',
   'bg-teal-500 hover:bg-teal-600',
@@ -45,17 +36,10 @@ export default function Home() {
   const [gameState, setGameState] = useState<GameState>('idle');
   const [clicks, setClicks] = useState(0);
   const [timeLeft, setTimeLeft] = useState(selectedTime);
-  const [result, setResult] = useState<Result | null>(null);
   const [isPulsing, setIsPulsing] = useState(false);
-  const [showResultDialog, setShowResultDialog] = useState(false);
-
+  
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const clicksRef = useRef(clicks);
   const selectedTimeRef = useRef(selectedTime);
-
-  useEffect(() => {
-    clicksRef.current = clicks;
-  }, [clicks]);
 
   useEffect(() => {
     selectedTimeRef.current = selectedTime;
@@ -68,23 +52,6 @@ export default function Home() {
       intervalRef.current = null;
     }
     setGameState('finished');
-
-    const timeUsed = selectedTimeRef.current;
-    const finalClicks = clicksRef.current;
-    const cps = parseFloat((finalClicks / timeUsed).toFixed(2));
-    const target = TARGETS[timeUsed];
-    const targetMet = finalClicks >= target;
-
-    const newResult: Result = {
-      cps,
-      totalClicks: finalClicks,
-      timeUsed,
-      targetMet,
-      target,
-    };
-    
-    setResult(newResult);
-    setShowResultDialog(true);
   }, []);
 
   const resetGame = useCallback(() => {
@@ -92,8 +59,6 @@ export default function Home() {
     setGameState('idle');
     setClicks(0);
     setTimeLeft(selectedTime);
-    setResult(null);
-    setShowResultDialog(false);
   }, [selectedTime]);
 
   const handleTimeChange = (time: number) => {
@@ -146,18 +111,12 @@ export default function Home() {
         setTimeout(() => setIsPulsing(false), 100);
     }
   };
-
-  const handleDialogChange = (open: boolean) => {
-    if (!open) {
-        resetGame();
-    }
-    setShowResultDialog(open);
-  };
   
   return (
     <>
-      <div className="min-h-screen w-full bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
-        <main className="flex flex-col items-center justify-center p-4 md:p-8 font-headline text-foreground">
+      <div className="flex flex-col min-h-screen bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
+        <main className="flex-grow container mx-auto px-4 py-8">
+          <div className="max-w-3xl mx-auto">
           <header className="text-center mb-8 max-w-4xl mx-auto">
             <Link href="/" className="font-bold text-2xl text-primary inline-flex items-center gap-2 mb-4">
               <Gamepad2 className="h-8 w-8" />
@@ -171,7 +130,7 @@ export default function Home() {
             </p>
           </header>
 
-          <Card className="w-full max-w-2xl bg-card/80 backdrop-blur-sm shadow-2xl rounded-2xl overflow-hidden border-2">
+          <Card className="w-full max-w-2xl bg-card/80 backdrop-blur-sm shadow-2xl rounded-2xl overflow-hidden border-2 mx-auto">
             <CardContent className="p-6 md:p-8">
               <div className="flex justify-center gap-2 flex-wrap mb-8">
                 {TIME_OPTIONS.map((time, index) => (
@@ -224,13 +183,23 @@ export default function Home() {
                     Click
                   </Button>
                 </div>
+
                 <div className="relative z-10 flex flex-col items-center mt-auto">
-                    <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg text-white">{TARGETS[selectedTime]}</div>
-                    <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80 text-white">
-                        <Target className="h-4 w-4 sm:h-5 sm:w-5" />
-                        <span>Target Goal</span>
-                    </div>
+                    { gameState === 'finished' ? (
+                        <Button onClick={resetGame} className="mt-4">
+                          <Goal className="mr-2" /> Try Again
+                        </Button>
+                    ) : (
+                      <>
+                        <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg text-white">{TARGETS[selectedTime]}</div>
+                        <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80 text-white">
+                            <Target className="h-4 w-4 sm:h-5 sm:w-5" />
+                            <span>Target Goal</span>
+                        </div>
+                      </>
+                    )}
                 </div>
+
               </div>
               
             </CardContent>
@@ -344,49 +313,9 @@ export default function Home() {
             </CardContent>
           </Card>
         </section>
+        </div>
         </main>
       </div>
-      {result && (
-        <Dialog open={showResultDialog} onOpenChange={handleDialogChange}>
-          <DialogPortal>
-            <DialogContent
-              className={cn(
-                'w-full max-w-xs sm:max-w-md',
-                result.targetMet ? 'bg-green-100 dark:bg-green-900/50' : 'bg-purple-100 dark:bg-purple-900/50'
-              )}
-            >
-              <DialogHeader className="p-4 items-center">
-                <DialogTitle className="text-2xl sm:text-3xl font-bold text-center">
-                    {result.targetMet ? 'Awesome! Target Met!' : 'So Close!'}
-                </DialogTitle>
-                <DialogDescription className="text-center text-sm sm:text-base">
-                  Here are your results.
-                </DialogDescription>
-              </DialogHeader>
-              
-              <div className="grid grid-cols-2 gap-4 text-center p-4 rounded-lg bg-muted/50 my-4 mx-4">
-                <div>
-                  <div className="text-3xl sm:text-4xl font-bold text-teal-500">{result.cps}</div>
-                  <div className="text-xs sm:text-sm text-muted-foreground">Clicks/Second</div>
-                </div>
-                <div>
-                  <div className="text-3xl sm:text-4xl font-bold text-amber-500">{result.totalClicks}</div>
-                  <div className="text-xs sm:text-sm text-muted-foreground">Total Clicks</div>
-                </div>
-                <div className="col-span-2 mt-2">
-                  <div className="text-xl sm:text-2xl font-bold">{result.target}</div>
-                  <div className="text-xs sm:text-sm text-muted-foreground">Target goals</div>
-                </div>
-              </div>
-              <DialogFooter className="sm:justify-center p-4">
-                <Button onClick={() => handleDialogChange(false)}>
-                  <Goal className="mr-2" /> Try Again
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </DialogPortal>
-        </Dialog>
-      )}
     </>
   );
 }
