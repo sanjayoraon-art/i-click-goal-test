@@ -109,9 +109,11 @@ export default function SequenceMemoryPage() {
     if (gameState === 'gameover') {
         if (feedbackBlock?.index === index && !gameOverSequence.includes(index)) return 'bg-red-500';
     }
-    if (feedbackBlock?.index === index) {
-        if (feedbackBlock.type === 'incorrect') return 'bg-red-500';
-        if (feedbackBlock.type === 'correct') return 'bg-sky-500';
+    if (feedbackBlock?.index === index && feedbackBlock.type === 'incorrect') {
+        return 'bg-red-500';
+    }
+    if(gameState === 'waiting' && feedbackBlock?.index === index && feedbackBlock.type === 'correct') {
+        return 'cursor-pointer bg-sky-500';
     }
     if(gameState === 'waiting') {
         return 'cursor-pointer bg-muted/50 hover:bg-primary/20';
