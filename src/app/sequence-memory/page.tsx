@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { BrainCircuit, History, Trophy } from 'lucide-react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 type GameState = 'idle' | 'showing' | 'waiting' | 'gameover';
 type FeedbackType = 'correct' | 'incorrect' | null;
@@ -165,9 +166,9 @@ export default function SequenceMemoryPage() {
 
       <div className="max-w-4xl mx-auto">
         <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border overflow-hidden">
-          <CardHeader>
-            <div className={cn("flex flex-col items-center justify-center", gameState === 'idle' && 'bg-sky-100 dark:bg-sky-900/50 p-4 rounded-lg')}>
-                 <h2 className={cn("text-2xl font-bold text-center w-full")}>{getStatusMessage()}</h2>
+          <CardHeader className="bg-sky-100 dark:bg-sky-900/50 p-4 rounded-lg">
+            <div className={cn("flex flex-col items-center justify-center")}>
+                 <h2 className={cn("text-2xl font-bold text-center w-full text-sky-800 dark:text-sky-200")}>{getStatusMessage()}</h2>
             </div>
             {gameState !== 'idle' && (
               <div className="flex justify-around items-center text-center text-xl font-bold text-muted-foreground mt-4 border-t pt-4">
@@ -191,7 +192,7 @@ export default function SequenceMemoryPage() {
                     </Button>
                 </div>
             ) : (
-                <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-sm mx-auto">
+                <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-sm mx-auto pt-6">
                 {[...Array(GRID_SIZE)].map((_, i) => {
                   const sequenceIndices = gameOverSequence.reduce((acc: number[], val, idx) => {
                     if (val === i) acc.push(idx + 1);
@@ -257,6 +258,43 @@ export default function SequenceMemoryPage() {
           </Card>
         </section>
 
+        <section className="w-full max-w-4xl mx-auto mt-12 text-left">
+            <h2 className="text-3xl font-bold text-center mb-6">Memory Skill Ranking</h2>
+            <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
+              <CardContent className="p-0">
+                <Table>
+                  <TableHeader className="bg-muted/50">
+                    <TableRow>
+                      <TableHead className="font-semibold text-base text-foreground/80">Level Reached</TableHead>
+                      <TableHead className="text-right font-semibold text-base text-foreground/80">Cognitive Skill</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    <TableRow className="even:bg-muted/20">
+                      <TableCell className="font-medium">1 - 4</TableCell>
+                      <TableCell className="text-right font-bold text-red-500">Novice</TableCell>
+                    </TableRow>
+                    <TableRow className="even:bg-muted/20">
+                      <TableCell className="font-medium">5 - 8</TableCell>
+                      <TableCell className="text-right font-bold text-amber-500">Developing</TableCell>
+                    </TableRow>
+                     <TableRow className="even:bg-muted/20">
+                      <TableCell className="font-medium">9 - 12</TableCell>
+                      <TableCell className="text-right font-bold text-sky-500">Proficient</TableCell>
+                    </TableRow>
+                    <TableRow className="even:bg-muted/20">
+                      <TableCell className="font-medium">13 - 16</TableCell>
+                      <TableCell className="text-right font-bold text-green-500">Advanced</TableCell>
+                    </TableRow>
+                    <TableRow className="even:bg-muted/20">
+                      <TableCell className="font-medium">17+</TableCell>
+                      <TableCell className="text-right font-bold text-emerald-500">Master</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </section>
       </div>
     </div>
   );
