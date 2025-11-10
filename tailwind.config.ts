@@ -1,3 +1,4 @@
+
 import type {Config} from 'tailwindcss';
 
 export default {
@@ -103,16 +104,16 @@ export default {
   plugins: [require('tailwindcss-animate')],
   safelist: [
     {
-      pattern: /bg-(sky|teal|emerald|amber|orange|red|green|purple)-(100|500|900)/,
+      pattern: /bg-(sky|teal|emerald|amber|orange|red|green|purple|sky|red)-(100|500|900)/,
     },
     {
-      pattern: /dark:bg-(green|purple)-900\/50/,
+      pattern: /dark:bg-(green|purple|emerald|sky|amber|red)-900\/50/,
     },
      {
       pattern: /hover:bg-(sky|teal|emerald|amber|orange|red)-600/,
     },
     {
-        pattern: /text-(teal|amber)-(500)/,
+        pattern: /text-(teal|amber|emerald|green|sky|red|emerald|green|sky|amber|red)-(300|500)/,
     }
   ]
 } satisfies Config;

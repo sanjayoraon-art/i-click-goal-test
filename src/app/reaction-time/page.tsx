@@ -86,6 +86,23 @@ export default function ReactionTimePage() {
     }
   };
 
+  const getRankColorClass = (time: number): string => {
+    if (time <= 150) return 'text-emerald-500 bg-emerald-100 dark:bg-emerald-900/50';
+    if (time <= 200) return 'text-green-500 bg-green-100 dark:bg-green-900/50';
+    if (time <= 250) return 'text-sky-500 bg-sky-100 dark:bg-sky-900/50';
+    if (time <= 300) return 'text-amber-500 bg-amber-100 dark:bg-amber-900/50';
+    return 'text-red-500 bg-red-100 dark:bg-red-900/50';
+  };
+
+  const getRankTextColor = (time: number | null): string => {
+    if (time === null) return 'text-white';
+    if (time <= 150) return 'text-emerald-300';
+    if (time <= 200) return 'text-green-300';
+    if (time <= 250) return 'text-sky-300';
+    if (time <= 300) return 'text-amber-300';
+    return 'text-red-300';
+};
+
   const renderGameState = () => {
     switch (gameState) {
       case 'idle':
@@ -120,7 +137,7 @@ export default function ReactionTimePage() {
       case 'finished':
         return (
           <div className='text-center text-white'>
-            <div className="text-6xl font-bold mb-4">{reactionTime}ms</div>
+            <div className={cn("text-6xl font-bold mb-4", getRankTextColor(reactionTime))}>{reactionTime}ms</div>
             <div className="text-xl mb-6">Average: {averageTime}ms</div>
             <Button onClick={resetGame} size="lg" className="bg-white/20 hover:bg-white/30 text-white">
               <History className="mr-2 h-5 w-5" />
@@ -175,7 +192,7 @@ export default function ReactionTimePage() {
                     {history.map((time, index) => (
                       <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                         <div className="p-1">
-                           <div className="p-2 bg-muted rounded-md text-lg font-semibold">
+                           <div className={cn("p-2 rounded-md text-lg font-semibold", getRankColorClass(time))}>
                               {time}ms
                             </div>
                         </div>
