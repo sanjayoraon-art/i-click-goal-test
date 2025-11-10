@@ -85,6 +85,10 @@ export default function AimTrainerPage() {
   
   useEffect(() => {
     setTimeLeft(selectedLevel.duration);
+    // Reset game state when level changes
+    setGameState('idle');
+    setScore(0);
+    setMisses(0);
   }, [selectedLevel]);
 
 
@@ -111,11 +115,35 @@ export default function AimTrainerPage() {
           Aim Trainer
         </h1>
         <p className="text-muted-foreground text-lg mt-2">
-          Choose a level and hit the targets as fast as you can!
+          Choose a level, hit the targets as fast as you can, and improve your aim!
         </p>
       </header>
       
       <div className="max-w-4xl mx-auto text-center">
+        <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border mb-8">
+            <CardHeader>
+                <CardTitle className="text-2xl font-bold">Select a Level</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col items-center gap-4">
+                <div className="flex flex-wrap justify-center gap-2">
+                    {levels.map(level => (
+                        <Button
+                            key={level.id}
+                            variant={selectedLevel.id === level.id ? 'default' : 'outline'}
+                            onClick={() => setSelectedLevel(level)}
+                            disabled={gameState === 'running'}
+                        >
+                            {level.name}
+                        </Button>
+                    ))}
+                </div>
+                <div className="flex items-center gap-2 text-lg text-muted-foreground">
+                    <Target className="h-5 w-5" />
+                    <span>Time: <strong>{selectedLevel.duration}s</strong>, Target: <strong>{selectedLevel.targets} hits</strong></span>
+                </div>
+            </CardContent>
+        </Card>
+
         <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border overflow-hidden">
           <CardHeader>
             <div className="grid grid-cols-3 items-center text-center">
@@ -147,22 +175,7 @@ export default function AimTrainerPage() {
                    <div className="mx-auto bg-primary/10 rounded-full p-4 w-fit mb-4">
                     <MousePointerClick className="h-12 w-12 text-primary" />
                   </div>
-                  <h2 className="text-2xl font-bold mb-4">Select a Level</h2>
-                  <div className="flex flex-wrap justify-center gap-2 mb-6">
-                    {levels.map(level => (
-                        <Button
-                            key={level.id}
-                            variant={selectedLevel.id === level.id ? 'default' : 'outline'}
-                            onClick={() => setSelectedLevel(level)}
-                        >
-                            {level.name}
-                        </Button>
-                    ))}
-                  </div>
-                   <div className="flex items-center gap-2 text-lg text-muted-foreground mb-4">
-                      <Target className="h-5 w-5" />
-                      <span>Time: <strong>{selectedLevel.duration}s</strong>, Target: <strong>{selectedLevel.targets} hits</strong></span>
-                    </div>
+                  <h2 className="text-2xl font-bold mb-4">Ready to Start?</h2>
                   <Button onClick={startGame} size="lg">Start Game</Button>
                 </div>
               )}
@@ -177,7 +190,7 @@ export default function AimTrainerPage() {
                     <Crosshair className="w-6 h-6 text-primary-foreground" />
                   </div>
                    <div className="absolute top-4 left-4 text-left text-lg bg-black/20 text-white px-3 py-1 rounded-md">
-                      Target: {selectedLevel.targets}
+                      Level: {selectedLevel.name}
                     </div>
                 </>
               )}
@@ -205,7 +218,7 @@ export default function AimTrainerPage() {
                   </div>
                   <Button onClick={() => setGameState('idle')} size="lg" className="mt-4">
                     <History className="mr-2 h-4 w-4" />
-                    Change Level & Play Again
+                    Play Again
                   </Button>
                 </div>
               )}
@@ -233,5 +246,3 @@ export default function AimTrainerPage() {
     </div>
   );
 }
-
-    
