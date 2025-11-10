@@ -91,7 +91,7 @@ export default function SequenceMemoryPage() {
   const getStatusMessage = () => {
       switch(gameState) {
           case 'idle':
-            return <span className="text-primary bg-primary/10 p-2 rounded-md">Click "Start" to begin.</span>;
+            return <span className="text-primary-foreground bg-primary p-2 rounded-md">Click "Start" to begin.</span>;
           case 'showing':
             return 'Watch carefully...';
           case 'waiting':
