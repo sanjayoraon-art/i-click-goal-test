@@ -91,7 +91,7 @@ export default function SequenceMemoryPage() {
   const getStatusMessage = () => {
       switch(gameState) {
           case 'idle':
-            return <span className="text-muted-foreground">Click "Start" to begin.</span>;
+            return <span className="text-primary">Click "Start" to begin.</span>;
           case 'showing':
             return 'Watch carefully...';
           case 'waiting':
@@ -99,7 +99,7 @@ export default function SequenceMemoryPage() {
           case 'gameover':
             return (
               <span>
-                <span className="text-red-500">Game Over!</span> You reached level {level}.
+                <span className="text-red-500 font-bold">Game Over!</span> You reached level <span className="font-bold">{level}</span>.
               </span>
             );
           default:
