@@ -8,16 +8,6 @@ import { cn } from '@/lib/utils';
 import { Goal, Target, Gamepad2, History } from 'lucide-react';
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-
 
 const TIME_OPTIONS = [5, 10, 15, 30, 60, 100];
 
@@ -122,7 +112,7 @@ export default function Home() {
     }
   };
   
-  const cps = (clicks / (selectedTime - timeLeft)).toFixed(2);
+  const cps = (clicks / selectedTime).toFixed(2);
   
   return (
     <>
@@ -164,84 +154,79 @@ export default function Home() {
 
               <div
                 className={cn(
-                    "relative rounded-2xl p-4 sm:p-6 text-center overflow-hidden select-none cursor-pointer transition-transform duration-100 ease-in-out h-64 sm:h-72 md:h-80 flex flex-col justify-between bg-gradient-to-br from-blue-500 to-blue-700",
-                    'hover:scale-[1.02]',
+                    "relative rounded-2xl p-4 sm:p-6 text-center overflow-hidden select-none transition-transform duration-100 ease-in-out h-64 sm:h-72 md:h-80 flex flex-col justify-between bg-gradient-to-br from-blue-500 to-blue-700",
+                    gameState !== 'finished' && 'cursor-pointer hover:scale-[1.02]',
                     isPulsing && 'animate-pulse-click'
                 )}
-                onClick={handleAreaClick}
+                onClick={gameState !== 'finished' ? handleAreaClick : undefined}
                 onMouseDown={(e) => e.preventDefault()}
               >
-                <div className="relative z-10 flex flex-col items-center">
-                  
-                  <div className="grid grid-cols-2 items-center justify-center gap-2 sm:gap-4 w-full text-center text-white">
-                    <div>
-                        <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{timeLeft.toFixed(2)}</div>
-                        <div className="text-xs sm:text-sm font-semibold opacity-80">Seconds</div>
-                    </div>
-                    <div>
-                        <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{clicks}</div>
-                        <div className="text-xs sm:text-sm font-semibold opacity-80">Clicks</div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="absolute inset-0 flex items-center justify-center">
-                   {gameState === 'idle' && (
-                    <Button
-                      variant="default"
-                      size="lg"
-                      className="w-24 h-24 rounded-full text-2xl font-bold bg-primary hover:bg-primary/90 text-primary-foreground border-0 shadow-lg"
-                      onClick={(e) => { e.stopPropagation(); handleAreaClick(); }}
-                    >
-                      Click
-                    </Button>
-                  )}
-                </div>
-
-                <div className="relative z-10 flex flex-col items-center mt-auto">
-                    { gameState !== 'finished' && (
-                      <>
-                        <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg text-white">{TARGETS[selectedTime]}</div>
-                        <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80 text-white">
-                            <Target className="h-4 w-4 sm:h-5 sm:w-5" />
-                            <span>Target Goal</span>
+                 {gameState === 'finished' ? (
+                  <div className="relative z-10 flex flex-col items-center justify-center h-full text-white">
+                    <h2 className="text-2xl font-bold">Time's Up!</h2>
+                     <div className="flex justify-center items-center gap-4 my-4">
+                        <div className="text-center p-4 rounded-lg bg-white/20">
+                            <div className="text-3xl font-bold">{cps}</div>
+                            <div className="text-sm">CPS</div>
                         </div>
-                      </>
-                    )}
-                </div>
+                        <div className="text-center p-4 rounded-lg bg-white/20">
+                            <div className="text-3xl font-bold">{clicks}</div>
+                            <div className="text-sm">Clicks</div>
+                        </div>
+                        <div className="text-center p-4 rounded-lg bg-white/20">
+                           <div className="text-3xl font-bold">{TARGETS[selectedTime]}</div>
+                           <div className="text-sm">Target</div>
+                        </div>
+                    </div>
+                    <Button onClick={resetGame} className="mt-4">
+                      <History className="mr-2 h-4 w-4" />
+                      Play Again
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <div className="relative z-10 flex flex-col items-center">
+                      <div className="grid grid-cols-2 items-center justify-center gap-2 sm:gap-4 w-full text-center text-white">
+                        <div>
+                            <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{timeLeft.toFixed(2)}</div>
+                            <div className="text-xs sm:text-sm font-semibold opacity-80">Seconds</div>
+                        </div>
+                        <div>
+                            <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg">{clicks}</div>
+                            <div className="text-xs sm:text-sm font-semibold opacity-80">Clicks</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      {gameState === 'idle' && (
+                        <Button
+                          variant="default"
+                          size="lg"
+                          className="w-24 h-24 rounded-full text-2xl font-bold bg-primary hover:bg-primary/90 text-primary-foreground border-0 shadow-lg"
+                          onClick={(e) => { e.stopPropagation(); handleAreaClick(); }}
+                        >
+                          Click
+                        </Button>
+                      )}
+                    </div>
 
+                    <div className="relative z-10 flex flex-col items-center mt-auto">
+                        <>
+                          <div className="text-3xl sm:text-4xl md:text-5xl font-bold tabular-nums drop-shadow-lg text-white">{TARGETS[selectedTime]}</div>
+                          <div className="flex items-center gap-1 text-xs sm:text-sm font-semibold opacity-80 text-white">
+                              <Target className="h-4 w-4 sm:h-5 sm:w-5" />
+                              <span>Target Goal</span>
+                          </div>
+                        </>
+                    </div>
+                  </>
+                )}
               </div>
               
             </CardContent>
           </Card>
           
-           <AlertDialog open={gameState === 'finished'} onOpenChange={(isOpen) => !isOpen && resetGame()}>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle className="text-center text-2xl font-bold">Time's Up!</AlertDialogTitle>
-                <AlertDialogDescription className="text-center text-lg">
-                  You clicked <span className="font-bold text-primary">{clicks}</span> times in {selectedTime} seconds.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <div className="flex justify-center items-center gap-4 my-4">
-                  <div className="text-center p-4 rounded-lg bg-muted">
-                      <div className="text-3xl font-bold text-primary">{(clicks / selectedTime).toFixed(2)}</div>
-                      <div className="text-sm text-muted-foreground">CPS</div>
-                  </div>
-                   <div className="text-center p-4 rounded-lg bg-muted">
-                      <div className="text-3xl font-bold">{clicks}</div>
-                      <div className="text-sm text-muted-foreground">Total Clicks</div>
-                  </div>
-              </div>
-              <AlertDialogFooter>
-                <Button onClick={resetGame} className="w-full">
-                  <History className="mr-2 h-4 w-4" />
-                  Play Again
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-
           <section className="w-full max-w-4xl mx-auto mt-12 text-left">
             <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl overflow-hidden border-2">
               <CardHeader>
