@@ -115,7 +115,7 @@ export default function TypingTestPage() {
           <Type className="h-12 w-12 text-primary" />
         </div>
         <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
-          Typing Test
+          Typing Test - 1 Minute Challenge
         </h1>
         <p className="text-muted-foreground text-lg mt-2">
           Measure your typing speed and accuracy. How many words per minute can you type?
@@ -276,5 +276,3 @@ export default function TypingTestPage() {
     </div>
   );
 }
-
-    

@@ -114,7 +114,7 @@ export default function AimTrainerPage() {
     <div className="container mx-auto px-4 py-8">
       <header className="text-center mb-8 max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
-          Aim Trainer
+          Aim Trainer - {selectedLevel.name}
         </h1>
         <p className="text-muted-foreground text-lg mt-2">
           Choose a level, hit the targets as fast as you can, and improve your aim!

@@ -91,7 +91,7 @@ export default function SequenceMemoryPage() {
   const getStatusMessage = () => {
       switch(gameState) {
           case 'idle':
-            return 'Click "Start" to begin.';
+            return <span className="text-sky-800">Click "Start" to begin.</span>;
           case 'showing':
             return 'Watch carefully...';
           case 'waiting':
@@ -99,7 +99,7 @@ export default function SequenceMemoryPage() {
           case 'gameover':
             return (
               <span>
-                <span className="text-red-500 font-bold">Game Over!</span> You reached level <span className="font-bold">{level}</span>.
+                <span className="text-red-500 font-bold">Game Over!</span> You reached level <span className="font-bold text-foreground">{level}</span>.
               </span>
             );
           default:
@@ -146,8 +146,8 @@ export default function SequenceMemoryPage() {
       <div className="max-w-4xl mx-auto">
         <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border overflow-hidden">
           <CardHeader>
-            <div className={cn("flex justify-between items-center", gameState === 'idle' && 'bg-sky-100 p-4 rounded-lg')}>
-                 <h2 className={cn("text-2xl font-bold text-center w-full", gameState === 'idle' && 'text-sky-800')}>{getStatusMessage()}</h2>
+            <div className={cn("flex justify-between items-center", gameState === 'idle' && 'bg-sky-100 dark:bg-sky-900/50 p-4 rounded-lg')}>
+                 <h2 className={cn("text-2xl font-bold text-center w-full")}>{getStatusMessage()}</h2>
             </div>
             <div className="text-center text-xl font-bold text-muted-foreground mt-4">
                 Level: <span className="text-primary">{level}</span>
