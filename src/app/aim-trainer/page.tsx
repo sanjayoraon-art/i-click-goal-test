@@ -189,9 +189,6 @@ export default function AimTrainerPage() {
                   >
                     <Crosshair className="w-6 h-6 text-primary-foreground" />
                   </div>
-                   <div className="absolute top-4 left-4 text-left text-lg bg-black/20 text-white px-3 py-1 rounded-md">
-                      Level: {selectedLevel.name}
-                    </div>
                 </>
               )}
               
