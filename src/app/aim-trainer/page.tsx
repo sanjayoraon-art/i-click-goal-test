@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { History, MousePointerClick, Crosshair, Target } from 'lucide-react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 type GameState = 'idle' | 'running' | 'finished';
 
@@ -232,18 +233,73 @@ export default function AimTrainerPage() {
         <section className="w-full max-w-4xl mx-auto mt-12 text-left">
           <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl overflow-hidden border-2">
             <CardHeader>
-              <CardTitle className="text-2xl font-bold">About the Aim Trainer</CardTitle>
+              <CardTitle className="text-2xl font-bold">How to Play & Benefits</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4 text-muted-foreground">
-              <p>
-                The Aim Trainer is designed to help you improve your mouse accuracy, precision, and reaction time. This skill is essential for competitive gaming, especially in First-Person Shooter (FPS) games like Valorant, Counter-Strike, and Call of Duty.
-              </p>
-              <p>
-                Regular practice with this tool can lead to better muscle memory, faster target acquisition, and higher flick-shot accuracy. With multiple difficulty levels, you can challenge yourself to beat your high score and see your in-game performance soar!
-              </p>
+            <CardContent className="space-y-6 text-muted-foreground">
+              <div>
+                <h3 className="text-xl font-semibold text-foreground mb-2">How to Play</h3>
+                <ol className="list-decimal list-inside space-y-2">
+                  <li><strong>Select a Level:</strong> Choose a difficulty level from 'Easy' to 'Insane'. Each level has a different time limit and target size.</li>
+                  <li><strong>Start the Game:</strong> Click the "Start Game" button to begin the challenge.</li>
+                  <li><strong>Click the Targets:</strong> As soon as the game starts, targets will appear on the screen. Click on them as quickly and accurately as you can.</li>
+                  <li><strong>Track Your Score:</strong> Each successful hit increases your score. Missing a target increases the miss count.</li>
+                  <li><strong>Beat the Clock:</strong> The game ends when the timer runs out. Your final score, misses, and accuracy will be displayed.</li>
+                  <li><strong>Play Again:</strong> Challenge yourself to beat your high score by playing again!</li>
+                </ol>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-foreground mb-2">Benefits of Aim Training</h3>
+                <p>
+                  Regular practice with an aim trainer is one of the most effective ways to improve your performance in FPS games. It helps build crucial skills that directly translate to in-game success. Consistent training helps develop muscle memory, allowing your hand to instinctively move the mouse to the correct position without conscious thought. This leads to faster reaction times and more accurate shots under pressure.
+                </p>
+              </div>
             </CardContent>
           </Card>
         </section>
+
+        <section className="w-full max-w-4xl mx-auto mt-12 text-left">
+            <h2 className="text-3xl font-bold text-center mb-6">Aim Training Skill Breakdown</h2>
+            <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
+              <CardContent className="p-0">
+                <Table>
+                  <TableHeader className="bg-muted/50">
+                    <TableRow>
+                      <TableHead className="font-semibold text-base text-foreground/80">Skill</TableHead>
+                      <TableHead className="font-semibold text-base text-foreground/80">Description</TableHead>
+                      <TableHead className="text-right font-semibold text-base text-foreground/80">Impact</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    <TableRow className="even:bg-muted/20">
+                      <TableCell className="font-medium">Accuracy</TableCell>
+                      <TableCell>The ability to hit your target precisely. Our trainer helps you fine-tune your mouse movements.</TableCell>
+                      <TableCell className="text-right font-bold text-green-500">High</TableCell>
+                    </TableRow>
+                    <TableRow className="even:bg-muted/20">
+                      <TableCell className="font-medium">Speed</TableCell>
+                      <TableCell>How quickly you can acquire and engage targets. The time pressure improves your overall speed.</TableCell>
+                      <TableCell className="text-right font-bold text-green-500">High</TableCell>
+                    </TableRow>
+                    <TableRow className="even:bg-muted/20">
+                      <TableCell className="font-medium">Reaction Time</TableCell>
+                      <TableCell>The delay between seeing a target and making your first move. Training reduces this delay significantly.</TableCell>
+                      <TableCell className="text-right font-bold text-amber-500">Medium</TableCell>
+                    </TableRow>
+                     <TableRow className="even:bg-muted/20">
+                      <TableCell className="font-medium">Flicking</TableCell>
+                      <TableCell>Rapidly and accurately moving your crosshair from one point to another. Targets appearing randomly helps practice this.</TableCell>
+                      <TableCell className="text-right font-bold text-green-500">High</TableCell>
+                    </TableRow>
+                    <TableRow className="even:bg-muted/20">
+                      <TableCell className="font-medium">Tracking</TableCell>
+                      <TableCell>Keeping your crosshair on a moving target. While our targets are static, practicing speed helps in tracking.</TableCell>
+                      <TableCell className="text-right font-bold text-amber-500">Medium</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </section>
 
       </div>
     </div>
