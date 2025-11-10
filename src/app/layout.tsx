@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 export const metadata: Metadata = {
   title: 'Click Speed Test - Challenge Your Clicks Per Second (CPS)',
   description: 'How fast can you click? Take our free CPS test to measure your click speed, test your aim, and compete with others. Perfect for gamers looking to improve their performance.',
-  keywords: ['CPS test', 'click speed test', 'clicks per second', 'aim trainer', 'aim test', 'reaction time'],
+  keywords: ['CPS test', 'click speed test', 'clicks per second', 'aim trainer', 'aim test', 'reaction time', 'typing test', 'sequence memory'],
   openGraph: {
     title: 'Click Speed Test & Aim Trainer - Challenge Your Skills',
     description: 'How fast can you click? Take our free CPS test to measure your click speed and test your aim. Perfect for gamers looking to improve their performance.',
@@ -58,9 +58,12 @@ export default function RootLayout({
                     <Gamepad2 className="h-8 w-8" />
                     <span>Click Games</span>
                   </Link>
-                  <div className="flex space-x-4">
+                  <div className="hidden md:flex space-x-4">
                     <Link href="/" className="hover:text-primary">CPS Test</Link>
                     <Link href="/aim-trainer" className="hover:text-primary">Aim Trainer</Link>
+                    <Link href="/reaction-time" className="hover:text-primary">Reaction Time</Link>
+                    <Link href="/sequence-memory" className="hover:text-primary">Sequence Memory</Link>
+                    <Link href="/typing-test" className="hover:text-primary">Typing Test</Link>
                   </div>
               </div>
           </nav>
