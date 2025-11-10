@@ -106,15 +106,13 @@ export default {
       pattern: /bg-(sky|teal|emerald|amber|orange|red|green|purple)-(100|500|900)/,
     },
     {
-      pattern: /dark:bg-(green|purple)-(900)\/(50)/,
+      pattern: /dark:bg-(green|purple)-900\/50/,
     },
      {
-      pattern: /hover:bg-(sky|teal|emerald|amber|orange|red)-(600)/,
+      pattern: /hover:bg-(sky|teal|emerald|amber|orange|red)-600/,
     },
     {
         pattern: /text-(teal|amber)-(500)/,
     }
   ]
 } satisfies Config;
-
-    
