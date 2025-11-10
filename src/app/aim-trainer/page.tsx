@@ -29,6 +29,14 @@ const levels = [
   { id: 5, name: 'Insane', duration: 10, targets: 30, size: 'w-6 h-6' },
 ];
 
+const BUTTON_COLORS = [
+    'bg-sky-500 hover:bg-sky-600',
+    'bg-teal-500 hover:bg-teal-600',
+    'bg-emerald-500 hover:bg-emerald-600',
+    'bg-amber-500 hover:bg-amber-600',
+    'bg-orange-500 hover:bg-orange-600',
+];
+
 export default function AimTrainerPage() {
   const [selectedLevel, setSelectedLevel] = useState(levels[0]);
   const [gameState, setGameState] = useState<GameState>('idle');
@@ -126,10 +134,15 @@ export default function AimTrainerPage() {
             </CardHeader>
             <CardContent className="flex flex-col items-center gap-4">
                 <div className="flex flex-wrap justify-center gap-2">
-                    {levels.map(level => (
+                    {levels.map((level, index) => (
                         <Button
                             key={level.id}
-                            variant={selectedLevel.id === level.id ? 'default' : 'outline'}
+                            variant={selectedLevel.id === level.id ? 'outline' : 'default'}
+                            className={cn(
+                                'font-semibold text-white',
+                                selectedLevel.id !== level.id && BUTTON_COLORS[index % BUTTON_COLORS.length],
+                                selectedLevel.id === level.id && 'border-4 border-primary'
+                            )}
                             onClick={() => setSelectedLevel(level)}
                             disabled={gameState === 'running'}
                         >
@@ -194,26 +207,26 @@ export default function AimTrainerPage() {
               
               {gameState === 'finished' && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 z-10 p-4 gap-4">
-                  <h2 className="text-2xl md:text-3xl font-bold text-primary text-center">Level {selectedLevel.name} Finished!</h2>
+                  <h2 className="text-2xl md:text-3xl font-bold text-primary text-center mb-2">Level {selectedLevel.name} Finished!</h2>
                   <div className="grid grid-cols-2 md:grid-cols-4 justify-center items-stretch gap-2 md:gap-4">
-                      <div className="text-center p-2 rounded-lg bg-muted min-w-[5rem]">
+                      <div className="text-center p-2 rounded-lg bg-green-100 dark:bg-green-900/50 min-w-[5rem]">
                           <div className="text-2xl md:text-3xl font-bold">{score}</div>
                           <div className="text-xs uppercase">Hits</div>
                       </div>
-                       <div className="text-center p-2 rounded-lg bg-muted min-w-[5rem]">
+                       <div className="text-center p-2 rounded-lg bg-purple-100 dark:bg-purple-900/50 min-w-[5rem]">
                          <div className="text-2xl md:text-3xl font-bold">{selectedLevel.targets}</div>
                          <div className="text-xs uppercase">Target</div>
                       </div>
-                      <div className="text-center p-2 rounded-lg bg-muted min-w-[5rem]">
+                      <div className="text-center p-2 rounded-lg bg-red-100 dark:bg-red-900/50 min-w-[5rem]">
                           <div className="text-2xl md:text-3xl font-bold">{misses}</div>
                           <div className="text-xs uppercase">Misses</div>
                       </div>
-                      <div className="text-center p-2 rounded-lg bg-muted min-w-[5rem]">
-                         <div className="text-2xl md:text-3xl font-bold">{accuracy}%</div>
+                      <div className="text-center p-2 rounded-lg bg-amber-100 dark:bg-amber-900/50 min-w-[5rem]">
+                         <div className="text-2xl md:text-3xl font-bold text-amber-500">{accuracy}%</div>
                          <div className="text-xs uppercase">Accuracy</div>
                       </div>
                   </div>
-                  <Button onClick={() => setGameState('idle')} size="lg" className="px-10 py-6 text-xl">
+                  <Button onClick={() => setGameState('idle')} size="lg" className="px-10 py-6 text-xl mt-4">
                     <History className="mr-2 h-5 w-5" />
                     Play Again
                   </Button>
