@@ -226,7 +226,7 @@ export default function AimTrainerPage() {
                          <div className="text-xs uppercase">Accuracy</div>
                       </div>
                   </div>
-                  <Button onClick={() => setGameState('idle')} size="lg" className="px-10 py-6 text-xl">
+                  <Button onClick={() => setGameState('idle')} size="lg" className="px-10 py-6 text-xl bg-green-500 hover:bg-green-600 text-white">
                     <History className="mr-2 h-5 w-5" />
                     Play Again
                   </Button>
@@ -256,3 +256,5 @@ export default function AimTrainerPage() {
     </div>
   );
 }
+
+    
