@@ -4,6 +4,10 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import Link from 'next/link';
 import { Gamepad2 } from 'lucide-react';
+import { Inter } from 'next/font/google';
+import { cn } from '@/lib/utils';
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
   title: 'Click Speed Test - Challenge Your Clicks Per Second (CPS)',
@@ -39,9 +43,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
         {/* Replace ca-pub-XXXXXXXXXXXXXXXX with your own AdSense Publisher ID */}
         <script 
           async 
@@ -49,7 +50,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         ></script>
       </head>
-      <body className="font-body antialiased">
+      <body className={cn("font-body antialiased", inter.variable)}>
         <div className="flex flex-col min-h-screen bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
           <nav className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground border-b">
               <div className="container mx-auto flex justify-between items-center">
@@ -82,5 +83,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-    

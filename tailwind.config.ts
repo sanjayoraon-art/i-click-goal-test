@@ -11,8 +11,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['Inter', 'sans-serif'],
-        headline: ['Inter', 'sans-serif'],
+        body: ['var(--font-inter)', 'sans-serif'],
+        headline: ['var(--font-inter)', 'sans-serif'],
         code: ['monospace'],
       },
       colors: {
@@ -102,18 +102,4 @@ export default {
     },
   },
   plugins: [require('tailwindcss-animate')],
-  safelist: [
-    {
-      pattern: /bg-(sky|teal|emerald|amber|orange|red|green|purple|sky|red)-(100|500|900)/,
-    },
-    {
-      pattern: /dark:bg-(green|purple|emerald|sky|amber|red)-900\/50/,
-    },
-     {
-      pattern: /hover:bg-(sky|teal|emerald|amber|orange|red)-600/,
-    },
-    {
-        pattern: /text-(teal|amber|emerald|green|sky|red|emerald|green|sky|amber|red)-(300|500)/,
-    }
-  ]
 } satisfies Config;
