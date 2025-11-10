@@ -3,6 +3,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import Link from 'next/link';
+import { Gamepad2 } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Click Speed Test - Challenge Your Clicks Per Second (CPS)',
@@ -49,20 +50,36 @@ export default function RootLayout({
         ></script>
       </head>
       <body className="font-body antialiased">
-        {children}
+        <div className="flex flex-col min-h-screen bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
+          <nav className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground border-b">
+              <div className="container mx-auto flex justify-between items-center">
+                  <Link href="/" className="font-bold text-2xl text-primary inline-flex items-center gap-2">
+                    <Gamepad2 className="h-8 w-8" />
+                    <span>Click Games</span>
+                  </Link>
+                  <div className="flex space-x-4">
+                    <Link href="/" className="hover:text-primary">CPS Test</Link>
+                    <Link href="/about" className="hover:text-primary">About</Link>
+                  </div>
+              </div>
+          </nav>
+          <main className="flex-grow">
+            {children}
+          </main>
+          <footer className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground border-t">
+              <div className="container mx-auto flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                  <span>&copy; {new Date().getFullYear()} Click Games. All rights reserved.</span>
+                  <div className="flex space-x-4">
+                    <Link href="/privacy-policy" className="hover:text-primary">Privacy Policy</Link>
+                    <Link href="/terms-and-conditions" className="hover:text-primary">Terms & Conditions</Link>
+                  </div>
+              </div>
+          </footer>
+        </div>
         <Toaster />
-        <footer className="w-full bg-card/80 backdrop-blur-sm p-4 text-center text-muted-foreground">
-            <div className="container mx-auto flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4">
-                <span>&copy; {new Date().getFullYear()} Click Speed Test. All rights reserved.</span>
-                <div className="flex space-x-4">
-                  <Link href="/" className="hover:text-primary">Home</Link>
-                  <Link href="/about" className="hover:text-primary">About Us</Link>
-                  <Link href="/privacy-policy" className="hover:text-primary">Privacy Policy</Link>
-                  <Link href="/terms-and-conditions" className="hover:text-primary">Terms & Conditions</Link>
-                </div>
-            </div>
-        </footer>
       </body>
     </html>
   );
 }
+
+    

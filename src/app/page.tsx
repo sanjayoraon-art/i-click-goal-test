@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { Target, Gamepad2, History } from 'lucide-react';
+import { Target, Gamepad2, History, MousePointerClick, BrainCircuit, Type, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
@@ -30,6 +30,34 @@ const BUTTON_COLORS = [
   'bg-orange-500 hover:bg-orange-600',
   'bg-red-500 hover:bg-red-600',
 ];
+
+const otherGames = [
+  {
+    title: 'Aim Trainer',
+    description: 'Improve your precision and speed by clicking on targets.',
+    href: '/aim-trainer',
+    icon: <MousePointerClick className="h-10 w-10 text-primary" />,
+  },
+  {
+    title: 'Reaction Time Test',
+    description: 'Test how fast you can react to on-screen changes.',
+    href: '/reaction-time',
+    icon: <Zap className="h-10 w-10 text-primary" />,
+  },
+  {
+    title: 'Typing Test',
+    description: 'Measure your typing speed and accuracy in WPM.',
+    href: '/typing-test',
+    icon: <Type className="h-10 w-10 text-primary" />,
+  },
+  {
+    title: 'Sequence Memory',
+    description: 'Test your short-term memory by repeating sequences.',
+    href: '/sequence-memory',
+    icon: <BrainCircuit className="h-10 w-10 text-primary" />,
+  },
+];
+
 
 export default function Home() {
   const [selectedTime, setSelectedTime] = useState(5);
@@ -115,14 +143,8 @@ export default function Home() {
   const cps = clicks > 0 && (selectedTime - timeLeft) > 0 ? (clicks / (selectedTime - timeLeft)).toFixed(2) : '0.00';
   
   return (
-    <>
-    <div className="min-h-screen w-full bg-grid-slate-100/[0.05] dark:bg-grid-slate-900/[0.2]">
-      <main className="flex flex-col items-center justify-center p-4 md:p-8 font-headline text-foreground">
+    <div className="flex flex-col items-center justify-center p-4 md:p-8 font-headline text-foreground">
         <header className="text-center mb-8 max-w-4xl mx-auto">
-          <Link href="/" className="font-bold text-2xl text-primary inline-flex items-center gap-2 mb-4">
-            <Gamepad2 className="h-8 w-8" />
-            Click Games
-          </Link>
           <h1 className="text-4xl md:text-6xl font-bold text-primary tracking-tighter drop-shadow-lg">
             Click Speed Test (CPS)
           </h1>
@@ -242,7 +264,26 @@ export default function Home() {
             </Card>
           </section>
           
-          <section className="w-full max-w-4xl mx-auto mt-8 text-left">
+          <section className="w-full max-w-4xl mx-auto mt-12">
+            <h2 className="text-3xl font-bold text-center mb-6">Explore Other Games</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {otherGames.map((game) => (
+                <Link href={game.href} key={game.href} className="group">
+                  <Card className="bg-card/80 backdrop-blur-sm h-full flex flex-col justify-between transform transition-transform duration-300 group-hover:scale-105 group-hover:shadow-xl">
+                    <CardHeader className="flex-row items-center gap-4">
+                      {game.icon}
+                      <CardTitle className="text-2xl font-bold text-primary">{game.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground">{game.description}</p>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="w-full max-w-4xl mx-auto mt-12 text-left">
             <h2 className="text-3xl font-bold text-center mb-6">Time and Targets</h2>
             <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
               <CardContent className="p-0">
@@ -266,7 +307,7 @@ export default function Home() {
             </Card>
           </section>
 
-        <section className="w-full max-w-4xl mx-auto mt-8 text-left">
+        <section className="w-full max-w-4xl mx-auto mt-12 text-left">
           <h2 className="text-3xl font-bold text-center mb-6">Frequently Asked Questions (FAQ)</h2>
           <div className="space-y-4">
             <Card className="bg-card/80 backdrop-blur-sm">
@@ -296,7 +337,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="w-full max-w-4xl mx-auto mt-8 text-left">
+        <section className="w-full max-w-4xl mx-auto mt-12 text-left">
           <h2 className="text-3xl font-bold text-center mb-6">Clicking Techniques Comparison</h2>
           <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
             <CardContent className="p-0">
@@ -334,8 +375,8 @@ export default function Home() {
             </CardContent>
           </Card>
         </section>
-      </main>
-    </div>
-    </>
+      </div>
   );
 }
+
+    
