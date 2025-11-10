@@ -131,7 +131,7 @@ export default function TypingTestPage() {
                 <div className="text-sm text-muted-foreground">Seconds</div>
               </div>
               <div>
-                <div className="text-2xl md:text-4xl font-bold text-sky-500 tabular-nums">{gameState === 'running' ? Math.round((correctChars / 5) / ((GAME_DURATION - timeLeft) / 60)) : 0}</div>
+                <div className="text-2xl md:text-4xl font-bold text-sky-500 tabular-nums">{gameState === 'running' && timeLeft < GAME_DURATION ? Math.round((correctChars / 5) / ((GAME_DURATION - timeLeft) / 60)) : 0}</div>
                 <div className="text-sm text-muted-foreground">WPM</div>
               </div>
               <div className="text-right">
@@ -140,8 +140,8 @@ export default function TypingTestPage() {
               </div>
             </div>
           </CardHeader>
-          <CardContent onClick={() => inputRef.current?.focus()}>
-            <div className="relative rounded-lg bg-muted/50 p-4 sm:p-6 text-xl sm:text-2xl tracking-wider leading-relaxed font-code select-none cursor-text h-64 overflow-y-auto">
+          <CardContent onClick={() => inputRef.current?.focus()} className="relative">
+            <div className="rounded-lg bg-muted/50 p-4 sm:p-6 text-xl sm:text-2xl tracking-wider leading-relaxed font-code select-none cursor-text h-64 overflow-y-auto">
               {textToType.split('').map((char, index) => {
                 let color = 'text-muted-foreground';
                 if (index < userInput.length) {
@@ -154,8 +154,8 @@ export default function TypingTestPage() {
                     ref={isCursor ? activeCharRef : null}
                     className={cn('transition-colors relative', color)}
                   >
-                    {isCursor && (
-                        <span className="absolute left-0 top-0 animate-pulse">|</span>
+                    {isCursor && gameState !== 'finished' && (
+                        <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary animate-pulse"></span>
                     )}
                     {char}
                   </span>
@@ -276,3 +276,5 @@ export default function TypingTestPage() {
     </div>
   );
 }
+
+    
