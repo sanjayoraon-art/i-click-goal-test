@@ -201,26 +201,27 @@ export default function AimTrainerPage() {
               
               {gameState === 'finished' && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 z-10 p-4">
-                  <h2 className="text-2xl md:text-3xl font-bold text-primary text-center mb-4">Level {selectedLevel.name} Finished!</h2>
-                  <div className="grid grid-cols-2 md:grid-cols-4 justify-center items-stretch gap-4 mb-8">
-                      <div className="text-center p-4 rounded-lg bg-green-100 dark:bg-green-900/50 min-w-[5rem]">
-                          <div className="text-2xl md:text-4xl font-bold">{score}</div>
-                          <div className="text-xs uppercase">Hits</div>
-                      </div>
-                       <div className="text-center p-4 rounded-lg bg-teal-100 dark:bg-teal-900/50 min-w-[5rem]">
-                         <div className="text-2xl md:text-4xl font-bold text-teal-500">{selectedLevel.duration}s</div>
-                         <div className="text-xs uppercase">Time</div>
-                      </div>
-                      <div className="text-center p-4 rounded-lg bg-red-100 dark:bg-red-900/50 min-w-[5rem]">
-                          <div className="text-2xl md:text-4xl font-bold">{misses}</div>
-                          <div className="text-xs uppercase">Misses</div>
-                      </div>
-                      <div className="text-center p-4 rounded-lg bg-amber-100 dark:bg-amber-900/50 min-w-[5rem]">
-                         <div className="text-2xl md:text-4xl font-bold text-amber-500">{accuracy}%</div>
-                         <div className="text-xs uppercase">Accuracy</div>
-                      </div>
+                  <h2 className="text-2xl font-bold text-primary mb-2">Finished!</h2>
+                  <h3 className="text-lg text-muted-foreground mb-4">Level {selectedLevel.name} Complete</h3>
+                  <div className="grid grid-cols-2 gap-3 text-center mb-6">
+                    <div className="p-3 rounded-lg bg-green-100 dark:bg-green-900/50">
+                      <div className="text-2xl font-bold">{score}</div>
+                      <div className="text-xs uppercase">Hits</div>
+                    </div>
+                    <div className="p-3 rounded-lg bg-red-100 dark:bg-red-900/50">
+                      <div className="text-2xl font-bold">{misses}</div>
+                      <div className="text-xs uppercase">Misses</div>
+                    </div>
+                    <div className="p-3 rounded-lg bg-sky-100 dark:bg-sky-900/50">
+                      <div className="text-2xl font-bold text-sky-500">{selectedLevel.duration}s</div>
+                      <div className="text-xs uppercase">Time</div>
+                    </div>
+                    <div className="p-3 rounded-lg bg-amber-100 dark:bg-amber-900/50">
+                      <div className="text-2xl font-bold text-amber-500">{accuracy}%</div>
+                      <div className="text-xs uppercase">Accuracy</div>
+                    </div>
                   </div>
-                  <Button onClick={() => setGameState('idle')} size="lg" className="px-10 py-6 text-xl bg-green-500 hover:bg-green-600 text-white">
+                  <Button onClick={() => setGameState('idle')} size="lg">
                     <History className="mr-2 h-5 w-5" />
                     Play Again
                   </Button>
