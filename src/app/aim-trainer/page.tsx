@@ -213,8 +213,8 @@ export default function AimTrainerPage() {
                          <div className="text-xs uppercase">Accuracy</div>
                       </div>
                   </div>
-                  <Button onClick={() => setGameState('idle')} size="lg" className="mt-6 md:px-8 md:py-3 md:text-lg">
-                    <History className="mr-2 h-4 w-4" />
+                  <Button onClick={() => setGameState('idle')} size="lg" className="mt-6 px-10 py-6 text-xl">
+                    <History className="mr-2 h-5 w-5" />
                     Play Again
                   </Button>
                 </div>
