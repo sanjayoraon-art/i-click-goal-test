@@ -5,8 +5,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { BrainCircuit, History, Lightbulb } from 'lucide-react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { BrainCircuit, History, Trophy } from 'lucide-react';
 
 type GameState = 'idle' | 'showing' | 'waiting' | 'gameover';
 type FeedbackType = 'correct' | 'incorrect' | null;
@@ -18,9 +17,18 @@ export default function SequenceMemoryPage() {
   const [sequence, setSequence] = useState<number[]>([]);
   const [userSequence, setUserSequence] = useState<number[]>([]);
   const [level, setLevel] = useState(1);
+  const [highScore, setHighScore] = useState(1);
   const [activeBlock, setActiveBlock] = useState<number | null>(null);
   const [feedbackBlock, setFeedbackBlock] = useState<{ index: number, type: FeedbackType } | null>(null);
   const [gameOverSequence, setGameOverSequence] = useState<number[]>([]);
+  const [isNewHighScore, setIsNewHighScore] = useState(false);
+
+  useEffect(() => {
+    const savedHighScore = localStorage.getItem('sequenceMemoryHighScore');
+    if (savedHighScore) {
+      setHighScore(parseInt(savedHighScore, 10));
+    }
+  }, []);
 
   const generateNextInSequence = useCallback(() => {
     let nextBlock;
@@ -37,6 +45,7 @@ export default function SequenceMemoryPage() {
     setLevel(1);
     setFeedbackBlock(null);
     setGameOverSequence([]);
+    setIsNewHighScore(false);
     setGameState('showing');
   };
 
@@ -84,6 +93,11 @@ export default function SequenceMemoryPage() {
     } else {
         setFeedbackBlock({ index, type: 'incorrect' });
         setGameOverSequence(sequence);
+        if (level > highScore) {
+          setHighScore(level);
+          localStorage.setItem('sequenceMemoryHighScore', level.toString());
+          setIsNewHighScore(true);
+        }
         setGameState('gameover');
     }
   };
@@ -91,16 +105,22 @@ export default function SequenceMemoryPage() {
   const getStatusMessage = () => {
       switch(gameState) {
           case 'idle':
-            return <span className="text-sky-800">Click "Start" to begin.</span>;
+            return <span className="text-sky-800 dark:text-sky-200">Click "Start" to begin.</span>;
           case 'showing':
             return 'Watch carefully...';
           case 'waiting':
             return 'Your turn!';
           case 'gameover':
             return (
-              <span>
-                <span className="text-red-500 font-bold">Game Over!</span> You reached level <span className="font-bold text-foreground">{level}</span>.
-              </span>
+              <div className="flex flex-col items-center">
+                <span className="text-red-500 font-bold">Game Over!</span>
+                <span className="text-base text-muted-foreground">You reached level <span className="font-bold text-foreground">{level}</span>.</span>
+                 {isNewHighScore && (
+                  <span className="text-lg font-bold text-amber-500 mt-2 flex items-center gap-2">
+                    <Trophy className="h-5 w-5" /> New High Score!
+                  </span>
+                )}
+              </div>
             );
           default:
             return '';
@@ -146,12 +166,21 @@ export default function SequenceMemoryPage() {
       <div className="max-w-4xl mx-auto">
         <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border overflow-hidden">
           <CardHeader>
-            <div className={cn("flex justify-between items-center", gameState === 'idle' && 'bg-sky-100 dark:bg-sky-900/50 p-4 rounded-lg')}>
+            <div className={cn("flex flex-col items-center justify-center", gameState === 'idle' && 'bg-sky-100 dark:bg-sky-900/50 p-4 rounded-lg')}>
                  <h2 className={cn("text-2xl font-bold text-center w-full")}>{getStatusMessage()}</h2>
             </div>
-            <div className="text-center text-xl font-bold text-muted-foreground mt-4">
-                Level: <span className="text-primary">{level}</span>
-            </div>
+            {gameState !== 'idle' && (
+              <div className="flex justify-around items-center text-center text-xl font-bold text-muted-foreground mt-4 border-t pt-4">
+                  <div className="flex flex-col items-center">
+                    <span>Level</span>
+                    <span className="text-primary text-3xl">{level}</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <span>High Score</span>
+                    <span className="text-amber-500 text-3xl">{highScore}</span>
+                  </div>
+              </div>
+            )}
           </CardHeader>
           <CardContent>
             {gameState === 'idle' ? (
