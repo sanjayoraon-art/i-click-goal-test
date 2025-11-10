@@ -42,7 +42,7 @@ export default function AimTrainerPage() {
   const moveTarget = useCallback(() => {
     if (gameAreaRef.current) {
       const { width, height } = gameAreaRef.current.getBoundingClientRect();
-      const targetSize = parseInt(selectedLevel.size.split('-')[1]) * 4; // approx px value
+      const targetSize = parseInt(selectedLevel.size.split('-')[1]) * 4; // approx px value from tailwind class
       const newTop = Math.random() * (height - targetSize);
       const newLeft = Math.random() * (width - targetSize);
       setTargetPosition({ top: `${newTop}px`, left: `${newLeft}px` });
@@ -183,7 +183,7 @@ export default function AimTrainerPage() {
               {gameState === 'running' && (
                 <>
                   <div
-                    className={cn("absolute bg-primary rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-all duration-75", selectedLevel.size)}
+                    className={cn("absolute bg-primary rounded-full flex items-center justify-center transition-all duration-75", selectedLevel.size)}
                     style={{ top: targetPosition.top, left: targetPosition.left }}
                     onClick={handleTargetClick}
                   >
@@ -243,3 +243,5 @@ export default function AimTrainerPage() {
     </div>
   );
 }
+
+    
