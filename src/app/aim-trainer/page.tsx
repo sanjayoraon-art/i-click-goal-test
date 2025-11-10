@@ -22,11 +22,11 @@ interface TargetPosition {
 }
 
 const levels = [
-  { id: 1, name: 'Easy', duration: 30, targets: 20, size: 'w-12 h-12' },
-  { id: 2, name: 'Medium', duration: 25, targets: 25, size: 'w-10 h-10' },
-  { id: 3, name: 'Hard', duration: 20, targets: 30, size: 'w-8 h-8' },
-  { id: 4, name: 'Expert', duration: 15, targets: 35, size: 'w-7 h-7' },
-  { id: 5, name: 'Insane', duration: 10, targets: 30, size: 'w-6 h-6' },
+  { id: 1, name: 'Easy', duration: 30, targets: 20, size: 'w-16 h-16' },
+  { id: 2, name: 'Medium', duration: 25, targets: 25, size: 'w-14 h-14' },
+  { id: 3, name: 'Hard', duration: 20, targets: 30, size: 'w-12 h-12' },
+  { id: 4, name: 'Expert', duration: 15, targets: 35, size: 'w-10 h-10' },
+  { id: 5, name: 'Insane', duration: 10, targets: 30, size: 'w-8 h-8' },
 ];
 
 const BUTTON_COLORS = [
@@ -152,7 +152,7 @@ export default function AimTrainerPage() {
                 </div>
                 <div className="flex items-center gap-2 text-lg text-muted-foreground">
                     <Target className="h-5 w-5" />
-                    <span>Time: <strong>{selectedLevel.duration}s</strong>, Target: <strong>{selectedLevel.targets} hits</strong></span>
+                    <span>Time: <strong>{selectedLevel.duration}s</strong></span>
                 </div>
             </CardContent>
         </Card>
@@ -200,7 +200,7 @@ export default function AimTrainerPage() {
                     style={{ top: targetPosition.top, left: targetPosition.left }}
                     onClick={handleTargetClick}
                   >
-                    <Crosshair className="w-6 h-6 text-primary-foreground" />
+                    <Crosshair className="w-1/2 h-1/2 text-primary-foreground" />
                   </div>
                 </>
               )}
@@ -213,9 +213,9 @@ export default function AimTrainerPage() {
                           <div className="text-2xl md:text-3xl font-bold">{score}</div>
                           <div className="text-xs uppercase">Hits</div>
                       </div>
-                       <div className="text-center p-2 rounded-lg bg-purple-100 dark:bg-purple-900/50 min-w-[5rem]">
-                         <div className="text-2xl md:text-3xl font-bold">{selectedLevel.targets}</div>
-                         <div className="text-xs uppercase">Target</div>
+                       <div className="text-center p-2 rounded-lg bg-teal-100 dark:bg-teal-900/50 min-w-[5rem]">
+                         <div className="text-2xl md:text-3xl font-bold text-teal-500">{selectedLevel.duration}s</div>
+                         <div className="text-xs uppercase">Time</div>
                       </div>
                       <div className="text-center p-2 rounded-lg bg-red-100 dark:bg-red-900/50 min-w-[5rem]">
                           <div className="text-2xl md:text-3xl font-bold">{misses}</div>
