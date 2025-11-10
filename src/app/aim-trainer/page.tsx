@@ -10,8 +10,8 @@ import type { Metadata } from 'next';
 
 const metadata: Metadata = {
   title: 'Aim Trainer - Test & Improve Your Aiming Skills',
-  description: 'Sharpen your mouse accuracy and reaction time with our free Aim Trainer game. Click targets, track your score, and improve your FPS gaming skills.',
-  keywords: ['aim trainer', 'aim test', 'FPS trainer', 'mouse accuracy', 'reaction time game'],
+  description: 'Sharpen your mouse accuracy and reaction time with our free Aim Trainer game. Click targets, track your score, and improve your FPS gaming skills across 5 difficulty levels.',
+  keywords: ['aim trainer', 'aim test', 'FPS trainer', 'mouse accuracy', 'reaction time game', 'aiming levels'],
 };
 
 type GameState = 'idle' | 'running' | 'finished';
@@ -21,14 +21,20 @@ interface TargetPosition {
   left: string;
 }
 
-const AIM_TRAINER_TARGET = 25;
-const GAME_DURATION = 30;
+const levels = [
+  { id: 1, name: 'Easy', duration: 30, targets: 20, size: 'w-12 h-12' },
+  { id: 2, name: 'Medium', duration: 25, targets: 25, size: 'w-10 h-10' },
+  { id: 3, name: 'Hard', duration: 20, targets: 30, size: 'w-8 h-8' },
+  { id: 4, name: 'Expert', duration: 15, targets: 35, size: 'w-7 h-7' },
+  { id: 5, name: 'Insane', duration: 10, targets: 30, size: 'w-6 h-6' },
+];
 
 export default function AimTrainerPage() {
+  const [selectedLevel, setSelectedLevel] = useState(levels[0]);
   const [gameState, setGameState] = useState<GameState>('idle');
   const [score, setScore] = useState(0);
   const [misses, setMisses] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
+  const [timeLeft, setTimeLeft] = useState(selectedLevel.duration);
   const [targetPosition, setTargetPosition] = useState<TargetPosition>({ top: '50%', left: '50%' });
   const gameAreaRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -36,16 +42,17 @@ export default function AimTrainerPage() {
   const moveTarget = useCallback(() => {
     if (gameAreaRef.current) {
       const { width, height } = gameAreaRef.current.getBoundingClientRect();
-      const newTop = Math.random() * (height - 40);
-      const newLeft = Math.random() * (width - 40);
+      const targetSize = parseInt(selectedLevel.size.split('-')[1]) * 4; // approx px value
+      const newTop = Math.random() * (height - targetSize);
+      const newLeft = Math.random() * (width - targetSize);
       setTargetPosition({ top: `${newTop}px`, left: `${newLeft}px` });
     }
-  }, []);
+  }, [selectedLevel.size]);
   
   const startGame = () => {
     setScore(0);
     setMisses(0);
-    setTimeLeft(GAME_DURATION);
+    setTimeLeft(selectedLevel.duration);
     setGameState('running');
     moveTarget();
   };
@@ -61,13 +68,13 @@ export default function AimTrainerPage() {
     if (gameState === 'running') {
       timerRef.current = setInterval(() => {
         setTimeLeft(prev => {
-          if (prev <= 1) {
+          if (prev <= 0.01) {
             endGame();
             return 0;
           }
-          return prev - 1;
+          return prev - 0.01;
         });
-      }, 1000);
+      }, 10);
     }
     return () => {
       if (timerRef.current) {
@@ -75,6 +82,11 @@ export default function AimTrainerPage() {
       }
     };
   }, [gameState, endGame]);
+  
+  useEffect(() => {
+    setTimeLeft(selectedLevel.duration);
+  }, [selectedLevel]);
+
 
   const handleTargetClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -99,7 +111,7 @@ export default function AimTrainerPage() {
           Aim Trainer
         </h1>
         <p className="text-muted-foreground text-lg mt-2">
-          Hit {AIM_TRAINER_TARGET} targets in 30 seconds to prove your aim! Click the targets as they appear.
+          Choose a level and hit the targets as fast as you can!
         </p>
       </header>
       
@@ -112,7 +124,7 @@ export default function AimTrainerPage() {
                 <div className="text-sm text-muted-foreground">Hits</div>
               </div>
               <div>
-                <div className="text-2xl md:text-4xl font-bold">{timeLeft}</div>
+                <div className="text-2xl md:text-4xl font-bold tabular-nums">{timeLeft.toFixed(2)}</div>
                 <div className="text-sm text-muted-foreground">Seconds</div>
               </div>
               <div className="text-right">
@@ -135,10 +147,21 @@ export default function AimTrainerPage() {
                    <div className="mx-auto bg-primary/10 rounded-full p-4 w-fit mb-4">
                     <MousePointerClick className="h-12 w-12 text-primary" />
                   </div>
-                  <h2 className="text-2xl font-bold mb-2">Improve Your Aim</h2>
+                  <h2 className="text-2xl font-bold mb-4">Select a Level</h2>
+                  <div className="flex flex-wrap justify-center gap-2 mb-6">
+                    {levels.map(level => (
+                        <Button
+                            key={level.id}
+                            variant={selectedLevel.id === level.id ? 'default' : 'outline'}
+                            onClick={() => setSelectedLevel(level)}
+                        >
+                            {level.name}
+                        </Button>
+                    ))}
+                  </div>
                    <div className="flex items-center gap-2 text-lg text-muted-foreground mb-4">
                       <Target className="h-5 w-5" />
-                      <span>Target: <strong>{AIM_TRAINER_TARGET} hits</strong></span>
+                      <span>Time: <strong>{selectedLevel.duration}s</strong>, Target: <strong>{selectedLevel.targets} hits</strong></span>
                     </div>
                   <Button onClick={startGame} size="lg">Start Game</Button>
                 </div>
@@ -147,28 +170,28 @@ export default function AimTrainerPage() {
               {gameState === 'running' && (
                 <>
                   <div
-                    className="absolute w-10 h-10 bg-primary rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-all duration-75"
+                    className={cn("absolute bg-primary rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-all duration-75", selectedLevel.size)}
                     style={{ top: targetPosition.top, left: targetPosition.left }}
                     onClick={handleTargetClick}
                   >
                     <Crosshair className="w-6 h-6 text-primary-foreground" />
                   </div>
                    <div className="absolute top-4 left-4 text-left text-lg bg-black/20 text-white px-3 py-1 rounded-md">
-                      Target: {AIM_TRAINER_TARGET}
+                      Target: {selectedLevel.targets}
                     </div>
                 </>
               )}
               
               {gameState === 'finished' && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 z-10 p-4">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Game Over!</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Level {selectedLevel.name} Finished!</h2>
                   <div className="grid grid-cols-2 md:grid-cols-4 justify-center items-stretch gap-2 md:gap-4 my-4">
                       <div className="text-center p-2 md:p-4 rounded-lg bg-muted min-w-[7rem] md:min-w-[8rem]">
                           <div className="text-2xl md:text-5xl font-bold">{score}</div>
                           <div className="text-xs md:text-sm uppercase">Hits</div>
                       </div>
                        <div className="text-center p-2 md:p-4 rounded-lg bg-muted min-w-[7rem] md:min-w-[8rem]">
-                         <div className="text-2xl md:text-5xl font-bold">{AIM_TRAINER_TARGET}</div>
+                         <div className="text-2xl md:text-5xl font-bold">{selectedLevel.targets}</div>
                          <div className="text-xs md:text-sm uppercase">Target</div>
                       </div>
                       <div className="text-center p-2 md:p-4 rounded-lg bg-muted min-w-[7rem] md:min-w-[8rem]">
@@ -180,9 +203,9 @@ export default function AimTrainerPage() {
                          <div className="text-xs md:text-sm uppercase">Accuracy</div>
                       </div>
                   </div>
-                  <Button onClick={startGame} size="lg" className="mt-4">
+                  <Button onClick={() => setGameState('idle')} size="lg" className="mt-4">
                     <History className="mr-2 h-4 w-4" />
-                    Play Again
+                    Change Level & Play Again
                   </Button>
                 </div>
               )}
@@ -200,7 +223,7 @@ export default function AimTrainerPage() {
                 The Aim Trainer is designed to help you improve your mouse accuracy, precision, and reaction time. This skill is essential for competitive gaming, especially in First-Person Shooter (FPS) games like Valorant, Counter-Strike, and Call of Duty.
               </p>
               <p>
-                Regular practice with this tool can lead to better muscle memory, faster target acquisition, and higher flick-shot accuracy. Challenge yourself to beat your high score and see your in-game performance soar!
+                Regular practice with this tool can lead to better muscle memory, faster target acquisition, and higher flick-shot accuracy. With multiple difficulty levels, you can challenge yourself to beat your high score and see your in-game performance soar!
               </p>
             </CardContent>
           </Card>
@@ -210,3 +233,5 @@ export default function AimTrainerPage() {
     </div>
   );
 }
+
+    
