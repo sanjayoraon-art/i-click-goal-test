@@ -153,16 +153,23 @@ export default function SequenceMemoryPage() {
                 </div>
             ) : (
                 <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-sm mx-auto">
-                {[...Array(GRID_SIZE)].map((_, i) => (
+                {[...Array(GRID_SIZE)].map((_, i) => {
+                  const sequenceIndex = gameOverSequence.indexOf(i);
+                  return (
                     <div
                     key={i}
                     onClick={() => handleBlockClick(i)}
                     className={cn(
-                        'w-full aspect-square rounded-lg transition-all duration-200',
+                        'w-full aspect-square rounded-lg transition-all duration-200 flex items-center justify-center text-3xl font-bold text-white',
                         getBlockClass(i)
                     )}
-                    />
-                ))}
+                    >
+                      {gameState === 'gameover' && sequenceIndex !== -1 && (
+                        <span>{sequenceIndex + 1}</span>
+                      )}
+                    </div>
+                  );
+                })}
                 </div>
             )}
              {gameState === 'gameover' && (
