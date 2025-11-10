@@ -31,6 +31,7 @@ export default function TypingTestPage() {
   
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const activeCharRef = useRef<HTMLSpanElement>(null);
 
   const resetGame = useCallback(() => {
     if (timerRef.current) {
@@ -56,7 +57,7 @@ export default function TypingTestPage() {
       timerRef.current = setInterval(() => {
         setTimeLeft(prev => prev - 1);
       }, 1000);
-    } else if (timeLeft === 0) {
+    } else if (timeLeft <= 0) {
       if (timerRef.current) clearInterval(timerRef.current);
       setGameState('finished');
     }
@@ -68,24 +69,33 @@ export default function TypingTestPage() {
     };
   }, [gameState, timeLeft]);
   
+  useEffect(() => {
+    if (activeCharRef.current) {
+      activeCharRef.current.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+  }, [userInput]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
     if (gameState === 'finished') return;
 
-    if (gameState === 'idle') {
+    if (gameState === 'idle' && value.length > 0) {
       setGameState('running');
     }
 
     let currentErrors = 0;
     let currentCorrectChars = 0;
-
     const textToCompare = textToType.substring(0, value.length);
-    for(let i=0; i<value.length; i++) {
-        if(value[i] === textToCompare[i]) {
+
+    for (let i = 0; i < value.length; i++) {
+        if (value[i] === textToCompare[i]) {
             currentCorrectChars++;
         } else {
-            currentErrors++;
+            // Count errors only up to the point where user is typing
+            if (i < textToCompare.length) {
+              currentErrors++;
+            }
         }
     }
     
@@ -96,7 +106,7 @@ export default function TypingTestPage() {
   };
   
   const wpm = gameState === 'finished' ? Math.round((correctChars / 5) / (GAME_DURATION / 60)) : 0;
-  const accuracy = totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 100;
+  const accuracy = totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 0;
   
   return (
     <div className="container mx-auto px-4 py-8">
@@ -121,26 +131,31 @@ export default function TypingTestPage() {
                 <div className="text-sm text-muted-foreground">Seconds</div>
               </div>
               <div>
-                <div className="text-2xl md:text-4xl font-bold text-sky-500 tabular-nums">{gameState === 'finished' ? wpm : 0}</div>
+                <div className="text-2xl md:text-4xl font-bold text-sky-500 tabular-nums">{gameState === 'running' ? Math.round((correctChars / 5) / ((GAME_DURATION - timeLeft) / 60)) : 0}</div>
                 <div className="text-sm text-muted-foreground">WPM</div>
               </div>
               <div className="text-right">
-                <div className="text-2xl md:text-4xl font-bold text-green-500 tabular-nums">{gameState === 'finished' ? accuracy : 100}%</div>
+                <div className="text-2xl md:text-4xl font-bold text-green-500 tabular-nums">{totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 100}%</div>
                 <div className="text-sm text-muted-foreground">Accuracy</div>
               </div>
             </div>
           </CardHeader>
           <CardContent onClick={() => inputRef.current?.focus()}>
-            <div className="relative rounded-lg bg-muted/50 p-4 sm:p-6 text-xl sm:text-2xl tracking-wider leading-relaxed font-code select-none cursor-text h-64 overflow-hidden">
+            <div className="relative rounded-lg bg-muted/50 p-4 sm:p-6 text-xl sm:text-2xl tracking-wider leading-relaxed font-code select-none cursor-text h-64 overflow-y-auto">
               {textToType.split('').map((char, index) => {
                 let color = 'text-muted-foreground';
                 if (index < userInput.length) {
                   color = char === userInput[index] ? 'text-foreground' : 'text-red-500 bg-red-500/20';
                 }
+                const isCursor = index === userInput.length;
                 return (
-                  <span key={index} className={cn('transition-colors', color)}>
-                    {index === userInput.length && (
-                        <span className="absolute animate-pulse">|</span>
+                  <span
+                    key={index}
+                    ref={isCursor ? activeCharRef : null}
+                    className={cn('transition-colors relative', color)}
+                  >
+                    {isCursor && (
+                        <span className="absolute left-0 top-0 animate-pulse">|</span>
                     )}
                     {char}
                   </span>
@@ -155,24 +170,27 @@ export default function TypingTestPage() {
               onChange={handleInputChange}
               onPaste={(e) => e.preventDefault()}
               disabled={gameState === 'finished'}
+              spellCheck="false"
+              autoCorrect="off"
+              autoCapitalize="off"
             />
              {gameState === 'finished' && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 z-10 p-4 text-center">
                   <h2 className="text-2xl md:text-3xl font-bold text-primary">Test Finished!</h2>
-                  <div className="flex justify-center items-stretch gap-2 md:gap-4 my-4">
-                      <div className="text-center p-2 md:p-4 rounded-lg bg-sky-100 dark:bg-sky-900/50 min-w-[5rem]">
+                  <div className="grid grid-cols-2 md:grid-cols-4 justify-center items-stretch gap-4 my-4">
+                      <div className="text-center p-4 rounded-lg bg-sky-100 dark:bg-sky-900/50 min-w-[5rem]">
                           <div className="text-2xl md:text-4xl font-bold text-sky-500">{wpm}</div>
                           <div className="text-xs uppercase">WPM</div>
                       </div>
-                      <div className="text-center p-2 md:p-4 rounded-lg bg-green-100 dark:bg-green-900/50 min-w-[5rem]">
+                      <div className="text-center p-4 rounded-lg bg-green-100 dark:bg-green-900/50 min-w-[5rem]">
                          <div className="text-2xl md:text-4xl font-bold text-green-500">{accuracy}%</div>
                          <div className="text-xs uppercase">Accuracy</div>
                       </div>
-                      <div className="text-center p-2 md:p-4 rounded-lg bg-amber-100 dark:bg-amber-900/50 min-w-[5rem]">
+                      <div className="text-center p-4 rounded-lg bg-amber-100 dark:bg-amber-900/50 min-w-[5rem]">
                           <div className="text-2xl md:text-4xl font-bold">{correctChars}</div>
                           <div className="text-xs uppercase">Correct</div>
                       </div>
-                      <div className="text-center p-2 md:p-4 rounded-lg bg-red-100 dark:bg-red-900/50 min-w-[5rem]">
+                      <div className="text-center p-4 rounded-lg bg-red-100 dark:bg-red-900/50 min-w-[5rem]">
                          <div className="text-2xl md:text-4xl font-bold text-red-500">{errors}</div>
                          <div className="text-xs uppercase">Errors</div>
                       </div>
@@ -189,7 +207,7 @@ export default function TypingTestPage() {
         <section className="w-full max-w-4xl mx-auto mt-12 text-left">
           <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl overflow-hidden border-2">
             <CardHeader>
-              <CardTitle className="text-2xl font-bold">How to Play & Improve</CardTitle>
+              <CardTitle className="text-2xl font-bold">How to Play &amp; Improve</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6 text-muted-foreground">
               <div>
@@ -258,5 +276,3 @@ export default function TypingTestPage() {
     </div>
   );
 }
-
-    
