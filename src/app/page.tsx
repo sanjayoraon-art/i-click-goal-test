@@ -237,7 +237,7 @@ export default function Home() {
           </Card>
           
           <section className="w-full max-w-4xl mx-auto mt-12 text-left">
-            <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
+            <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl overflow-hidden border-2">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold">About the Click Speed Test</CardTitle>
               </CardHeader>
