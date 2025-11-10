@@ -33,6 +33,7 @@ export default function SequenceMemoryPage() {
     setSequence([]);
     setUserSequence([]);
     setLevel(1);
+    setFeedbackBlock(null);
     setGameState('showing');
   };
 
@@ -60,7 +61,7 @@ export default function SequenceMemoryPage() {
 
 
   const handleBlockClick = (index: number) => {
-    if (gameState !== 'waiting' || feedbackBlock) return;
+    if (gameState !== 'waiting') return;
 
     const newPlayerSequence = [...userSequence, index];
     setUserSequence(newPlayerSequence);
@@ -79,10 +80,7 @@ export default function SequenceMemoryPage() {
         }
     } else {
         setFeedbackBlock({ index, type: 'incorrect' });
-        setTimeout(() => {
-            setGameState('gameover');
-            setFeedbackBlock(null);
-        }, 500);
+        setGameState('gameover');
     }
   };
   
@@ -95,7 +93,7 @@ export default function SequenceMemoryPage() {
           case 'waiting':
             return 'Your turn!';
           case 'gameover':
-            return `Game Over! You reached level ${level -1}.`;
+            return `Game Over! You reached level ${level}.`;
           default:
             return '';
       }
@@ -135,14 +133,14 @@ export default function SequenceMemoryPage() {
                  <h2 className="text-2xl font-bold text-center w-full">{getStatusMessage()}</h2>
             </div>
             <div className="text-center text-xl font-bold text-muted-foreground">
-                Level: <span className="text-primary">{gameState === 'gameover' ? level - 1 : level -1}</span>
+                Level: <span className="text-primary">{gameState === 'gameover' ? level : level -1}</span>
             </div>
           </CardHeader>
           <CardContent>
-            {gameState === 'idle' || gameState === 'gameover' ? (
+            {gameState === 'idle' ? (
                 <div className="flex flex-col items-center justify-center h-full min-h-[300px]">
                     <Button onClick={startGame} size="lg">
-                        {gameState === 'idle' ? 'Start Game' : 'Play Again'}
+                        Start Game
                         <History className="ml-2 h-5 w-5" />
                     </Button>
                 </div>
@@ -158,6 +156,14 @@ export default function SequenceMemoryPage() {
                     )}
                     />
                 ))}
+                </div>
+            )}
+             {gameState === 'gameover' && (
+                <div className="flex justify-center mt-6">
+                    <Button onClick={startGame} size="lg">
+                        Play Again
+                        <History className="ml-2 h-5 w-5" />
+                    </Button>
                 </div>
             )}
           </CardContent>
