@@ -201,7 +201,7 @@ export default function AimTrainerPage() {
               
               {gameState === 'finished' && (
                 <div className="absolute inset-0 flex flex-col items-center justify-around bg-background/90 z-10 p-4">
-                  <h2 className="text-2xl md:text-3xl font-bold text-primary text-center mb-2">Level {selectedLevel.name} Finished!</h2>
+                  <h2 className="text-2xl md:text-3xl font-bold text-primary text-center">Level {selectedLevel.name} Finished!</h2>
                   <div className="grid grid-cols-2 md:grid-cols-4 justify-center items-stretch gap-4">
                       <div className="text-center p-4 rounded-lg bg-green-100 dark:bg-green-900/50 min-w-[5rem]">
                           <div className="text-2xl md:text-4xl font-bold">{score}</div>
@@ -295,6 +295,32 @@ export default function AimTrainerPage() {
                       <TableCell>Keeping your crosshair on a moving target. While our targets are static, practicing speed helps in tracking.</TableCell>
                       <TableCell className="text-right font-bold text-amber-500">Medium</TableCell>
                     </TableRow>
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </section>
+
+          <section className="w-full max-w-4xl mx-auto mt-12 text-left">
+            <h2 className="text-3xl font-bold text-center mb-6">Level Details</h2>
+            <Card className="bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl border">
+              <CardContent className="p-0">
+                <Table>
+                  <TableHeader className="bg-muted/50">
+                    <TableRow>
+                      <TableHead className="font-semibold text-base text-foreground/80">Level</TableHead>
+                      <TableHead className="font-semibold text-base text-foreground/80">Time</TableHead>
+                      <TableHead className="text-right font-semibold text-base text-foreground/80">Total Targets</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {levels.map((level) => (
+                      <TableRow key={level.id} className="even:bg-muted/20">
+                        <TableCell className="font-medium">{level.name}</TableCell>
+                        <TableCell>{level.duration} seconds</TableCell>
+                        <TableCell className="text-right font-bold">{level.targets}</TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </CardContent>
