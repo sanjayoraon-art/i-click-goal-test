@@ -46,7 +46,7 @@ export default function RootLayout({
         {/* Replace ca-pub-XXXXXXXXXXXXXXXX with your own AdSense Publisher ID */}
         <script 
           async 
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5245626981758881"
           crossOrigin="anonymous"
         ></script>
       </head>
